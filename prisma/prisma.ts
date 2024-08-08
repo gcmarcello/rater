@@ -4,12 +4,27 @@ const prismaClientSingleton = () => {
   return new PrismaClient();
 };
 
-declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
-} & typeof global;
+declare global {
+  var prisma: ReturnType<typeof prismaClientSingleton>;
+  namespace PrismaJson {
+    type CelebrityOptions = {
+      image?: string;
+    };
+    type MovieOptions = {
+      duration?: number;
+      ageRating?: number;
+      image?: string;
+    };
+    type ShowOptions = {
+      duration?: number;
+      ageRating?: number;
+      image?: string;
+    };
+  }
+}
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+const prisma = global.prisma ?? prismaClientSingleton();
 
 export default prisma;
 
-if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
+if (process.env.NODE_ENV !== "production") global.prisma = prisma;
