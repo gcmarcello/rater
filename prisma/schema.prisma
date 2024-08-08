@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema", "postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuid_ossp(map: "uuid-ossp", schema: "extensions")]
+  schemas    = ["extensions", "public"]
+}
+
+model User {
+  id        String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Review    Review[]
+
+  @@schema("public")
+}
+
+model Celebrity {
+  id             String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  name           String
+  birthDate      DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  directedMovies Movie[]  @relation(name: "Director")
+  writtenMovies  Movie[]  @relation(name: "Writers")
+  starredMovies  Movie[]  @relation(name: "Starring")
+  starredShows   Show[]   @relation(name: "StarringShow")
+  writtenShows   Show[]   @relation(name: "WritersShow")
+  directedShows  Show[]   @relation(name: "DirectorShow")
+
+  @@schema("public")
+}
+
+model Movie {
+  id          String      @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  title       String
+  releaseDate DateTime
+  rating      Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  director    Celebrity   @relation(name: "Director", fields: [directorId], references: [id])
+  directorId  String      @db.Uuid
+  writers     Celebrity[] @relation(name: "Writers")
+  starring    Celebrity[] @relation(name: "Starring")
+  Review      Review[]
+
+  @@schema("public")
+}
+
+model Show {
+  id          String      @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  title       String
+  releaseDate DateTime
+  rating      Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  director    Celebrity   @relation(name: "DirectorShow", fields: [directorId], references: [id])
+  directorId  String      @db.Uuid
+  writers     Celebrity[] @relation(name: "WritersShow")
+  starring    Celebrity[] @relation(name: "StarringShow")
+  Review      Review[]
+
+  @@schema("public")
+}
+
+model Review {
+  id        String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  rating    Float
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  movieId   String   @db.Uuid
+  show      Show     @relation(fields: [showId], references: [id])
+  showId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.Uuid
+
+  @@schema("public")
+}
