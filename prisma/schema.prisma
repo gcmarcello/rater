@@ -51,6 +51,7 @@ model Movie {
   title       String
   releaseDate DateTime
   rating      Float
+  genres      Genre[]
   /// [MovieOptions]
   options     Json?       @db.JsonB
   createdAt   DateTime    @default(now())
@@ -69,6 +70,7 @@ model Show {
   title       String
   releaseDate DateTime
   rating      Float
+  genres      Genre[]
   /// [ShowOptions]
   options     Json?       @db.JsonB
   createdAt   DateTime    @default(now())
@@ -94,6 +96,17 @@ model Review {
   showId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @db.Uuid
+
+  @@schema("public")
+}
+
+model Genre {
+  id        String   @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  name      String
+  movies    Movie[]
+  shows     Show[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@schema("public")
 }
