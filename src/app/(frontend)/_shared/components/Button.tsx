@@ -29,19 +29,24 @@ const TertiaryButton = styled(BaselineButton)`
   background: rgba(255, 255, 255, 0.2);
 `;
 
-export default function Button({
-  children,
-  variant,
-}: {
-  children: React.ReactNode;
-  variant: "primary" | "secondary" | "tertiary";
-}) {
-  switch (variant) {
+interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "primary" | "secondary" | "tertiary";
+  children: React.ReactNode | string;
+}
+
+export default function Button(props: ButtonProps) {
+  switch (props.variant) {
     case "primary":
-      return <PrimaryWhiteButton>{children}</PrimaryWhiteButton>;
+      return (
+        <PrimaryWhiteButton {...props}>{props.children}</PrimaryWhiteButton>
+      );
     case "secondary":
-      return <SecondaryButton>{children}</SecondaryButton>;
+      return <SecondaryButton {...props}>{props.children}</SecondaryButton>;
     case "tertiary":
-      return <TertiaryButton>{children}</TertiaryButton>;
+      return <TertiaryButton {...props}>{props.children}</TertiaryButton>;
+    default:
+      return (
+        <PrimaryWhiteButton {...props}>{props.children}</PrimaryWhiteButton>
+      );
   }
 }
