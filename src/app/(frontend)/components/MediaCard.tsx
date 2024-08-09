@@ -6,6 +6,7 @@ import Image from "next/image";
 import { minutesToHours } from "../utils/minutesToHours";
 import { useGlobalStore } from "@/app/libs/zustand/useGlobalStore";
 import { MovieWithGenres } from "@/app/types/Movies";
+import Indicator from "../_shared/components/Indicator";
 
 type MediaCardProps = {
   image?: string;
@@ -33,7 +34,7 @@ const Card = styled.div<MediaCardProps>`
 
 const CardInfo = styled.div`
   display: flex;
-  margin-right: auto;
+  justify-content: start;
   flex-direction: column;
   gap: 12px;
   padding: 24px;
@@ -101,12 +102,21 @@ export function HeroMediaCard({
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
 
-  const { genres } = useGlobalStore();
-
   if (movie)
     return (
       <Card image={movie.options?.image}>
         <CardInfo>
+          {movie.highlighted && (
+            <Indicator>
+              <Image
+                src={"/flame.svg"}
+                height={20}
+                width={20}
+                alt="highlighted icon"
+              />
+              <>Em Destaque</>
+            </Indicator>
+          )}
           <CardTitleText>{movie.title}</CardTitleText>
           <CardDetails>
             <Image src="/star.png" width={20} height={20} alt="Star" />
