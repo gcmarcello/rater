@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Button from "./Button";
-import Text from "./Text";
+import Button from "../_shared/components/Button";
+import Text from "../_shared/components/Text";
 import { Genre, Movie, Show } from "@prisma/client";
 import Image from "next/image";
 import { minutesToHours } from "../utils/minutesToHours";

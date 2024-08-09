@@ -1,7 +1,7 @@
 "use client";
 import MainContainer from "@/app/(frontend)/components/Container";
 import Button from "@/app/(frontend)/components/Button";
-import Text from "./components/Text";
+import Text from "./_shared/components/Text";
 import useSWR from "swr";
 import { map } from "zod";
 import { HeroMediaCard, MediaCard } from "./components/MediaCard";

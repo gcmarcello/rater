@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import Button from "./Button";
+import Button from "../_shared/components/Button";
 
 const HeaderContainer = styled.div`
   width: 100dvw;
