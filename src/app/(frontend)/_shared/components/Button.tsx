@@ -8,8 +8,6 @@ const BaselineButton = styled.div`
   justify-content: center;
   align-items: center;
   padding: 8px 28px;
-  margin-top: auto;
-  margin-bottom: auto;
   gap: 8px;
   border-radius: 12px;
   cursor: pointer;
@@ -27,7 +25,9 @@ const SecondaryButton = styled(BaselineButton)`
   }
 `;
 
-const TertiaryButton = styled(BaselineButton)``;
+const TertiaryButton = styled(BaselineButton)`
+  background: rgba(255, 255, 255, 0.2);
+`;
 
 export default function Button({
   children,
