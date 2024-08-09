@@ -11,14 +11,19 @@ declare global {
       image?: string;
     };
     type MovieOptions = {
+      description?: string;
       duration?: number;
       ageRating?: number;
       image?: string;
+      poster?: string;
     };
     type ShowOptions = {
+      description?: string;
+      seasonCount?: number;
       duration?: number;
       ageRating?: number;
       image?: string;
+      poster?: string;
     };
   }
 }
