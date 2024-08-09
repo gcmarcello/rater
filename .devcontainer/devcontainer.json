@@ -21,7 +21,8 @@
         "eamodio.gitlens",
         "yoavbls.pretty-ts-errors",
         "ms-vsliveshare.vsliveshare",
-        "harehare.portable-kanban"
+        "harehare.portable-kanban",
+        "styled-components.vscode-styled-components"
       ],
       "settings": {
         "git.repositoryScanMaxDepth": 5,
