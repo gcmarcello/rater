@@ -60,6 +60,7 @@ model Movie {
   releaseDate DateTime?
   rating      Float?
   genres      Genre[]
+  highlighted Boolean     @default(false)
   /// [MovieOptions]
   options     Json?       @db.JsonB
   createdAt   DateTime    @default(now())
@@ -79,6 +80,7 @@ model Show {
   releaseDate DateTime?
   rating      Float?
   genres      Genre[]
+  highlighted Boolean     @default(false)
   /// [ShowOptions]
   options     Json?       @db.JsonB
   createdAt   DateTime    @default(now())
