@@ -1,95 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import MainContainer from "@/app/(frontend)/components/Container";
+import Button from "@/app/(frontend)/components/Button";
+import Text from "./(frontend)/components/Text";
+import useSWR from "swr";
+import { map } from "zod";
+import { HeroMediaCard, MediaCard } from "./(frontend)/components/MediaCard";
+import Hero from "./(frontend)/components/Hero";
+import MainPageContainer from "./(frontend)/components/MainPageContainer";
+import { Movie } from "@prisma/client";
+import { useMemo } from "react";
+import styled from "styled-components";
+
+const fetcher = (url: string) =>
+  fetch(url)
+    .then((r) => r.json())
+    .catch((e) => console.error(e));
+
+const AdjacentList = styled.div`
+  display: flex;
+  min-height: 284px;
+  gap: 12px;
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: column;
+  }
+`;
 
 export default function Home() {
+  const { data: movies, error: movieError } = useSWR<Movie[]>(
+    "/api/movies",
+    fetcher
+  );
+  const { data: genres, error: genreError } = useSWR<Movie[]>(
+    "/api/genres",
+    fetcher
+  );
+
+  const movieList = useMemo(() => {
+    return movies?.splice(1, 3);
+  }, [movies]);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <MainContainer>
+      <MainPageContainer>
+        <Hero>
+          {movies ? (
+            <HeroMediaCard key={movies[0]?.id} movie={movies[0]} />
+          ) : (
+            "Loading..."
+          )}
+        </Hero>
+        <AdjacentList>
+          {movieList?.map((movie) => (
+            <HeroMediaCard key={movie.id} movie={movie} />
+          ))}
+        </AdjacentList>
+      </MainPageContainer>
+    </MainContainer>
   );
 }
