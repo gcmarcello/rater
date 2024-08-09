@@ -4,7 +4,7 @@ const Hero = styled.div`
   display: flex;
   justify-content: center;
   min-height: 284px;
-  grid-column: span 3 / span 3;
+  grid-column: span 6 / span 6;
 
   @media screen and (min-width: 1024px) {
     min-height: 80vh;

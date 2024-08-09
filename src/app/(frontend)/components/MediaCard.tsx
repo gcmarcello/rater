@@ -4,6 +4,8 @@ import Text from "./Text";
 import { Genre, Movie, Show } from "@prisma/client";
 import Image from "next/image";
 import { minutesToHours } from "../utils/minutesToHours";
+import { useGlobalStore } from "@/app/libs/zustand/useGlobalStore";
+import { MovieWithGenres } from "@/app/types/Movies";
 
 type MediaCardProps = {
   image?: string;
@@ -39,11 +41,16 @@ const CardInfo = styled.div`
 `;
 
 const CardDetails = styled.div`
-  display: flex;
-  gap: 12px;
+  gap: 8px;
   font-size: 16px;
   font-weight: 600;
   color: rgba(180, 180, 180, 1);
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    gap: 12px;
+  }
 `;
 
 const Description = styled.p`
@@ -51,7 +58,6 @@ const Description = styled.p`
   font-size: 12px;
   font-weight: 500;
   max-width: 100%;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -60,9 +66,18 @@ const Description = styled.p`
     font-size: 16px;
     color: white;
     max-width: 550px;
-    white-space: normal;
     min-height: auto;
     max-height: auto;
+  }
+`;
+
+const HeroCardTitleText = styled.p`
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 24px;
   }
 `;
 
@@ -80,11 +95,13 @@ export function HeroMediaCard({
   movie,
   show,
 }: {
-  movie: Movie & { genre?: Genre[] };
-  show?: Show;
+  movie?: MovieWithGenres | null;
+  show?: Show | null;
 }) {
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
+
+  const { genres } = useGlobalStore();
 
   if (movie)
     return (
@@ -98,7 +115,10 @@ export function HeroMediaCard({
               {movie.options?.duration &&
                 minutesToHours(movie.options?.duration)}{" "}
               • {movie.releaseDate && new Date(movie.releaseDate).getFullYear()}{" "}
-              • {movie.genre ? movie.genre.map((g) => g.name).join(", ") : ""}
+              •{" "}
+              {movie.genres.length
+                ? movie.genres.map((g) => g.name).join(", ")
+                : ""}
             </div>
           </CardDetails>
 
@@ -108,4 +128,25 @@ export function HeroMediaCard({
     );
 }
 
-export function MediaCard({}) {}
+export function MediaCard({
+  movie,
+  show,
+}: {
+  movie?: MovieWithGenres | null;
+  show?: Show | null;
+}) {
+  if (!movie && !show) throw new Error("No movie or show provided");
+  if (movie && show) throw new Error("Both movie and show provided");
+
+  const { genres } = useGlobalStore();
+
+  if (movie)
+    return (
+      <Card image={movie.options?.image}>
+        <CardInfo>
+          <HeroCardTitleText>{movie.title}</HeroCardTitleText>
+          <Description>{movie.options?.description}</Description>
+        </CardInfo>
+      </Card>
+    );
+}
