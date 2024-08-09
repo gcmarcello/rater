@@ -20,6 +20,10 @@ generator json {
   provider = "prisma-json-types-generator"
 }
 
+generator zod {
+  provider = "zod-prisma-types"
+}
+
 model User {
   id        String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
   email     String    @unique
