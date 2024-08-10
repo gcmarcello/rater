@@ -44,7 +44,7 @@ export const useAuthStore = create<AuthStoreProps>()(
           Object.entries(state).filter(([key]) => !["foo"].includes(key))
         ),
       name: "auth-storage",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
