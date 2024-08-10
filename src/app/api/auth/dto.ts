@@ -21,7 +21,7 @@ export const loginDto = z.object({
     .string({ message: "Campo Obrigatório" })
     .email({ message: "Email Inválido" }),
   password: z
-    .string({ message: "Tipo inválido" })
+    .string({ message: "Campo Obrigatório" })
     .min(1, { message: "Campo Obrigatório" }),
 });
 
