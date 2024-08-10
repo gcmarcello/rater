@@ -11,6 +11,8 @@ import useNextStore from "../hooks/useNextStore";
 import { Spinner } from "../_shared/components/Spinner";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { useGlobalStore } from "../hooks/useGlobalStore";
+import { useAuthModalStore } from "../hooks/useAuthModalStore";
+import AuthModal from "./AuthModal";
 
 const HeaderContainer = styled.div`
   width: 100dvw;
@@ -22,7 +24,7 @@ const HeaderContainer = styled.div`
 export default function Header() {
   const auth = useNextStore(useAuthStore, (state) => state);
 
-  const { isAuthModalOpen, setIsAuthModalOpen } = useGlobalStore();
+  const { isAuthModalOpen, setIsAuthModalOpen } = useAuthModalStore();
 
   return (
     <HeaderContainer>
@@ -39,7 +41,7 @@ export default function Header() {
               <Text variant="white">Login</Text>
             </Button>
             <Dialog isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen}>
-              <LoginForm />
+              <AuthModal />
             </Dialog>
           </>
         )
