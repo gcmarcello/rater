@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/(frontend)/components/Header";
 import StyledComponentsRegistry from "../libs/styled-components/registry";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <Header />
           {children}
+          <Toaster />
         </StyledComponentsRegistry>
       </body>
     </html>
