@@ -1,5 +1,9 @@
 import styled, { keyframes } from "styled-components";
 
+type SpinnerProps = {
+  size: number;
+};
+
 const spin = keyframes`
   from {
     transform: rotate(0deg);
@@ -9,22 +13,22 @@ const spin = keyframes`
   }
 `;
 
-const SpinnerWrapper = styled.div`
+const SpinnerWrapper = styled.div<SpinnerProps>`
   display: flex;
-  height: 24px; /* Adjust the height as needed */
-  width: 24px; /* Adjust the width as needed */
+  height: ${(props) => `${props.size}px`};
+  width: ${(props) => `${props.size}px`};
 `;
 
-const SpinningSVG = styled.svg`
-  width: 24px; /* Adjust the size as needed */
-  height: 24px; /* Adjust the size as needed */
+const SpinningSVG = styled.svg<SpinnerProps>`
+  width: ${(props) => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
   animation: ${spin} 1s linear infinite;
 `;
 
-export function Spinner() {
+export function Spinner({ size = 24 }: { size?: number }) {
   return (
-    <SpinnerWrapper>
-      <SpinningSVG viewBox="0 0 24 24">
+    <SpinnerWrapper size={size}>
+      <SpinningSVG size={size} viewBox="0 0 24 24">
         <circle
           style={{ opacity: 0.25 }}
           cx="12"

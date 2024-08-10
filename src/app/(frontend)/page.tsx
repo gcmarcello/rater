@@ -10,6 +10,8 @@ import { fetcher } from "../libs/swr/fetcher";
 import { MovieWithGenres } from "../types/Movies";
 import { useGlobalStore } from "./hooks/useGlobalStore";
 import { useAuthStore } from "./hooks/useAuthStore";
+import { Spinner } from "./_shared/components/Spinner";
+import Loading from "./_shared/components/Loading";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -33,6 +35,8 @@ export default function Home() {
 
   useSWR<Genre[]>(genres ? "/api/genres" : null, fetcher, {
     onSuccess: (data) => setGenres(data),
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
   });
 
   const { isLoading: isLoadingMovies } = useSWR<MovieWithGenres[]>(
@@ -42,30 +46,28 @@ export default function Home() {
     fetcher,
     {
       onSuccess: (data) => handleHighlightedMovies(data),
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
   );
 
   return (
     <MainContainer>
-      {!isLoadingMovies ? (
-        highlightedMovie &&
-        featuredMovies && (
-          <MainPageContainer>
-            <Hero>
-              <HeroMediaCard
-                key={highlightedMovie?.id}
-                movie={highlightedMovie}
-              />
-            </Hero>
-            <AdjacentList>
-              {featuredMovies.map((movie) => (
-                <MediaCard key={movie.id} movie={movie} />
-              ))}
-            </AdjacentList>
-          </MainPageContainer>
-        )
-      ) : (
-        <>Carregando...</>
+      {isLoadingMovies && <Loading />}
+      {highlightedMovie && featuredMovies && (
+        <MainPageContainer>
+          <Hero>
+            <HeroMediaCard
+              key={highlightedMovie?.id}
+              movie={highlightedMovie}
+            />
+          </Hero>
+          <AdjacentList>
+            {featuredMovies.map((movie) => (
+              <MediaCard key={movie.id} movie={movie} />
+            ))}
+          </AdjacentList>
+        </MainPageContainer>
       )}
     </MainContainer>
   );
