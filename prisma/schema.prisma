@@ -21,7 +21,8 @@ generator json {
 }
 
 generator zod {
-  provider = "zod-prisma-types"
+  provider          = "zod-prisma-types"
+  useTypeAssertions = true // TODO - Temporary solution due to unsolved issue with Zod
 }
 
 model User {
