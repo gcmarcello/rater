@@ -1,10 +1,11 @@
-import { Validation } from "../../decorators/Validation";
+import { Validation } from "../decorators/Validation";
 import { loginDto, LoginDto, SignupDto, signupDto } from "./dto";
-import prisma from "../../infrastructure/prisma";
+import prisma from "../infrastructure/prisma";
 import { type ParsedRequest } from "../../../types/ParsedRequest";
-import { compareData, hashData } from "../../utils/bcrypt";
+import { compareData, hashData } from "../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { Session } from "@/types/Session";
 
 export class AuthService {
   @Validation(signupDto)
@@ -40,9 +41,13 @@ export class AuthService {
         status: 401,
       };
     }
-    const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET!, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: existingUser.id, name: existingUser.name } as Session,
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "7d",
+      }
+    );
     cookies().set("token", token);
     return { token };
   }
