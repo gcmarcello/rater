@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import prisma from "../infrastructure/prisma";
 import { MovieFindManyArgsSchema } from "../../../../prisma/generated/zod";
 import { Validation } from "../decorators/Validation";
-import { type ParsedRequest } from "../../../types/ParsedRequest";
+import { type ParsedRequest } from "../../types/ParsedRequest";
 
 export class MovieService {
   @Validation(MovieFindManyArgsSchema, { validateSearchParams: true })
