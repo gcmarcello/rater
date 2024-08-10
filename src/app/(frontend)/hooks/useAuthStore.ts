@@ -1,6 +1,7 @@
 import { logout } from "@/app/api/auth/action";
 import { Session } from "@/app/types/Session";
 import dayjs from "dayjs";
+import toast from "react-hot-toast";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -33,7 +34,9 @@ export const useAuthStore = create<AuthStoreProps>()(
         try {
           await logout();
           set({ session: null });
+          toast.success("Deslogado com sucesso!");
         } catch (error) {
+          toast.error("Erro ao deslogar!");
           console.error(error);
         }
       },
