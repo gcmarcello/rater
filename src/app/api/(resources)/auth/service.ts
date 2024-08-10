@@ -1,7 +1,7 @@
 import { Validation } from "../../decorators/Validation";
 import { loginDto, LoginDto, SignupDto, signupDto } from "./dto";
 import prisma from "../../infrastructure/prisma";
-import { type ParsedRequest } from "../../../types/ParsedRequest";
+import { type ParsedRequest } from "../../../types/Request";
 import { compareData, hashData } from "../../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
