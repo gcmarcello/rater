@@ -26,7 +26,12 @@ const Card = styled.div<MediaCardProps>`
   width: 100%;
   height: 100%;
   border-radius: 24px;
+  cursor: pointer;
+  transition-duration: 0.3s;
 
+  &:hover {
+    transform: scale(1.005);
+  }
   @media screen and (max-width: 1024px) {
     max-height: 300px;
   }
@@ -114,7 +119,9 @@ export function HeroMediaCard({
                 width={20}
                 alt="highlighted icon"
               />
-              <>Em Destaque</>
+              <>
+                <Text variant="white">Em Destaque</Text>
+              </>
             </Indicator>
           )}
           <CardTitleText>{movie.title}</CardTitleText>
@@ -148,14 +155,11 @@ export function MediaCard({
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
 
-  const { genres } = useGlobalStore();
-
   if (movie)
     return (
       <Card image={movie.options?.image}>
         <CardInfo>
           <HeroCardTitleText>{movie.title}</HeroCardTitleText>
-          <Description>{movie.options?.description}</Description>
         </CardInfo>
       </Card>
     );
