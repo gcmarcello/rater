@@ -1,18 +1,15 @@
 "use client";
 import MainContainer from "@/app/(frontend)/components/Container";
-import Button from "@/app/(frontend)/components/Button";
-import Text from "./_shared/components/Text";
 import useSWR from "swr";
-import { map } from "zod";
 import { HeroMediaCard, MediaCard } from "./components/MediaCard";
 import Hero from "./components/Hero";
 import MainPageContainer from "./components/MainPageContainer";
 import { Genre, Movie } from "@prisma/client";
-import { useMemo } from "react";
 import styled from "styled-components";
-import { useGlobalStore } from "@/app/libs/zustand/useGlobalStore";
 import { fetcher } from "../libs/swr/fetcher";
 import { MovieWithGenres } from "../types/Movies";
+import { useGlobalStore } from "./hooks/useGlobalStore";
+import { useAuthStore } from "./hooks/useAuthStore";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -27,16 +24,21 @@ const AdjacentList = styled.div`
 
 export default function Home() {
   const {
+    genres,
     setGenres,
     handleHighlightedMovies,
     highlightedMovie,
     featuredMovies,
   } = useGlobalStore();
-  useSWR<Genre[]>("/api/genres", fetcher, {
+
+  useSWR<Genre[]>(genres ? "/api/genres" : null, fetcher, {
     onSuccess: (data) => setGenres(data),
   });
+
   const { isLoading: isLoadingMovies } = useSWR<MovieWithGenres[]>(
-    "/api/movies?take=4",
+    featuredMovies
+      ? "/api/movies?take=4&where={%22highlighted%22:true}&orderBy={%22rating%22:%22desc%22}"
+      : null,
     fetcher,
     {
       onSuccess: (data) => handleHighlightedMovies(data),
@@ -46,19 +48,22 @@ export default function Home() {
   return (
     <MainContainer>
       {!isLoadingMovies ? (
-        <MainPageContainer>
-          <Hero>
-            <HeroMediaCard
-              key={highlightedMovie?.id}
-              movie={highlightedMovie}
-            />
-          </Hero>
-          <AdjacentList>
-            {featuredMovies.map((movie) => (
-              <MediaCard key={movie.id} movie={movie} />
-            ))}
-          </AdjacentList>
-        </MainPageContainer>
+        highlightedMovie &&
+        featuredMovies && (
+          <MainPageContainer>
+            <Hero>
+              <HeroMediaCard
+                key={highlightedMovie?.id}
+                movie={highlightedMovie}
+              />
+            </Hero>
+            <AdjacentList>
+              {featuredMovies.map((movie) => (
+                <MediaCard key={movie.id} movie={movie} />
+              ))}
+            </AdjacentList>
+          </MainPageContainer>
+        )
       ) : (
         <>Carregando...</>
       )}
