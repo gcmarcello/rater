@@ -1,4 +1,4 @@
-import { SignupDto, signupDto } from "@/app/api/auth/dto";
+import { SignupDto, signupDto } from "@/app/api/(resources)/auth/dto";
 import styled from "styled-components";
 import Input from "../../_shared/form/components/Input";
 import Label from "../../_shared/form/components/Label";

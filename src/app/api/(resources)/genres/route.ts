@@ -1,4 +1,4 @@
-import { GenreService } from "@/app/api/genres/service";
+import { GenreService } from "@/app/api/(resources)/genres/service";
 import { ServerResponse } from "@/app/api/classes/ServerResponse";
 
 export async function GET() {

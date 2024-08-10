@@ -1,4 +1,4 @@
-import prisma from "../infrastructure/prisma";
+import prisma from "../../infrastructure/prisma";
 
 export class GenreService {
   static async getGenres() {

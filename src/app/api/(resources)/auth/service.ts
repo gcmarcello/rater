@@ -1,8 +1,8 @@
-import { Validation } from "../decorators/Validation";
+import { Validation } from "../../decorators/Validation";
 import { loginDto, LoginDto, SignupDto, signupDto } from "./dto";
-import prisma from "../infrastructure/prisma";
-import { type ParsedRequest } from "../../types/ParsedRequest";
-import { compareData, hashData } from "../utils/bcrypt";
+import prisma from "../../infrastructure/prisma";
+import { type ParsedRequest } from "../../../types/ParsedRequest";
+import { compareData, hashData } from "../../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Session } from "@/app/types/Session";

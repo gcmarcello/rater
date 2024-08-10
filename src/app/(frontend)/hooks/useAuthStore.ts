@@ -1,4 +1,4 @@
-import { logout } from "@/app/api/auth/action";
+import { logout } from "@/app/api/(resources)/auth/action";
 import { Session } from "@/app/types/Session";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
