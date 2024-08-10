@@ -2,12 +2,10 @@ import { logout } from "@/app/api/auth/action";
 import { Session } from "@/app/types/Session";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
-import { create } from "zustand";
+import { create, createStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 export type AuthStoreProps = {
-  isAuthModalOpen: boolean;
-  setIsAuthModalOpen: (isOpen: boolean) => void;
   session: Session | null;
   getSession: () => Session | null;
   login: (session: Session) => void;
@@ -17,8 +15,6 @@ export type AuthStoreProps = {
 export const useAuthStore = create<AuthStoreProps>()(
   persist(
     (set, get) => ({
-      isAuthModalOpen: false,
-      setIsAuthModalOpen: (isOpen: boolean) => set({ isAuthModalOpen: isOpen }),
       session: null,
       getSession: () => {
         const currentSession = get().session;
@@ -41,7 +37,12 @@ export const useAuthStore = create<AuthStoreProps>()(
         }
       },
     }),
+
     {
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(([key]) => !["foo"].includes(key))
+        ),
       name: "auth-storage",
       storage: createJSONStorage(() => sessionStorage),
     }

@@ -10,6 +10,7 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import useNextStore from "../hooks/useNextStore";
 import { Spinner } from "../_shared/components/Spinner";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { useGlobalStore } from "../hooks/useGlobalStore";
 
 const HeaderContainer = styled.div`
   width: 100dvw;
@@ -21,6 +22,8 @@ const HeaderContainer = styled.div`
 export default function Header() {
   const auth = useNextStore(useAuthStore, (state) => state);
 
+  const { isAuthModalOpen, setIsAuthModalOpen } = useGlobalStore();
+
   return (
     <HeaderContainer>
       <Image src="/Logo.png" width={128} height={36} alt="Logo" />
@@ -30,15 +33,12 @@ export default function Header() {
         ) : (
           <>
             <Button
-              onClick={() => auth.setIsAuthModalOpen(true)}
+              onClick={() => setIsAuthModalOpen(true)}
               variant="secondary"
             >
               <Text variant="white">Login</Text>
             </Button>
-            <Dialog
-              isOpen={auth.isAuthModalOpen}
-              setIsOpen={auth.setIsAuthModalOpen}
-            >
+            <Dialog isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen}>
               <LoginForm />
             </Dialog>
           </>

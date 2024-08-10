@@ -22,6 +22,9 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import { useStore } from "zustand";
 import { Session } from "@/app/types/Session";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
+import useNextStore from "../../hooks/useNextStore";
+import toast from "react-hot-toast";
+import { useGlobalStore } from "../../hooks/useGlobalStore";
 
 export default function LoginForm() {
   const { Field, ...form } = useForm({
@@ -29,10 +32,8 @@ export default function LoginForm() {
     mode: "onChange",
   });
 
-  const { setIsAuthModalOpen, login } = useStore(
-    useAuthStore,
-    (state) => state
-  );
+  const auth = useNextStore(useAuthStore, (state) => state);
+  const { isAuthModalOpen, setIsAuthModalOpen } = useGlobalStore();
 
   const { trigger, error } = useSWRMutation<
     Session,
@@ -46,8 +47,9 @@ export default function LoginForm() {
       handleFormError(error, form);
     },
     onSuccess: (data: Session) => {
-      login(data);
+      auth?.login(data);
       setIsAuthModalOpen(false);
+      toast.success("Logado com sucesso!");
     },
     throwOnError: false,
   });
