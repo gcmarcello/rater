@@ -48,7 +48,13 @@ export class AuthService {
         expiresIn: "7d",
       }
     );
-    cookies().set("token", token);
-    return { token };
+    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    cookies().set("token", token, {
+      secure: true,
+      sameSite: "strict",
+      httpOnly: true,
+      expires,
+    });
+    return { name: existingUser.name, exp: expires };
   }
 }
