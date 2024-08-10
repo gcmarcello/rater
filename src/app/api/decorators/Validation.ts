@@ -1,6 +1,5 @@
-import { NextResponse } from "next/server";
 import { ZodSchema } from "zod";
-import { ParsedRequest } from "../../types/ParsedRequest";
+import { ParsedRequest, ParsedRequestWithUser } from "../../types/Request";
 
 type ValidationOptions = {
   validateSearchParams?: boolean;
@@ -14,25 +13,26 @@ export function Validation<T>(
     target: any,
     propertyKey: string,
     descriptor: TypedPropertyDescriptor<
-      (request: ParsedRequest<T>) => Promise<any>
+      (request: ParsedRequestWithUser<T>) => Promise<any>
     >
   ) {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (request: ParsedRequest<T>) {
+      let newRequest = request as ParsedRequestWithUser<T>;
       if (options?.validateSearchParams && request.nextUrl.searchParams) {
         (request as any).parsedSearchParams = validateSearchParams(
           request,
           zodSchema
         );
-        return await originalMethod!.apply(this, [request]);
+        return await originalMethod!.apply(this, [newRequest]);
       }
 
       (request as any).parsedBody = await request.json();
 
       await validateBody(request.parsedBody, zodSchema);
 
-      return await originalMethod!.apply(this, [request]);
+      return await originalMethod!.apply(this, [newRequest]);
     };
 
     return descriptor;
