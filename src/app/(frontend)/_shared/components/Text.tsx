@@ -29,16 +29,8 @@ const DarkAnchor = styled.a<TextProps>`
 export default function Text(props: TextProps) {
   switch (props.variant) {
     case "white":
-      return props.href ? (
-        <WhiteAnchor {...props}>{props.children}</WhiteAnchor>
-      ) : (
-        <WhiteText>{props.children}</WhiteText>
-      );
+      return props.href ? <WhiteAnchor {...props} /> : <WhiteText {...props} />;
     case "dark":
-      return props.href ? (
-        <DarkAnchor {...props}>{props.children}</DarkAnchor>
-      ) : (
-        <DarkText>{props.children}</DarkText>
-      );
+      return props.href ? <DarkAnchor {...props} /> : <DarkText {...props} />;
   }
 }
