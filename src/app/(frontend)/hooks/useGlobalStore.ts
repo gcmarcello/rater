@@ -9,13 +9,9 @@ export type GlobalStoreProps = {
   featuredMovies: MovieWithGenres[];
   highlightedMovie: MovieWithGenres | null;
   handleHighlightedMovies: (movies: MovieWithGenres[]) => void;
-  isAuthModalOpen: boolean;
-  setIsAuthModalOpen: (isOpen: boolean) => void;
 };
 
 export const useGlobalStore = create<GlobalStoreProps>((set) => ({
-  isAuthModalOpen: false,
-  setIsAuthModalOpen: (isOpen: boolean) => set({ isAuthModalOpen: isOpen }),
   genres: [],
   setGenres: () => {},
   highlightedMovie: null,
