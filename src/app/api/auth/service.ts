@@ -12,7 +12,7 @@ export class AuthService {
   static async signup(request: ParsedRequest<SignupDto>) {
     const body = request.parsedBody;
     const existingEmail = await prisma.user.findUnique({
-      where: { email: body.email },
+      where: { email: body.email.toLocaleLowerCase() },
     });
     if (existingEmail) {
       throw { path: "email", message: "Email já existe.", status: 409 };
@@ -32,7 +32,7 @@ export class AuthService {
   static async login(request: ParsedRequest<LoginDto>) {
     const body = request.parsedBody;
     const existingUser = await prisma.user.findUnique({
-      where: { email: body.email },
+      where: { email: body.email.toLocaleLowerCase() },
     });
     if (!existingUser || !compareData(body.password, existingUser.password)) {
       throw {
