@@ -28,7 +28,10 @@ export function Validation<T>(
         return await originalMethod!.apply(this, [request]);
       }
 
-      (request as any).parsedBody = validateBody(request, zodSchema);
+      (request as any).parsedBody = await request.json();
+
+      await validateBody(request.parsedBody, zodSchema);
+
       return await originalMethod!.apply(this, [request]);
     };
 
@@ -47,20 +50,16 @@ function validateSearchParams<T>(
   });
   const validateParams = zodSchema.safeParse(parsedParams);
   if (!validateParams.success) {
-    throw { error: validateParams.error.issues };
+    throw validateParams.error.issues;
   }
   return validateParams.data;
 }
 
-async function validateBody<T>(
-  request: ParsedRequest<T>,
-  zodSchema: ZodSchema
-) {
-  const body = await request.json();
+export async function validateBody<T>(body: T, zodSchema: ZodSchema) {
   const parsedBody = zodSchema.safeParse(body);
 
   if (!parsedBody.success) {
-    throw { error: parsedBody.error.issues };
+    throw parsedBody.error.issues;
   }
 
   return parsedBody.data;
