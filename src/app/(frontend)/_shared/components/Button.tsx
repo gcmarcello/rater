@@ -2,16 +2,25 @@
 import React from "react";
 import styled from "styled-components";
 
-const BaselineButton = styled.div`
+const BaselineButton = styled.button`
   display: flex;
+  font-family: "Inter", sans-serif;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 8px 28px;
   gap: 8px;
   border-radius: 12px;
-  cursor: pointer;
+  font-size: 16px;
   font-weight: 600;
+  border: 0;
+  cursor: pointer;
+
+  :disabled {
+    opacity: 0.5;
+    font-size: 16px;
+    cursor: none;
+  }
 `;
 
 const PrimaryWhiteButton = styled(BaselineButton)`
@@ -21,7 +30,9 @@ const PrimaryWhiteButton = styled(BaselineButton)`
 const SecondaryButton = styled(BaselineButton)`
   background: #232323;
   &:hover {
-    background: #333333;
+    &:not(:disabled) {
+      background: #333333;
+    }
   }
 `;
 
@@ -29,7 +40,7 @@ const TertiaryButton = styled(BaselineButton)`
   background: rgba(255, 255, 255, 0.2);
 `;
 
-interface ButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "tertiary";
   children: React.ReactNode | string;
 }

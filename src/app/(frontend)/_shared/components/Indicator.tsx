@@ -10,7 +10,8 @@ const IndicatorComponent = styled.div`
   gap: 8px;
   border-radius: 12px;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 `;
 
 export default function Indicator({ children }: { children: React.ReactNode }) {
