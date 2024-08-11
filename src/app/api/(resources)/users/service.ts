@@ -19,10 +19,11 @@ export class UserService {
   @Authentication()
   @Validation(UserFindUniqueArgsSchema, { validateSearchParams: true })
   static async read(request: ParsedRequestWithUser<Prisma.UserFindUniqueArgs>) {
-    console.log(request.user, request.parsedBody);
-    return await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: request.user.id },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, realName: true },
     });
+
+    return user;
   }
 }
