@@ -19,15 +19,20 @@ const StyledInput = styled(HeadlessInput)<InputProps>`
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0 2px 0;
-  background-color: #232323;
+  background-color: #313131;
   border-radius: 12px;
   height: 48px;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
+  flex-grow: 1;
 
   border: ${(props) =>
     props.variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
+
+  &:disabled {
+    color: #585858;
+  }
 `;
 
 const HidePasswordButton = styled(EyeSlashIcon)`
@@ -54,6 +59,7 @@ const ShowPasswordButton = styled(EyeIcon)`
 
 const InputSpan = styled.span`
   position: relative;
+  flex-grow: 1;
 `;
 
 export default function Input({
