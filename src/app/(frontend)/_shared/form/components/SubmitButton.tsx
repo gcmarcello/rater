@@ -4,10 +4,6 @@ import { styled } from "styled-components";
 import { useFormContext } from "../context/form.ctx";
 
 const StyledSubmitButton = styled(Button)`
-  width: 100%;
-  padding: 16px auto;
-  max-width: 400px;
-
   @media screen and (min-width: 1024px) {
     width: auto;
   }
