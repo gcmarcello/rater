@@ -3,6 +3,7 @@ import { ServerResponse } from "../classes/ServerResponse";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Session } from "@/app/types/Session";
+import { UserService } from "../(resources)/users/service";
 
 export function Authentication<T>() {
   return function (
@@ -31,6 +32,7 @@ export function Authentication<T>() {
           token,
           process.env.JWT_SECRET!
         ) as Session;
+        await UserService.verifyActiveUser(decodedToken.id);
         newRequest.user = decodedToken;
       } catch (error) {
         throw {

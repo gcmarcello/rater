@@ -26,4 +26,10 @@ export class UserService {
 
     return user;
   }
+  static async verifyActiveUser(id: string) {
+    const potentialUser = await prisma.user.findUniqueOrThrow({
+      where: { id },
+    });
+    return z.string().email().parse(potentialUser.email);
+  }
 }
