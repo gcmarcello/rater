@@ -38,8 +38,6 @@ export const Details = styled.span`
 export const FormBody = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
   flex-grow: 1;
 `;
 
@@ -48,12 +46,8 @@ export const FormTitle = styled.h1`
   font-weight: 600;
   font-size: 24px;
   line-height: 38px;
-  text-align: center;
   color: #eeeeee;
   flex: none;
-  order: 0;
-  align-self: stretch;
-  flex-grow: 0;
 
   @media screen and (min-width: 1024px) {
     font-size: 32px;
@@ -62,10 +56,19 @@ export const FormTitle = styled.h1`
 
 export const Fieldset = styled.div`
   display: flex;
-  flex-grow: 1;
-  gap: 8px;
   flex-direction: column;
-  align-items: center;
+`;
+
+export const FieldGroup = styled.div`
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  margin: 4px 0;
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
 `;
 
 export function Form<Fields extends FieldValues>({
