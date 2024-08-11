@@ -16,8 +16,8 @@ const StyledField = styled(HeadlessFieldset)`
   flex-direction: column;
   gap: 4px;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  flex-grow: 1;
+  margin: 0;
   border: 0;
 `;
 
