@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   @Validation(loginDto)
-  static async login(request: ParsedRequest<LoginDto>) {
+  static async login(request: ParsedRequest<LoginDto>): Promise<Session> {
     const body = request.parsedBody;
     const existingUser = await prisma.user.findUnique({
       where: { email: body.email.toLocaleLowerCase() },
@@ -55,6 +55,6 @@ export class AuthService {
       httpOnly: true,
       expires,
     });
-    return { name: existingUser.name, exp: expires };
+    return { name: existingUser.name, exp: expires, id: existingUser.id };
   }
 }
