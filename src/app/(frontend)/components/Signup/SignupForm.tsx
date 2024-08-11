@@ -82,7 +82,11 @@ export default function SignupForm() {
         </Fieldset>
         <ErrorMessage />
         <DialogActions>
-          <SubmitButton type="submit" variant="secondary">
+          <SubmitButton
+            style={{ width: "100%" }}
+            type="submit"
+            variant="secondary"
+          >
             Cadastrar
           </SubmitButton>
           <Details>

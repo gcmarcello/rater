@@ -79,7 +79,11 @@ export default function LoginForm() {
           <ErrorMessage />
         </DialogBody>
         <DialogActions>
-          <SubmitButton type="submit" variant="secondary">
+          <SubmitButton
+            style={{ width: "100%" }}
+            type="submit"
+            variant="secondary"
+          >
             Fazer Login
           </SubmitButton>
           <Details>
