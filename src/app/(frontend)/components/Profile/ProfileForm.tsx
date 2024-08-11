@@ -25,9 +25,17 @@ import { Spinner } from "../../_shared/components/Spinner";
 import { Loading } from "../../_shared/components/Loading";
 import useSWRMutation from "swr/mutation";
 import toast from "react-hot-toast";
+import Alert, {
+  AlertActions,
+  AlertTitle,
+} from "../../_shared/components/Alert";
+import { useState } from "react";
+import { useGlobalStore } from "../../hooks/useGlobalStore";
+import { AccountRemovalModal } from "./AccountRemovalModal";
 
 export default function ProfileForm() {
   const auth = useNextStore(useAuthStore, (state) => state);
+  const { setIsAccountRemovalModalOpen } = useGlobalStore();
 
   const { isLoading } = useSWR<PublicUser, ErrorResponse, any>(
     auth?.getSession()?.id
@@ -70,6 +78,7 @@ export default function ProfileForm() {
 
   return (
     <>
+      <AccountRemovalModal />
       <DialogHeader style={{ alignItems: "start" }}>
         <FormTitle>Preferências da conta</FormTitle>
       </DialogHeader>
@@ -125,6 +134,7 @@ export default function ProfileForm() {
             excluídos. Esta ação é irreversível.
           </Description>
           <Button
+            onClick={() => setIsAccountRemovalModalOpen(true)}
             style={{
               padding: "16px 28px",
               marginRight: "auto",

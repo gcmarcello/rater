@@ -28,8 +28,8 @@ export const useAuthStore = create<AuthStoreProps>()(
       login: (session: Session) => set({ session }),
       logout: async () => {
         try {
-          await logout();
           set({ session: null });
+          await logout();
           toast.success("Deslogado com sucesso!");
         } catch (error) {
           toast.error("Erro ao deslogar!");
