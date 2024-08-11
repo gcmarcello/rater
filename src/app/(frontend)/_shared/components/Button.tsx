@@ -37,6 +37,7 @@ const PrimaryWhiteButton = styled(BaselineButton)`
 
 const SecondaryButton = styled(BaselineButton)`
   background: #232323;
+  color: #eeeeee;
   &:hover {
     &:not(:disabled) {
       background: #333333;
