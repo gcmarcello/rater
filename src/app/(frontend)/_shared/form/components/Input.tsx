@@ -60,6 +60,7 @@ const ShowPasswordButton = styled(EyeIcon)`
 const InputSpan = styled.span`
   position: relative;
   flex-grow: 1;
+  width: 100%;
 `;
 
 export default function Input({
@@ -78,7 +79,7 @@ export default function Input({
   InputProps) {
   const form = useFormContext();
   const [showPassword, setShowPassword] = useState(!(type === "password"));
-  const { name, error, isRequired } = useField();
+  const { name, error, isRequired, id } = useField();
 
   return (
     <InputSpan>
@@ -103,6 +104,7 @@ export default function Input({
               invalid={Boolean(error)}
               disabled={loading}
               value={value || ""}
+              id={id}
               type={
                 type === "password"
                   ? showPassword

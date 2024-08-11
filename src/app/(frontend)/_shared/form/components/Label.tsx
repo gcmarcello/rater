@@ -1,22 +1,28 @@
 import { styled } from "styled-components";
 import { useField } from "../hooks/useField";
-
-const StyledLabel = styled.div`
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 4px;
-`;
+import {
+  Label as HeadlessLabel,
+  LabelProps as HeadlessLabelProps,
+} from "@headlessui/react";
 
 const Asterisk = styled.span`
   color: rgba(225, 29, 72, 1);
 `;
 
-export default function Label({ children }: { children: React.ReactNode }) {
-  const { isRequired } = useField();
+export default function Label(
+  props: HeadlessLabelProps & { children: React.ReactNode }
+) {
+  const { isRequired, type, name, id } = useField();
+
+  const StyledLabel = styled(HeadlessLabel)`
+    color: white;
+    font-size: 14px;
+    font-weight: ${() => (type === "checkbox" ? "500" : "600")};
+  `;
+
   return (
-    <StyledLabel>
-      {children} {isRequired && <Asterisk>*</Asterisk>}
+    <StyledLabel htmlFor={id}>
+      {props.children} {isRequired && <Asterisk>*</Asterisk>}
     </StyledLabel>
   );
 }

@@ -6,24 +6,28 @@ import {
 } from "@headlessui/react";
 import styled from "styled-components";
 import { getEntryFromPath } from "@/app/(frontend)/_shared/form/functions/getEntryFromPath";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useId } from "react";
 import { getZodFields } from "@/app/libs/zod/getFieldsFromSchema";
 import { FieldContext } from "../hooks/useField";
 import { useFormContext } from "../context/form.ctx";
 
-const StyledField = styled(HeadlessFieldset)`
+export type FieldProps<Fields extends FieldValues> = FieldsetProps & {
+  name: Path<Fields>;
+  type?: "checkbox" | "radio" | "text" | "textarea" | "select";
+};
+
+const StyledField = styled(HeadlessField)<FieldProps<FieldValues>>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => (props.type === "checkbox" ? "row" : "column")};
+  align-items: ${(props) =>
+    props.type === "checkbox" ? "center" : "flex-start"};
   gap: 4px;
   width: 100%;
-  flex-grow: 1;
   margin: 0;
   border: 0;
 `;
 
-export type FieldProps<Fields extends FieldValues> = FieldsetProps & {
-  name: Path<Fields>;
-};
+const StyledCheckboxField = styled(HeadlessField)``;
 
 export function INTERNAL_Field<Fields extends FieldValues>({
   name,
@@ -47,11 +51,13 @@ export function INTERNAL_Field<Fields extends FieldValues>({
     name,
     error: error,
     isRequired,
+    type: props.type,
+    id: useId(),
   };
 
   return (
     <FieldContext.Provider value={fieldContextValue}>
-      <StyledField {...props} />
+      <StyledField name={name} {...props} />
     </FieldContext.Provider>
   );
 }
