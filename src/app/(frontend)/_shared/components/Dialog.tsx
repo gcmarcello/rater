@@ -87,7 +87,6 @@ export const DialogActions = styled.div`
 
   @media screen and (min-width: 1024px) {
     gap: 16px;
-    flex-direction: row;
     justify-content: end;
   }
 `;
