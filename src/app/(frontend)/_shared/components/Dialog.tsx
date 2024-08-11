@@ -12,6 +12,10 @@ import {
   slideInAnimation,
 } from "@/app/libs/styled-components/animations";
 
+type DialogProps = {
+  size?: "sm" | "md" | "lg";
+};
+
 export const DialogHeader = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,8 +43,10 @@ const DialogBackdrop = styled.div`
   }
 `;
 
-const StyledDialogPanel = styled(DialogPanel)`
-  width: 100dvw;
+const StyledDialogPanel = styled(DialogPanel)<DialogProps>`
+  min-width: 100dvw;
+  max-height: 100dvh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   min-height: 60vh;
@@ -51,21 +57,55 @@ const StyledDialogPanel = styled(DialogPanel)`
   animation: ${slideInAnimation} 0.5s linear;
 
   @media screen and (min-width: 1024px) {
+    overflow: hidden;
+    min-width: 24dvw;
+    width: ${(props) => {
+      switch (props.size) {
+        case "lg":
+          return "62dvw";
+        case "md":
+          return "50dvw";
+        case "sm":
+          return "24dvw";
+        default:
+          return "24dvw";
+      }
+    }};
     border-radius: 24px;
     border: 4px solid rgba(35, 35, 35, 1);
-    max-width: 32rem;
     animation: ${fadeInAnimation} 0.1s linear;
   }
+`;
+
+export const DialogActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+
+  @media screen and (min-width: 1024px) {
+    gap: 16px;
+    flex-direction: row;
+    justify-content: end;
+  }
+`;
+
+export const DialogBody = styled(DialogTitle)`
+  flex-grow: 1;
 `;
 
 export default function Dialog({
   isOpen,
   setIsOpen,
   children,
+  size = "sm",
 }: {
   isOpen: boolean;
   setIsOpen: Function;
   children: React.ReactNode;
+  size?: "sm" | "md" | "lg";
 }) {
   return (
     <>
@@ -75,7 +115,7 @@ export default function Dialog({
         className="relative z-50"
       >
         <DialogBackdrop>
-          <StyledDialogPanel>{children}</StyledDialogPanel>
+          <StyledDialogPanel size={size}>{children}</StyledDialogPanel>
         </DialogBackdrop>
       </_Dialog>
     </>
