@@ -4,7 +4,6 @@ import Text from "../_shared/components/Text";
 import { Genre, Movie, Show } from "@prisma/client";
 import Image from "next/image";
 import { minutesToHours } from "../utils/minutesToHours";
-import { useGlobalStore } from "@/app/libs/zustand/useGlobalStore";
 import { MovieWithGenres } from "@/app/types/Movies";
 import Indicator from "../_shared/components/Indicator";
 
