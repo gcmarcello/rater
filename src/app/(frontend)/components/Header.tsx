@@ -2,15 +2,12 @@
 import styled, { keyframes } from "styled-components";
 import Button from "../_shared/components/Button";
 import Dialog from "@/app/(frontend)/_shared/components/Dialog";
-import { useState } from "react";
-import LoginForm from "./Login/LoginForm";
 import Text from "../_shared/components/Text";
 import Image from "next/image";
 import { useAuthStore } from "../hooks/useAuthStore";
 import useNextStore from "../hooks/useNextStore";
 import { Spinner } from "../_shared/components/Spinner";
 import { ProfileDropdown } from "./ProfileDropdown";
-import { useGlobalStore } from "../hooks/useGlobalStore";
 import { useAuthModalStore } from "../hooks/useAuthModalStore";
 import AuthModal from "./AuthModal";
 import ProfileModal from "./ProfileModal";
