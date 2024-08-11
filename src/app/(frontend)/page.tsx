@@ -11,7 +11,7 @@ import { MovieWithGenres } from "../types/Movies";
 import { useGlobalStore } from "./hooks/useGlobalStore";
 import { useAuthStore } from "./hooks/useAuthStore";
 import { Spinner } from "./_shared/components/Spinner";
-import Loading from "./_shared/components/Loading";
+import { LoadingOverlay } from "./_shared/components/Loading";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <MainContainer>
-      {isLoadingMovies && <Loading />}
+      {isLoadingMovies && <LoadingOverlay />}
       {highlightedMovie && featuredMovies && (
         <MainPageContainer>
           <Hero>

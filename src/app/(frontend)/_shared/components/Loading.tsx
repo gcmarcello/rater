@@ -13,10 +13,28 @@ const StyledLoadingOverlay = styled.div`
   align-items: center;
   position: fixed;
 `;
-export default function Loading() {
+
+const StyledLoadingDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+`;
+
+export function LoadingOverlay() {
   return (
     <StyledLoadingOverlay>
       <Spinner size={150} />
     </StyledLoadingOverlay>
+  );
+}
+
+export function Loading() {
+  return (
+    <StyledLoadingDiv>
+      <Spinner size={80} />
+    </StyledLoadingDiv>
   );
 }
