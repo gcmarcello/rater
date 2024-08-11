@@ -1,6 +1,6 @@
 export type Session = {
-  id?: string;
+  id: string;
   name: string;
-  exp: number;
+  exp: Date;
   iat?: number;
 };
