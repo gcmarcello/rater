@@ -13,6 +13,7 @@ import { ProfileDropdown } from "./ProfileDropdown";
 import { useGlobalStore } from "../hooks/useGlobalStore";
 import { useAuthModalStore } from "../hooks/useAuthModalStore";
 import AuthModal from "./AuthModal";
+import ProfileModal from "./ProfileModal";
 
 const HeaderContainer = styled.div`
   width: 100dvw;
@@ -31,7 +32,10 @@ export default function Header() {
       <Image src="/Logo.png" width={128} height={36} alt="Logo" />
       {auth ? (
         auth.getSession() ? (
-          <ProfileDropdown userName={auth.getSession()?.name} />
+          <>
+            <ProfileDropdown userName={auth.getSession()?.name} />
+            <ProfileModal />
+          </>
         ) : (
           <>
             <Button
