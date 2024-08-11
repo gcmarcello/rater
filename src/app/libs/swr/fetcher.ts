@@ -16,14 +16,16 @@ export async function mutator<T>(url: string, { arg }: { arg: T }) {
   });
 }
 
-export const deleter = (url: string) =>
+export async function deleter<T>(url: string, { arg }: { arg: T }) {
   fetch(url, {
     method: "DELETE",
+    body: JSON.stringify(arg),
   }).then(async (r) => {
     const parsedResponse = await r.json();
     if (!r.ok) throw parsedResponse;
     return parsedResponse;
   });
+}
 
 export async function updater<T>(url: string, { arg }: { arg: T }) {
   return fetch(url, {
