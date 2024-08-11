@@ -13,7 +13,7 @@ import {
 import ErrorMessage from "../../_shared/form/components/ErrorMessage";
 import Text from "../../_shared/components/Text";
 import { SubmitButton } from "../../_shared/form/components/SubmitButton";
-import { DialogHeader } from "../../_shared/components/Dialog";
+import { DialogActions, DialogHeader } from "../../_shared/components/Dialog";
 import { useForm } from "../../_shared/form/hooks/useForm";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
@@ -80,14 +80,13 @@ export default function SignupForm() {
             <ErrorMessage />
           </Field>
         </Fieldset>
-        <Fieldset>
+        <ErrorMessage />
+        <DialogActions>
           <SubmitButton type="submit" variant="secondary">
-            Registrar
+            Cadastrar
           </SubmitButton>
-        </Fieldset>
-        <Fieldset>
           <Details>
-            Já possui uma conta?{" "}
+            Já tem uma conta ainda?{" "}
             <Text
               href="#"
               onClick={() => {
@@ -98,8 +97,7 @@ export default function SignupForm() {
               Clique Aqui.
             </Text>
           </Details>
-        </Fieldset>
-        <ErrorMessage />
+        </DialogActions>
       </Form>
     </>
   );

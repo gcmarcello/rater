@@ -7,19 +7,21 @@ import {
   Details,
   Fieldset,
   Form,
-  FormBody,
   FormTitle,
 } from "../../_shared/form/components/Form";
 import ErrorMessage from "../../_shared/form/components/ErrorMessage";
 import Text from "../../_shared/components/Text";
 import { SubmitButton } from "../../_shared/form/components/SubmitButton";
-import { DialogHeader } from "../../_shared/components/Dialog";
+import {
+  DialogActions,
+  DialogBody,
+  DialogHeader,
+} from "../../_shared/components/Dialog";
 import { useForm } from "../../_shared/form/hooks/useForm";
 import { mutator } from "@/app/libs/swr/fetcher";
 import useSWRMutation from "swr/mutation";
 import { handleFormError } from "../../_shared/form/functions/formErrors";
 import { useAuthStore } from "../../hooks/useAuthStore";
-import { useStore } from "zustand";
 import { Session } from "@/app/types/Session";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import useNextStore from "../../hooks/useNextStore";
@@ -60,26 +62,26 @@ export default function LoginForm() {
         <FormTitle>Acesse Sua Conta</FormTitle>
         <Description>Bem vindo de volta! Entre com seus dados.</Description>
       </DialogHeader>
-
       <Form hform={form} onSubmit={(data) => trigger(data)}>
-        <Fieldset>
-          <Field name="email">
-            <Label>Email</Label>
-            <Input placeholder="Digite seu email" />
-            <ErrorMessage />
-          </Field>
-          <Field name="password">
-            <Label>Senha</Label>
-            <Input placeholder="Digite sua senha" type="password" />
-            <ErrorMessage />
-          </Field>
-        </Fieldset>
-        <Fieldset>
+        <DialogBody>
+          <Fieldset>
+            <Field name="email">
+              <Label>Email</Label>
+              <Input placeholder="Digite seu email" />
+              <ErrorMessage />
+            </Field>
+            <Field name="password">
+              <Label>Senha</Label>
+              <Input placeholder="Digite sua senha" type="password" />
+              <ErrorMessage />
+            </Field>
+          </Fieldset>
+          <ErrorMessage />
+        </DialogBody>
+        <DialogActions>
           <SubmitButton type="submit" variant="secondary">
             Fazer Login
           </SubmitButton>
-        </Fieldset>
-        <Fieldset>
           <Details>
             Não tem uma conta ainda?{" "}
             <Text
@@ -92,8 +94,7 @@ export default function LoginForm() {
               Clique Aqui.
             </Text>
           </Details>
-        </Fieldset>
-        <ErrorMessage />
+        </DialogActions>
       </Form>
     </>
   );
