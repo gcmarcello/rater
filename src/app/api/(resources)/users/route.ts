@@ -22,3 +22,13 @@ export async function PUT(request: ParsedRequestWithUser<UpdateUserDto>) {
     return ServerResponse.err(error);
   }
 }
+
+export async function DELETE(request: ParsedRequestWithUser<any>) {
+  try {
+    const deleteUser = await UserService.delete(request);
+    return ServerResponse.json(deleteUser);
+  } catch (error) {
+    console.log(error);
+    return ServerResponse.err(error);
+  }
+}

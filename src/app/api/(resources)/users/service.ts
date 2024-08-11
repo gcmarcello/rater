@@ -1,10 +1,17 @@
 import { type ParsedRequestWithUser } from "@/app/types/Request";
-import { updateUserDto, UpdateUserDto } from "./dto";
+import {
+  deleteUserDto,
+  DeleteUserDto,
+  updateUserDto,
+  UpdateUserDto,
+} from "./dto";
 import { Authentication } from "../../decorators/Authentication";
 import { Validation } from "../../decorators/Validation";
 import prisma from "../../infrastructure/prisma";
 import { Prisma } from "@prisma/client";
 import { UserFindUniqueArgsSchema } from "../../../../../prisma/generated/zod";
+import { randomUUID } from "crypto";
+import { z } from "zod";
 
 export class UserService {
   @Authentication()
@@ -26,6 +33,27 @@ export class UserService {
 
     return user;
   }
+
+  @Authentication()
+  @Validation(deleteUserDto)
+  static async delete(request: ParsedRequestWithUser<DeleteUserDto>) {
+    if (!request.parsedBody.keepRatings) {
+      await prisma.review.deleteMany({
+        where: { userId: request.user.id },
+      });
+      await prisma.user.delete({
+        where: { id: request.user.id },
+      });
+      return { message: "User deleted successfully" };
+    }
+
+    await prisma.user.update({
+      where: { id: request.user.id },
+      data: { email: randomUUID(), name: "Anonymous User", realName: null },
+    });
+    return { message: "User anonymized successfully" };
+  }
+
   static async verifyActiveUser(id: string) {
     const potentialUser = await prisma.user.findUniqueOrThrow({
       where: { id },
