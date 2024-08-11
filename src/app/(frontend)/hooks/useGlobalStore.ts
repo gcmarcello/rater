@@ -9,6 +9,8 @@ export type GlobalStoreProps = {
   featuredMovies: MovieWithGenres[];
   highlightedMovie: MovieWithGenres | null;
   handleHighlightedMovies: (movies: MovieWithGenres[]) => void;
+  isProfileModalOpen: boolean;
+  setIsProfileModalOpen: (value: boolean) => void;
 };
 
 export const useGlobalStore = create<GlobalStoreProps>((set) => ({
@@ -22,4 +24,6 @@ export const useGlobalStore = create<GlobalStoreProps>((set) => ({
       featuredMovies: movies.splice(1, movies.length),
     });
   },
+  isProfileModalOpen: false,
+  setIsProfileModalOpen: (value) => set({ isProfileModalOpen: value }),
 }));

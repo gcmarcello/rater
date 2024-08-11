@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { HTMLProps } from "react";
 import useNextStore from "../hooks/useNextStore";
 import { useAuthStore } from "../hooks/useAuthStore";
+import { useGlobalStore } from "../hooks/useGlobalStore";
 
 const StyledDropdownOption = styled.div`
   cursor: pointer;
@@ -24,6 +25,7 @@ export function DropdownOption(props: HTMLProps<HTMLDivElement>) {
 
 export function ProfileDropdown({ userName }: { userName?: string }) {
   const auth = useNextStore(useAuthStore, (state) => state);
+  const { setIsProfileModalOpen } = useGlobalStore();
   return (
     <Dropdown>
       {(props) => (
@@ -37,7 +39,11 @@ export function ProfileDropdown({ userName }: { userName?: string }) {
             )}
           </DropdownButton>
           <DropdownItems anchor="bottom">
-            <DropdownItem>
+            <DropdownItem
+              div={{
+                onClick: () => setIsProfileModalOpen(true),
+              }}
+            >
               <UserIcon height={20} width={20} /> Perfil
             </DropdownItem>
             <DropdownItem div={{ onClick: () => auth?.logout() }}>
