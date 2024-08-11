@@ -6,6 +6,7 @@ import { compareData, hashData } from "../../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Session } from "@/app/types/Session";
+import dayjs from "dayjs";
 
 export class AuthService {
   @Validation(signupDto)
@@ -48,12 +49,11 @@ export class AuthService {
         expiresIn: "7d",
       }
     );
-    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    const expires = dayjs().add(7, "day").diff(0, "s");
     cookies().set("token", token, {
-      secure: true,
       sameSite: "strict",
       httpOnly: true,
-      expires,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     });
     return { name: existingUser.name, exp: expires, id: existingUser.id };
   }

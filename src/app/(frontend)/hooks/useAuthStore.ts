@@ -18,8 +18,8 @@ export const useAuthStore = create<AuthStoreProps>()(
       session: null,
       getSession: () => {
         const currentSession = get().session;
-        if (!currentSession) return null;
-        if (dayjs().isAfter(dayjs(currentSession.exp))) {
+        if (!currentSession?.exp) return null;
+        if (dayjs().isAfter(dayjs.unix(currentSession.exp * 1000))) {
           set({ session: null });
           return null;
         }

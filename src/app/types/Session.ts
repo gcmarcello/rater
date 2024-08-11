@@ -1,6 +1,6 @@
-export type Session = {
+import { JwtPayload } from "jsonwebtoken";
+
+export type Session = JwtPayload & {
   id: string;
   name: string;
-  exp: Date;
-  iat?: number;
 };
