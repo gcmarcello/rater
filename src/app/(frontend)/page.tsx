@@ -13,12 +13,26 @@ import { RatingAlert } from "./components/Rating/RatingAlert";
 import { Hero } from "./components/Hero";
 import Text from "./_shared/components/Text";
 import SectionTitle from "./_shared/components/Text/SectionTitle";
+import dayjs from "dayjs";
+import { Section } from "./components/Section";
+import { useScroll } from "./hooks/useScroll";
+import React from "react";
+import Carousel, {
+  CarouselItem,
+  CarouselScrollLeftButton,
+  CarouselScrollRightButton,
+} from "./_shared/components/Carousel";
 
 const AdjacentList = styled.div`
   display: flex;
   min-height: 284px;
-  gap: 6px;
+  gap: 12px;
   height: 100%;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @media screen and (min-width: 1024px) {
     flex-direction: column;
@@ -48,6 +62,8 @@ export default function Home() {
     setRatings,
   } = useGlobalStore();
 
+  const carouselRef = React.useRef<HTMLDivElement>(null);
+
   useFetch<Genre[]>("/api/genres", {
     onSuccess: (data) => setGenres(data),
     revalidateOnFocus: false,
@@ -59,15 +75,22 @@ export default function Home() {
   });
 
   const { isLoading: isLoadingMovies } = useFetch<MovieWithGenres[]>(
-    featuredMovies
-      ? "/api/movies?take=4&where={%22highlighted%22:true}&orderBy={%22rating%22:%22desc%22}"
-      : null,
+    "/api/movies?take=4&where={%22highlighted%22:true}&orderBy={%22rating%22:%22desc%22}",
     {
       onSuccess: (data) => handleHighlightedMovies(data),
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     }
   );
+
+  const { isLoading: isLoadingLatestMovies, data: latestReleases } = useFetch<
+    MovieWithGenres[]
+  >("/api/movies?take=8&orderBy={%22releaseDate%22:%22desc%22}", {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+
+  const { x, y, canX, canY } = useScroll({ elementRef: carouselRef });
 
   return (
     <MainContainer>
@@ -76,17 +99,48 @@ export default function Home() {
         <MainPageContainer>
           <Hero key={highlightedMovie?.id} movie={highlightedMovie} />
           <Sidebar>
-            <SectionTitle size={20} variant="white">
-              Destaques Também
+            <SectionTitle>
+              <Text variant="white" size={20}>
+                Destaques Também
+              </Text>
             </SectionTitle>
             <AdjacentList>
               {featuredMovies.map((movie) => (
-                <MediaCard key={movie.id} movie={movie} />
+                <MediaCard highlighted={true} key={movie.id} movie={movie} />
               ))}
             </AdjacentList>
           </Sidebar>
         </MainPageContainer>
       )}
+      <Section>
+        <SectionTitle>
+          <Text variant="white" size={20}>
+            Últimos Lançamentos
+          </Text>
+          <div>
+            <CarouselScrollLeftButton
+              onClick={() => x(-768)}
+              fill={canX(-768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+            <CarouselScrollRightButton
+              onClick={() => x(768)}
+              fill={canX(768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+          </div>
+        </SectionTitle>
+        <Carousel ref={carouselRef}>
+          {latestReleases?.map((movie) => (
+            <CarouselItem key={movie.id}>
+              <MediaCard movie={movie} />
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </Section>
+
       <RatingAlert />
     </MainContainer>
   );
