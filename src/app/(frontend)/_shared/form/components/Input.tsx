@@ -20,6 +20,7 @@ const StyledInput = styled(HeadlessInput)<InputProps>`
   padding: 12px 20px;
   margin: 8px 0 2px 0;
   background-color: #313131;
+  color: #eeeeee;
   border-radius: 12px;
   height: 48px;
   font-family: "Inter", sans-serif;

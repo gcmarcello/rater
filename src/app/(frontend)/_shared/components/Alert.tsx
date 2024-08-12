@@ -57,19 +57,6 @@ const StyledAlertPanel = styled(DialogPanel)<AlertProps>`
 
   @media screen and (min-width: 1024px) {
     overflow: hidden;
-    min-width: 30dvw;
-    width: ${(props) => {
-      switch (props.size) {
-        case "lg":
-          return "62dvw";
-        case "md":
-          return "50dvw";
-        case "sm":
-          return "24dvw";
-        default:
-          return "24dvw";
-      }
-    }};
     border-radius: 24px;
     border: 4px solid rgba(35, 35, 35, 1);
     animation: ${fadeInAnimation} 0.1s linear;

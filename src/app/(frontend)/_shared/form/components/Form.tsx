@@ -57,6 +57,11 @@ export const FormTitle = styled.h1`
 export const Fieldset = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0px;
+
+  @media screen and (min-width: 1024px) {
+    gap: 8px;
+  }
 `;
 
 export const FieldGroup = styled.div`

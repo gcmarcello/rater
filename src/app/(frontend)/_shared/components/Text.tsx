@@ -1,7 +1,7 @@
 import React, { AnchorHTMLAttributes } from "react";
 import styled from "styled-components";
 
-type TextProps = {
+export type TextProps = {
   size?: number;
   variant?: "white" | "dark";
   children: React.ReactNode;

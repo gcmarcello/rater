@@ -27,6 +27,7 @@ const StyledDropdownButton = styled(HeadlessMenuButton)`
   border: 0;
   cursor: pointer;
   background: #232323;
+  color: #eeeeee;
 
   &:hover {
     &:not(:disabled) {
@@ -43,6 +44,7 @@ const StyledDropdownItems = styled(HeadlessMenuItems)`
   flex-direction: column;
   gap: 8px;
   background: #232323;
+  color: #eeeeee;
   width: 158px;
   animation: ${fadeInAnimation} 0.2s linear;
 `;
