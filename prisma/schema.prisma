@@ -39,7 +39,7 @@ model User {
 }
 
 model Celebrity {
-  id             String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  id             Int       @id @default(autoincrement())
   name           String
   birthDate      DateTime?
   /// [CelebrityOptions]
@@ -57,7 +57,7 @@ model Celebrity {
 }
 
 model Movie {
-  id          String      @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  id          Int         @id @default(autoincrement())
   title       String
   releaseDate DateTime?
   rating      Float?
@@ -68,7 +68,7 @@ model Movie {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime?   @updatedAt
   director    Celebrity?  @relation(name: "Director", fields: [directorId], references: [id])
-  directorId  String?     @db.Uuid
+  directorId  Int?
   writers     Celebrity[] @relation(name: "Writers")
   starring    Celebrity[] @relation(name: "Starring")
   Review      Review[]
@@ -77,7 +77,7 @@ model Movie {
 }
 
 model Show {
-  id          String      @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  id          Int         @id @default(autoincrement())
   title       String
   releaseDate DateTime?
   rating      Float?
@@ -88,7 +88,7 @@ model Show {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime?   @updatedAt
   director    Celebrity?  @relation(name: "DirectorShow", fields: [directorId], references: [id])
-  directorId  String?     @db.Uuid
+  directorId  Int?
   writers     Celebrity[] @relation(name: "WritersShow")
   starring    Celebrity[] @relation(name: "StarringShow")
   Review      Review[]
@@ -97,15 +97,15 @@ model Show {
 }
 
 model Review {
-  id        String    @id @default(dbgenerated("extensions.uuid_generate_v4()")) @db.Uuid
+  id        Int       @id @default(autoincrement())
   rating    Float
   comment   String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   movie     Movie     @relation(fields: [movieId], references: [id])
-  movieId   String    @db.Uuid
+  movieId   Int
   show      Show      @relation(fields: [showId], references: [id])
-  showId    String    @db.Uuid
+  showId    Int
   user      User      @relation(fields: [userId], references: [id])
   userId    String    @db.Uuid
 
@@ -113,7 +113,7 @@ model Review {
 }
 
 model Genre {
-  id        Int       @id
+  id        Int       @id @default(autoincrement())
   name      String
   movies    Movie[]
   shows     Show[]
