@@ -16,4 +16,22 @@ export class MovieService {
     });
     return movies;
   }
+
+  static async updateMovieRating(id: number) {
+    const movie = await prisma.movie.findUnique({
+      where: { id },
+      include: { Rating: true },
+    });
+    if (!movie) {
+      throw new Error("Movie not found");
+    }
+    const newRatingAverage =
+      movie.Rating.reduce((acc, rating) => acc + rating.rating, 0) /
+      movie.Rating.length;
+
+    return await prisma.movie.update({
+      where: { id },
+      data: { rating: newRatingAverage },
+    });
+  }
 }
