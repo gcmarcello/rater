@@ -13,6 +13,7 @@ import { useAuthModalStore } from "../hooks/useAuthModalStore";
 
 export type MediaCardProps = {
   $image?: string;
+  $highlighted?: boolean;
 };
 
 const Card = styled.div<MediaCardProps>`
@@ -27,8 +28,7 @@ const Card = styled.div<MediaCardProps>`
   background-size: cover;
   background-repeat: no-repeat;
   min-width: 167px;
-  width: 100%;
-  height: 100%;
+  height: 254px;
   border-radius: 24px;
   cursor: pointer;
   transition-duration: 0.3s;
@@ -36,7 +36,9 @@ const Card = styled.div<MediaCardProps>`
   &:hover {
     transform: scale(1.005);
   }
-  @media screen and (max-width: 1024px) {
+  @media screen and (min-width: 1024px) {
+    width: ${(props) => (props.$highlighted ? "100%" : "380px")};
+    min-height: 250px;
     max-height: 300px;
   }
 `;
@@ -48,16 +50,6 @@ const HeroCardTitleText = styled.p`
 
   @media screen and (min-width: 1024px) {
     font-size: 24px;
-  }
-`;
-
-const CardTitleText = styled.p`
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-
-  @media screen and (min-width: 1024px) {
-    font-size: 40px;
   }
 `;
 
@@ -95,7 +87,9 @@ const CardInfo = styled.div`
 export function MediaCard({
   movie,
   show,
+  highlighted,
 }: {
+  highlighted?: boolean;
   movie?: MovieWithGenres | null;
   show?: Show | null;
 }) {
@@ -108,7 +102,7 @@ export function MediaCard({
 
   if (movie)
     return (
-      <Card $image={movie.options?.image}>
+      <Card $highlighted={highlighted} $image={movie.options?.image}>
         <CardInfo>
           <div style={{ display: "flex", gap: "12px" }}>
             <MediaCardStarIndicator
