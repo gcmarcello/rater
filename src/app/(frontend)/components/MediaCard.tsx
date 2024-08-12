@@ -6,9 +6,13 @@ import Image from "next/image";
 import { minutesToHours } from "../utils/minutesToHours";
 import { MovieWithGenres } from "@/app/types/Movies";
 import Indicator from "../_shared/components/Indicator";
+import { useGlobalStore } from "../hooks/useGlobalStore";
+import useNextStore from "../hooks/useNextStore";
+import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthModalStore } from "../hooks/useAuthModalStore";
 
-type MediaCardProps = {
-  image?: string;
+export type MediaCardProps = {
+  $image?: string;
 };
 
 const Card = styled.div<MediaCardProps>`
@@ -16,12 +20,13 @@ const Card = styled.div<MediaCardProps>`
   flex-direction: column;
   justify-content: end;
   background-image: ${(props) =>
-    props.image
-      ? `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${props.image});`
+    props.$image
+      ? `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url(${props.$image});`
       : "none"};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  min-width: 167px;
   width: 100%;
   height: 100%;
   border-radius: 24px;
@@ -33,46 +38,6 @@ const Card = styled.div<MediaCardProps>`
   }
   @media screen and (max-width: 1024px) {
     max-height: 300px;
-  }
-`;
-
-const CardInfo = styled.div`
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  gap: 12px;
-  padding: 24px;
-  max-width: 100%;
-`;
-
-const CardDetails = styled.div`
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(180, 180, 180, 1);
-  display: none;
-
-  @media screen and (min-width: 1024px) {
-    display: flex;
-    gap: 12px;
-  }
-`;
-
-const Description = styled.p`
-  color: rgba(180, 180, 180, 1);
-  font-size: 12px;
-  font-weight: 500;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  @media screen and (min-width: 1024px) {
-    font-size: 16px;
-    color: white;
-    max-width: 550px;
-    min-height: auto;
-    max-height: auto;
   }
 `;
 
@@ -96,53 +61,36 @@ const CardTitleText = styled.p`
   }
 `;
 
-export function HeroMediaCard({
-  movie,
-  show,
-}: {
-  movie?: MovieWithGenres | null;
-  show?: Show | null;
-}) {
-  if (!movie && !show) throw new Error("No movie or show provided");
-  if (movie && show) throw new Error("Both movie and show provided");
+const MediaCardStarIndicator = styled(Indicator)`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
 
-  if (movie)
-    return (
-      <Card image={movie.options?.image}>
-        <CardInfo>
-          {movie.highlighted && (
-            <Indicator>
-              <Image
-                src={"/flame.svg"}
-                height={20}
-                width={20}
-                alt="highlighted icon"
-              />
-              <>
-                <Text variant="white">Em Destaque</Text>
-              </>
-            </Indicator>
-          )}
-          <CardTitleText>{movie.title}</CardTitleText>
-          <CardDetails>
-            <Image src="/star.png" width={20} height={20} alt="Star" />
-            <div>{movie.rating?.toFixed(2)} |</div>
-            <div>
-              {movie.options?.duration &&
-                minutesToHours(movie.options?.duration)}{" "}
-              • {movie.releaseDate && new Date(movie.releaseDate).getFullYear()}{" "}
-              •{" "}
-              {movie.genres.length
-                ? movie.genres.map((g) => g.name).join(", ")
-                : ""}
-            </div>
-          </CardDetails>
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  &:active {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
 
-          <Description>{movie.options?.description}</Description>
-        </CardInfo>
-      </Card>
-    );
-}
+const CardInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  max-width: 100%;
+  height: 100%;
+`;
 
 export function MediaCard({
   movie,
@@ -151,13 +99,37 @@ export function MediaCard({
   movie?: MovieWithGenres | null;
   show?: Show | null;
 }) {
+  const auth = useNextStore(useAuthStore, (state) => state);
+  const { setIsAuthModalOpen } = useAuthModalStore();
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
 
+  const { setToBeRatedMovie } = useGlobalStore();
+
   if (movie)
     return (
-      <Card image={movie.options?.image}>
+      <Card $image={movie.options?.image}>
         <CardInfo>
+          <div style={{ display: "flex", gap: "12px" }}>
+            <MediaCardStarIndicator
+              onClick={() =>
+                auth?.getSession()
+                  ? setToBeRatedMovie(movie)
+                  : setIsAuthModalOpen(true)
+              }
+            >
+              <Image
+                src={"/star.svg"}
+                height={20}
+                width={20}
+                alt="highlighted icon"
+              />
+            </MediaCardStarIndicator>
+            <MediaCardStarIndicator>
+              <Image src="/star.png" width={20} height={20} alt="Star" />
+              <div>{movie.rating?.toFixed(2)}</div>
+            </MediaCardStarIndicator>
+          </div>
           <HeroCardTitleText>{movie.title}</HeroCardTitleText>
         </CardInfo>
       </Card>
