@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledCarousel = styled.div`
-  display: grid;
+  display: flex;
   grid-auto-flow: column;
   grid-auto-columns: min-content;
   gap: 12px;
@@ -15,6 +15,7 @@ const StyledCarousel = styled.div`
   }
 
   @media screen and (min-width: 1024px) {
+    display: grid;
     overflow-x: hidden;
   }
 `;
