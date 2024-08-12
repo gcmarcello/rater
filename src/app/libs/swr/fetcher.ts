@@ -1,5 +1,6 @@
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import useSWR, { SWRConfiguration } from "swr";
+import useSWRImmutable from "swr/immutable";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
 async function handleResponse(r: Response) {
@@ -60,7 +61,7 @@ export const useFetch = <T>(
     throwOnError?: false;
   }
 ) => {
-  return useSWR<T, ErrorResponse>(url, get, {
+  return useSWRImmutable<T, ErrorResponse>(url, get, {
     throwOnError: false,
     ...options,
   });
