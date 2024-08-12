@@ -64,7 +64,7 @@ export const MovieScalarFieldEnumSchema = z.enum(['id','title','releaseDate','ra
 
 export const ShowScalarFieldEnumSchema = z.enum(['id','title','releaseDate','rating','highlighted','options','createdAt','updatedAt','directorId']);
 
-export const ReviewScalarFieldEnumSchema = z.enum(['id','rating','comment','createdAt','updatedAt','movieId','showId','userId']);
+export const RatingScalarFieldEnumSchema = z.enum(['id','rating','comment','createdAt','updatedAt','movieId','showId','userId']);
 
 export const GenreScalarFieldEnumSchema = z.enum(['id','name','createdAt','updatedAt']);
 
@@ -158,21 +158,21 @@ export const ShowSchema = z.object({
 export type Show = z.infer<typeof ShowSchema>
 
 /////////////////////////////////////////
-// REVIEW SCHEMA
+// RATING SCHEMA
 /////////////////////////////////////////
 
-export const ReviewSchema = z.object({
+export const RatingSchema = z.object({
   id: z.number().int(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date().nullable(),
-  movieId: z.number().int(),
-  showId: z.number().int(),
+  movieId: z.number().int().nullable(),
+  showId: z.number().int().nullable(),
   userId: z.string(),
 })
 
-export type Review = z.infer<typeof ReviewSchema>
+export type Rating = z.infer<typeof RatingSchema>
 
 /////////////////////////////////////////
 // GENRE SCHEMA
@@ -195,7 +195,7 @@ export type Genre = z.infer<typeof GenreSchema>
 //------------------------------------------------------
 
 export const UserIncludeSchema: z.ZodType<Prisma.UserInclude> = z.object({
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => UserCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -209,7 +209,7 @@ export const UserCountOutputTypeArgsSchema: z.ZodType<Prisma.UserCountOutputType
 }).strict();
 
 export const UserCountOutputTypeSelectSchema: z.ZodType<Prisma.UserCountOutputTypeSelect> = z.object({
-  Review: z.boolean().optional(),
+  Rating: z.boolean().optional(),
 }).strict();
 
 export const UserSelectSchema: z.ZodType<Prisma.UserSelect> = z.object({
@@ -220,7 +220,7 @@ export const UserSelectSchema: z.ZodType<Prisma.UserSelect> = z.object({
   password: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => UserCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -279,7 +279,7 @@ export const MovieIncludeSchema: z.ZodType<Prisma.MovieInclude> = z.object({
   director: z.union([z.boolean(),z.lazy(() => CelebrityArgsSchema)]).optional(),
   writers: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
   starring: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => MovieCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -296,7 +296,7 @@ export const MovieCountOutputTypeSelectSchema: z.ZodType<Prisma.MovieCountOutput
   genres: z.boolean().optional(),
   writers: z.boolean().optional(),
   starring: z.boolean().optional(),
-  Review: z.boolean().optional(),
+  Rating: z.boolean().optional(),
 }).strict();
 
 export const MovieSelectSchema: z.ZodType<Prisma.MovieSelect> = z.object({
@@ -313,7 +313,7 @@ export const MovieSelectSchema: z.ZodType<Prisma.MovieSelect> = z.object({
   director: z.union([z.boolean(),z.lazy(() => CelebrityArgsSchema)]).optional(),
   writers: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
   starring: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => MovieCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -325,7 +325,7 @@ export const ShowIncludeSchema: z.ZodType<Prisma.ShowInclude> = z.object({
   director: z.union([z.boolean(),z.lazy(() => CelebrityArgsSchema)]).optional(),
   writers: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
   starring: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => ShowCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -342,7 +342,7 @@ export const ShowCountOutputTypeSelectSchema: z.ZodType<Prisma.ShowCountOutputTy
   genres: z.boolean().optional(),
   writers: z.boolean().optional(),
   starring: z.boolean().optional(),
-  Review: z.boolean().optional(),
+  Rating: z.boolean().optional(),
 }).strict();
 
 export const ShowSelectSchema: z.ZodType<Prisma.ShowSelect> = z.object({
@@ -359,25 +359,25 @@ export const ShowSelectSchema: z.ZodType<Prisma.ShowSelect> = z.object({
   director: z.union([z.boolean(),z.lazy(() => CelebrityArgsSchema)]).optional(),
   writers: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
   starring: z.union([z.boolean(),z.lazy(() => CelebrityFindManyArgsSchema)]).optional(),
-  Review: z.union([z.boolean(),z.lazy(() => ReviewFindManyArgsSchema)]).optional(),
+  Rating: z.union([z.boolean(),z.lazy(() => RatingFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => ShowCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
-// REVIEW
+// RATING
 //------------------------------------------------------
 
-export const ReviewIncludeSchema: z.ZodType<Prisma.ReviewInclude> = z.object({
+export const RatingIncludeSchema: z.ZodType<Prisma.RatingInclude> = z.object({
   movie: z.union([z.boolean(),z.lazy(() => MovieArgsSchema)]).optional(),
   show: z.union([z.boolean(),z.lazy(() => ShowArgsSchema)]).optional(),
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
 }).strict()
 
-export const ReviewArgsSchema: z.ZodType<Prisma.ReviewDefaultArgs> = z.object({
-  select: z.lazy(() => ReviewSelectSchema).optional(),
-  include: z.lazy(() => ReviewIncludeSchema).optional(),
+export const RatingArgsSchema: z.ZodType<Prisma.RatingDefaultArgs> = z.object({
+  select: z.lazy(() => RatingSelectSchema).optional(),
+  include: z.lazy(() => RatingIncludeSchema).optional(),
 }).strict();
 
-export const ReviewSelectSchema: z.ZodType<Prisma.ReviewSelect> = z.object({
+export const RatingSelectSchema: z.ZodType<Prisma.RatingSelect> = z.object({
   id: z.boolean().optional(),
   rating: z.boolean().optional(),
   comment: z.boolean().optional(),
@@ -440,7 +440,7 @@ export const UserWhereInputSchema: z.ZodType<Prisma.UserWhereInput> = z.object({
   password: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict() as z.ZodType<Prisma.UserWhereInput>;
 
 export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z.object({
@@ -451,7 +451,7 @@ export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWit
   password: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Review: z.lazy(() => ReviewOrderByRelationAggregateInputSchema).optional()
+  Rating: z.lazy(() => RatingOrderByRelationAggregateInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserOrderByWithRelationInput>;
 
 export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> = z.union([
@@ -477,7 +477,7 @@ export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> 
   password: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict()) as z.ZodType<Prisma.UserWhereUniqueInput>;
 
 export const UserOrderByWithAggregationInputSchema: z.ZodType<Prisma.UserOrderByWithAggregationInput> = z.object({
@@ -603,7 +603,7 @@ export const MovieWhereInputSchema: z.ZodType<Prisma.MovieWhereInput> = z.object
   director: z.union([ z.lazy(() => CelebrityNullableRelationFilterSchema),z.lazy(() => CelebrityWhereInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
   starring: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieWhereInput>;
 
 export const MovieOrderByWithRelationInputSchema: z.ZodType<Prisma.MovieOrderByWithRelationInput> = z.object({
@@ -620,7 +620,7 @@ export const MovieOrderByWithRelationInputSchema: z.ZodType<Prisma.MovieOrderByW
   director: z.lazy(() => CelebrityOrderByWithRelationInputSchema).optional(),
   writers: z.lazy(() => CelebrityOrderByRelationAggregateInputSchema).optional(),
   starring: z.lazy(() => CelebrityOrderByRelationAggregateInputSchema).optional(),
-  Review: z.lazy(() => ReviewOrderByRelationAggregateInputSchema).optional()
+  Rating: z.lazy(() => RatingOrderByRelationAggregateInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieOrderByWithRelationInput>;
 
 export const MovieWhereUniqueInputSchema: z.ZodType<Prisma.MovieWhereUniqueInput> = z.object({
@@ -643,7 +643,7 @@ export const MovieWhereUniqueInputSchema: z.ZodType<Prisma.MovieWhereUniqueInput
   director: z.union([ z.lazy(() => CelebrityNullableRelationFilterSchema),z.lazy(() => CelebrityWhereInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
   starring: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict()) as z.ZodType<Prisma.MovieWhereUniqueInput>;
 
 export const MovieOrderByWithAggregationInputSchema: z.ZodType<Prisma.MovieOrderByWithAggregationInput> = z.object({
@@ -695,7 +695,7 @@ export const ShowWhereInputSchema: z.ZodType<Prisma.ShowWhereInput> = z.object({
   director: z.union([ z.lazy(() => CelebrityNullableRelationFilterSchema),z.lazy(() => CelebrityWhereInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
   starring: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowWhereInput>;
 
 export const ShowOrderByWithRelationInputSchema: z.ZodType<Prisma.ShowOrderByWithRelationInput> = z.object({
@@ -712,7 +712,7 @@ export const ShowOrderByWithRelationInputSchema: z.ZodType<Prisma.ShowOrderByWit
   director: z.lazy(() => CelebrityOrderByWithRelationInputSchema).optional(),
   writers: z.lazy(() => CelebrityOrderByRelationAggregateInputSchema).optional(),
   starring: z.lazy(() => CelebrityOrderByRelationAggregateInputSchema).optional(),
-  Review: z.lazy(() => ReviewOrderByRelationAggregateInputSchema).optional()
+  Rating: z.lazy(() => RatingOrderByRelationAggregateInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowOrderByWithRelationInput>;
 
 export const ShowWhereUniqueInputSchema: z.ZodType<Prisma.ShowWhereUniqueInput> = z.object({
@@ -735,7 +735,7 @@ export const ShowWhereUniqueInputSchema: z.ZodType<Prisma.ShowWhereUniqueInput> 
   director: z.union([ z.lazy(() => CelebrityNullableRelationFilterSchema),z.lazy(() => CelebrityWhereInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
   starring: z.lazy(() => CelebrityListRelationFilterSchema).optional(),
-  Review: z.lazy(() => ReviewListRelationFilterSchema).optional()
+  Rating: z.lazy(() => RatingListRelationFilterSchema).optional()
 }).strict()) as z.ZodType<Prisma.ShowWhereUniqueInput>;
 
 export const ShowOrderByWithAggregationInputSchema: z.ZodType<Prisma.ShowOrderByWithAggregationInput> = z.object({
@@ -770,86 +770,113 @@ export const ShowScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ShowScal
   directorId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.ShowScalarWhereWithAggregatesInput>;
 
-export const ReviewWhereInputSchema: z.ZodType<Prisma.ReviewWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => ReviewWhereInputSchema),z.lazy(() => ReviewWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => ReviewWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => ReviewWhereInputSchema),z.lazy(() => ReviewWhereInputSchema).array() ]).optional(),
+export const RatingWhereInputSchema: z.ZodType<Prisma.RatingWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => RatingWhereInputSchema),z.lazy(() => RatingWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => RatingWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => RatingWhereInputSchema),z.lazy(() => RatingWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   rating: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
-  comment: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  comment: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  movieId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  showId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  movieId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  showId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   userId: z.union([ z.lazy(() => UuidFilterSchema),z.string() ]).optional(),
-  movie: z.union([ z.lazy(() => MovieRelationFilterSchema),z.lazy(() => MovieWhereInputSchema) ]).optional(),
-  show: z.union([ z.lazy(() => ShowRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional(),
+  movie: z.union([ z.lazy(() => MovieNullableRelationFilterSchema),z.lazy(() => MovieWhereInputSchema) ]).optional().nullable(),
+  show: z.union([ z.lazy(() => ShowNullableRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional().nullable(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewWhereInput>;
+}).strict() as z.ZodType<Prisma.RatingWhereInput>;
 
-export const ReviewOrderByWithRelationInputSchema: z.ZodType<Prisma.ReviewOrderByWithRelationInput> = z.object({
+export const RatingOrderByWithRelationInputSchema: z.ZodType<Prisma.RatingOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
-  comment: z.lazy(() => SortOrderSchema).optional(),
+  comment: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  movieId: z.lazy(() => SortOrderSchema).optional(),
-  showId: z.lazy(() => SortOrderSchema).optional(),
+  movieId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  showId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
   movie: z.lazy(() => MovieOrderByWithRelationInputSchema).optional(),
   show: z.lazy(() => ShowOrderByWithRelationInputSchema).optional(),
   user: z.lazy(() => UserOrderByWithRelationInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewOrderByWithRelationInput>;
+}).strict() as z.ZodType<Prisma.RatingOrderByWithRelationInput>;
 
-export const ReviewWhereUniqueInputSchema: z.ZodType<Prisma.ReviewWhereUniqueInput> = z.object({
-  id: z.number().int()
-})
+export const RatingWhereUniqueInputSchema: z.ZodType<Prisma.RatingWhereUniqueInput> = z.union([
+  z.object({
+    id: z.number().int(),
+    userId_showId: z.lazy(() => RatingUserIdShowIdCompoundUniqueInputSchema),
+    userId_movieId: z.lazy(() => RatingUserIdMovieIdCompoundUniqueInputSchema)
+  }),
+  z.object({
+    id: z.number().int(),
+    userId_showId: z.lazy(() => RatingUserIdShowIdCompoundUniqueInputSchema),
+  }),
+  z.object({
+    id: z.number().int(),
+    userId_movieId: z.lazy(() => RatingUserIdMovieIdCompoundUniqueInputSchema),
+  }),
+  z.object({
+    id: z.number().int(),
+  }),
+  z.object({
+    userId_showId: z.lazy(() => RatingUserIdShowIdCompoundUniqueInputSchema),
+    userId_movieId: z.lazy(() => RatingUserIdMovieIdCompoundUniqueInputSchema),
+  }),
+  z.object({
+    userId_showId: z.lazy(() => RatingUserIdShowIdCompoundUniqueInputSchema),
+  }),
+  z.object({
+    userId_movieId: z.lazy(() => RatingUserIdMovieIdCompoundUniqueInputSchema),
+  }),
+])
 .and(z.object({
   id: z.number().int().optional(),
-  AND: z.union([ z.lazy(() => ReviewWhereInputSchema),z.lazy(() => ReviewWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => ReviewWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => ReviewWhereInputSchema),z.lazy(() => ReviewWhereInputSchema).array() ]).optional(),
+  userId_showId: z.lazy(() => RatingUserIdShowIdCompoundUniqueInputSchema).optional(),
+  userId_movieId: z.lazy(() => RatingUserIdMovieIdCompoundUniqueInputSchema).optional(),
+  AND: z.union([ z.lazy(() => RatingWhereInputSchema),z.lazy(() => RatingWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => RatingWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => RatingWhereInputSchema),z.lazy(() => RatingWhereInputSchema).array() ]).optional(),
   rating: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
-  comment: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  comment: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  movieId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
-  showId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
+  movieId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number().int() ]).optional().nullable(),
+  showId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number().int() ]).optional().nullable(),
   userId: z.union([ z.lazy(() => UuidFilterSchema),z.string() ]).optional(),
-  movie: z.union([ z.lazy(() => MovieRelationFilterSchema),z.lazy(() => MovieWhereInputSchema) ]).optional(),
-  show: z.union([ z.lazy(() => ShowRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional(),
+  movie: z.union([ z.lazy(() => MovieNullableRelationFilterSchema),z.lazy(() => MovieWhereInputSchema) ]).optional().nullable(),
+  show: z.union([ z.lazy(() => ShowNullableRelationFilterSchema),z.lazy(() => ShowWhereInputSchema) ]).optional().nullable(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
-}).strict()) as z.ZodType<Prisma.ReviewWhereUniqueInput>;
+}).strict()) as z.ZodType<Prisma.RatingWhereUniqueInput>;
 
-export const ReviewOrderByWithAggregationInputSchema: z.ZodType<Prisma.ReviewOrderByWithAggregationInput> = z.object({
+export const RatingOrderByWithAggregationInputSchema: z.ZodType<Prisma.RatingOrderByWithAggregationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
-  comment: z.lazy(() => SortOrderSchema).optional(),
+  comment: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  movieId: z.lazy(() => SortOrderSchema).optional(),
-  showId: z.lazy(() => SortOrderSchema).optional(),
+  movieId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  showId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
-  _count: z.lazy(() => ReviewCountOrderByAggregateInputSchema).optional(),
-  _avg: z.lazy(() => ReviewAvgOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => ReviewMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => ReviewMinOrderByAggregateInputSchema).optional(),
-  _sum: z.lazy(() => ReviewSumOrderByAggregateInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewOrderByWithAggregationInput>;
+  _count: z.lazy(() => RatingCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => RatingAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => RatingMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => RatingMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => RatingSumOrderByAggregateInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingOrderByWithAggregationInput>;
 
-export const ReviewScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ReviewScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => ReviewScalarWhereWithAggregatesInputSchema),z.lazy(() => ReviewScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  OR: z.lazy(() => ReviewScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => ReviewScalarWhereWithAggregatesInputSchema),z.lazy(() => ReviewScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+export const RatingScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.RatingScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => RatingScalarWhereWithAggregatesInputSchema),z.lazy(() => RatingScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => RatingScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => RatingScalarWhereWithAggregatesInputSchema),z.lazy(() => RatingScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   rating: z.union([ z.lazy(() => FloatWithAggregatesFilterSchema),z.number() ]).optional(),
-  comment: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  comment: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
-  movieId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
-  showId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  movieId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  showId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
   userId: z.union([ z.lazy(() => UuidWithAggregatesFilterSchema),z.string() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewScalarWhereWithAggregatesInput>;
+}).strict() as z.ZodType<Prisma.RatingScalarWhereWithAggregatesInput>;
 
 export const GenreWhereInputSchema: z.ZodType<Prisma.GenreWhereInput> = z.object({
   AND: z.union([ z.lazy(() => GenreWhereInputSchema),z.lazy(() => GenreWhereInputSchema).array() ]).optional(),
@@ -917,7 +944,7 @@ export const UserCreateInputSchema: z.ZodType<Prisma.UserCreateInput> = z.object
   password: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutUserInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutUserInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserCreateInput>;
 
 export const UserUncheckedCreateInputSchema: z.ZodType<Prisma.UserUncheckedCreateInput> = z.object({
@@ -928,7 +955,7 @@ export const UserUncheckedCreateInputSchema: z.ZodType<Prisma.UserUncheckedCreat
   password: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutUserInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutUserInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserUncheckedCreateInput>;
 
 export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z.object({
@@ -939,7 +966,7 @@ export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z.object
   password: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutUserNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutUserNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserUpdateInput>;
 
 export const UserUncheckedUpdateInputSchema: z.ZodType<Prisma.UserUncheckedUpdateInput> = z.object({
@@ -950,7 +977,7 @@ export const UserUncheckedUpdateInputSchema: z.ZodType<Prisma.UserUncheckedUpdat
   password: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutUserNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutUserNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserUncheckedUpdateInput>;
 
 export const UserCreateManyInputSchema: z.ZodType<Prisma.UserCreateManyInput> = z.object({
@@ -1079,7 +1106,7 @@ export const MovieCreateInputSchema: z.ZodType<Prisma.MovieCreateInput> = z.obje
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieCreateInput>;
 
 export const MovieUncheckedCreateInputSchema: z.ZodType<Prisma.MovieUncheckedCreateInput> = z.object({
@@ -1095,7 +1122,7 @@ export const MovieUncheckedCreateInputSchema: z.ZodType<Prisma.MovieUncheckedCre
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedCreateInput>;
 
 export const MovieUpdateInputSchema: z.ZodType<Prisma.MovieUpdateInput> = z.object({
@@ -1110,7 +1137,7 @@ export const MovieUpdateInputSchema: z.ZodType<Prisma.MovieUpdateInput> = z.obje
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUpdateInput>;
 
 export const MovieUncheckedUpdateInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateInput> = z.object({
@@ -1126,7 +1153,7 @@ export const MovieUncheckedUpdateInputSchema: z.ZodType<Prisma.MovieUncheckedUpd
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedUpdateInput>;
 
 export const MovieCreateManyInputSchema: z.ZodType<Prisma.MovieCreateManyInput> = z.object({
@@ -1175,7 +1202,7 @@ export const ShowCreateInputSchema: z.ZodType<Prisma.ShowCreateInput> = z.object
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowCreateInput>;
 
 export const ShowUncheckedCreateInputSchema: z.ZodType<Prisma.ShowUncheckedCreateInput> = z.object({
@@ -1191,7 +1218,7 @@ export const ShowUncheckedCreateInputSchema: z.ZodType<Prisma.ShowUncheckedCreat
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedCreateInput>;
 
 export const ShowUpdateInputSchema: z.ZodType<Prisma.ShowUpdateInput> = z.object({
@@ -1206,7 +1233,7 @@ export const ShowUpdateInputSchema: z.ZodType<Prisma.ShowUpdateInput> = z.object
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUpdateInput>;
 
 export const ShowUncheckedUpdateInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateInput> = z.object({
@@ -1222,7 +1249,7 @@ export const ShowUncheckedUpdateInputSchema: z.ZodType<Prisma.ShowUncheckedUpdat
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateInput>;
 
 export const ShowCreateManyInputSchema: z.ZodType<Prisma.ShowCreateManyInput> = z.object({
@@ -1259,76 +1286,76 @@ export const ShowUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ShowUncheckedU
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateManyInput>;
 
-export const ReviewCreateInputSchema: z.ZodType<Prisma.ReviewCreateInput> = z.object({
+export const RatingCreateInputSchema: z.ZodType<Prisma.RatingCreateInput> = z.object({
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movie: z.lazy(() => MovieCreateNestedOneWithoutReviewInputSchema),
-  show: z.lazy(() => ShowCreateNestedOneWithoutReviewInputSchema),
-  user: z.lazy(() => UserCreateNestedOneWithoutReviewInputSchema)
-}).strict() as z.ZodType<Prisma.ReviewCreateInput>;
+  movie: z.lazy(() => MovieCreateNestedOneWithoutRatingInputSchema).optional(),
+  show: z.lazy(() => ShowCreateNestedOneWithoutRatingInputSchema).optional(),
+  user: z.lazy(() => UserCreateNestedOneWithoutRatingInputSchema)
+}).strict() as z.ZodType<Prisma.RatingCreateInput>;
 
-export const ReviewUncheckedCreateInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateInput> = z.object({
+export const RatingUncheckedCreateInputSchema: z.ZodType<Prisma.RatingUncheckedCreateInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
-  showId: z.number().int(),
+  movieId: z.number().int().optional().nullable(),
+  showId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateInput>;
 
-export const ReviewUpdateInputSchema: z.ZodType<Prisma.ReviewUpdateInput> = z.object({
+export const RatingUpdateInputSchema: z.ZodType<Prisma.RatingUpdateInput> = z.object({
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movie: z.lazy(() => MovieUpdateOneRequiredWithoutReviewNestedInputSchema).optional(),
-  show: z.lazy(() => ShowUpdateOneRequiredWithoutReviewNestedInputSchema).optional(),
-  user: z.lazy(() => UserUpdateOneRequiredWithoutReviewNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewUpdateInput>;
+  movie: z.lazy(() => MovieUpdateOneWithoutRatingNestedInputSchema).optional(),
+  show: z.lazy(() => ShowUpdateOneWithoutRatingNestedInputSchema).optional(),
+  user: z.lazy(() => UserUpdateOneRequiredWithoutRatingNestedInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingUpdateInput>;
 
-export const ReviewUncheckedUpdateInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateInput> = z.object({
+export const RatingUncheckedUpdateInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateInput>;
 
-export const ReviewCreateManyInputSchema: z.ZodType<Prisma.ReviewCreateManyInput> = z.object({
+export const RatingCreateManyInputSchema: z.ZodType<Prisma.RatingCreateManyInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
-  showId: z.number().int(),
+  movieId: z.number().int().optional().nullable(),
+  showId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyInput>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyInput>;
 
-export const ReviewUpdateManyMutationInputSchema: z.ZodType<Prisma.ReviewUpdateManyMutationInput> = z.object({
+export const RatingUpdateManyMutationInputSchema: z.ZodType<Prisma.RatingUpdateManyMutationInput> = z.object({
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyMutationInput>;
+}).strict() as z.ZodType<Prisma.RatingUpdateManyMutationInput>;
 
-export const ReviewUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyInput> = z.object({
+export const RatingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyInput>;
 
 export const GenreCreateInputSchema: z.ZodType<Prisma.GenreCreateInput> = z.object({
   name: z.string(),
@@ -1448,20 +1475,20 @@ export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilt
   not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.DateTimeNullableFilter>;
 
-export const ReviewListRelationFilterSchema: z.ZodType<Prisma.ReviewListRelationFilter> = z.object({
-  every: z.lazy(() => ReviewWhereInputSchema).optional(),
-  some: z.lazy(() => ReviewWhereInputSchema).optional(),
-  none: z.lazy(() => ReviewWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewListRelationFilter>;
+export const RatingListRelationFilterSchema: z.ZodType<Prisma.RatingListRelationFilter> = z.object({
+  every: z.lazy(() => RatingWhereInputSchema).optional(),
+  some: z.lazy(() => RatingWhereInputSchema).optional(),
+  none: z.lazy(() => RatingWhereInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingListRelationFilter>;
 
 export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.object({
   sort: z.lazy(() => SortOrderSchema),
   nulls: z.lazy(() => NullsOrderSchema).optional()
 }).strict() as z.ZodType<Prisma.SortOrderInput>;
 
-export const ReviewOrderByRelationAggregateInputSchema: z.ZodType<Prisma.ReviewOrderByRelationAggregateInput> = z.object({
+export const RatingOrderByRelationAggregateInputSchema: z.ZodType<Prisma.RatingOrderByRelationAggregateInput> = z.object({
   _count: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewOrderByRelationAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingOrderByRelationAggregateInput>;
 
 export const UserCountOrderByAggregateInputSchema: z.ZodType<Prisma.UserCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
@@ -1882,22 +1909,32 @@ export const FloatFilterSchema: z.ZodType<Prisma.FloatFilter> = z.object({
   not: z.union([ z.number(),z.lazy(() => NestedFloatFilterSchema) ]).optional(),
 }).strict() as z.ZodType<Prisma.FloatFilter>;
 
-export const MovieRelationFilterSchema: z.ZodType<Prisma.MovieRelationFilter> = z.object({
-  is: z.lazy(() => MovieWhereInputSchema).optional(),
-  isNot: z.lazy(() => MovieWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieRelationFilter>;
+export const MovieNullableRelationFilterSchema: z.ZodType<Prisma.MovieNullableRelationFilter> = z.object({
+  is: z.lazy(() => MovieWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => MovieWhereInputSchema).optional().nullable()
+}).strict() as z.ZodType<Prisma.MovieNullableRelationFilter>;
 
-export const ShowRelationFilterSchema: z.ZodType<Prisma.ShowRelationFilter> = z.object({
-  is: z.lazy(() => ShowWhereInputSchema).optional(),
-  isNot: z.lazy(() => ShowWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowRelationFilter>;
+export const ShowNullableRelationFilterSchema: z.ZodType<Prisma.ShowNullableRelationFilter> = z.object({
+  is: z.lazy(() => ShowWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => ShowWhereInputSchema).optional().nullable()
+}).strict() as z.ZodType<Prisma.ShowNullableRelationFilter>;
 
 export const UserRelationFilterSchema: z.ZodType<Prisma.UserRelationFilter> = z.object({
   is: z.lazy(() => UserWhereInputSchema).optional(),
   isNot: z.lazy(() => UserWhereInputSchema).optional()
 }).strict() as z.ZodType<Prisma.UserRelationFilter>;
 
-export const ReviewCountOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewCountOrderByAggregateInput> = z.object({
+export const RatingUserIdShowIdCompoundUniqueInputSchema: z.ZodType<Prisma.RatingUserIdShowIdCompoundUniqueInput> = z.object({
+  userId: z.string(),
+  showId: z.number()
+}).strict() as z.ZodType<Prisma.RatingUserIdShowIdCompoundUniqueInput>;
+
+export const RatingUserIdMovieIdCompoundUniqueInputSchema: z.ZodType<Prisma.RatingUserIdMovieIdCompoundUniqueInput> = z.object({
+  userId: z.string(),
+  movieId: z.number()
+}).strict() as z.ZodType<Prisma.RatingUserIdMovieIdCompoundUniqueInput>;
+
+export const RatingCountOrderByAggregateInputSchema: z.ZodType<Prisma.RatingCountOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
   comment: z.lazy(() => SortOrderSchema).optional(),
@@ -1906,16 +1943,16 @@ export const ReviewCountOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewCoun
   movieId: z.lazy(() => SortOrderSchema).optional(),
   showId: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewCountOrderByAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingCountOrderByAggregateInput>;
 
-export const ReviewAvgOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewAvgOrderByAggregateInput> = z.object({
+export const RatingAvgOrderByAggregateInputSchema: z.ZodType<Prisma.RatingAvgOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
   movieId: z.lazy(() => SortOrderSchema).optional(),
   showId: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewAvgOrderByAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingAvgOrderByAggregateInput>;
 
-export const ReviewMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewMaxOrderByAggregateInput> = z.object({
+export const RatingMaxOrderByAggregateInputSchema: z.ZodType<Prisma.RatingMaxOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
   comment: z.lazy(() => SortOrderSchema).optional(),
@@ -1924,9 +1961,9 @@ export const ReviewMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewMaxOrd
   movieId: z.lazy(() => SortOrderSchema).optional(),
   showId: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewMaxOrderByAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingMaxOrderByAggregateInput>;
 
-export const ReviewMinOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewMinOrderByAggregateInput> = z.object({
+export const RatingMinOrderByAggregateInputSchema: z.ZodType<Prisma.RatingMinOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
   comment: z.lazy(() => SortOrderSchema).optional(),
@@ -1935,14 +1972,14 @@ export const ReviewMinOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewMinOrd
   movieId: z.lazy(() => SortOrderSchema).optional(),
   showId: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewMinOrderByAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingMinOrderByAggregateInput>;
 
-export const ReviewSumOrderByAggregateInputSchema: z.ZodType<Prisma.ReviewSumOrderByAggregateInput> = z.object({
+export const RatingSumOrderByAggregateInputSchema: z.ZodType<Prisma.RatingSumOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   rating: z.lazy(() => SortOrderSchema).optional(),
   movieId: z.lazy(() => SortOrderSchema).optional(),
   showId: z.lazy(() => SortOrderSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewSumOrderByAggregateInput>;
+}).strict() as z.ZodType<Prisma.RatingSumOrderByAggregateInput>;
 
 export const FloatWithAggregatesFilterSchema: z.ZodType<Prisma.FloatWithAggregatesFilter> = z.object({
   equals: z.number().optional(),
@@ -1989,19 +2026,19 @@ export const GenreSumOrderByAggregateInputSchema: z.ZodType<Prisma.GenreSumOrder
   id: z.lazy(() => SortOrderSchema).optional()
 }).strict() as z.ZodType<Prisma.GenreSumOrderByAggregateInput>;
 
-export const ReviewCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.ReviewCreateNestedManyWithoutUserInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewCreateWithoutUserInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyUserInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewCreateNestedManyWithoutUserInput>;
+export const RatingCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.RatingCreateNestedManyWithoutUserInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingCreateWithoutUserInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingCreateNestedManyWithoutUserInput>;
 
-export const ReviewUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewCreateWithoutUserInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyUserInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput>;
+export const RatingUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutUserInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingCreateWithoutUserInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutUserInput>;
 
 export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> = z.object({
   set: z.string().optional()
@@ -2019,33 +2056,33 @@ export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.
   set: z.coerce.date().optional().nullable()
 }).strict() as z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput>;
 
-export const ReviewUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithoutUserNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewCreateWithoutUserInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutUserInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyUserInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutUserInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutUserInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutUserInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithoutUserNestedInput>;
+export const RatingUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.RatingUpdateManyWithoutUserNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingCreateWithoutUserInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutUserInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutUserInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutUserInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutUserInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithoutUserNestedInput>;
 
-export const ReviewUncheckedUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewCreateWithoutUserInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutUserInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyUserInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutUserInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutUserInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutUserInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput>;
+export const RatingUncheckedUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingCreateWithoutUserInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema),z.lazy(() => RatingCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutUserInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyUserInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutUserInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutUserInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutUserInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutUserNestedInput>;
 
 export const MovieCreateNestedManyWithoutDirectorInputSchema: z.ZodType<Prisma.MovieCreateNestedManyWithoutDirectorInput> = z.object({
   create: z.union([ z.lazy(() => MovieCreateWithoutDirectorInputSchema),z.lazy(() => MovieCreateWithoutDirectorInputSchema).array(),z.lazy(() => MovieUncheckedCreateWithoutDirectorInputSchema),z.lazy(() => MovieUncheckedCreateWithoutDirectorInputSchema).array() ]).optional(),
@@ -2315,12 +2352,12 @@ export const CelebrityCreateNestedManyWithoutStarredMoviesInputSchema: z.ZodType
   connect: z.union([ z.lazy(() => CelebrityWhereUniqueInputSchema),z.lazy(() => CelebrityWhereUniqueInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityCreateNestedManyWithoutStarredMoviesInput>;
 
-export const ReviewCreateNestedManyWithoutMovieInputSchema: z.ZodType<Prisma.ReviewCreateNestedManyWithoutMovieInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewCreateWithoutMovieInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyMovieInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewCreateNestedManyWithoutMovieInput>;
+export const RatingCreateNestedManyWithoutMovieInputSchema: z.ZodType<Prisma.RatingCreateNestedManyWithoutMovieInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingCreateWithoutMovieInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema),z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyMovieInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingCreateNestedManyWithoutMovieInput>;
 
 export const GenreUncheckedCreateNestedManyWithoutMoviesInputSchema: z.ZodType<Prisma.GenreUncheckedCreateNestedManyWithoutMoviesInput> = z.object({
   create: z.union([ z.lazy(() => GenreCreateWithoutMoviesInputSchema),z.lazy(() => GenreCreateWithoutMoviesInputSchema).array(),z.lazy(() => GenreUncheckedCreateWithoutMoviesInputSchema),z.lazy(() => GenreUncheckedCreateWithoutMoviesInputSchema).array() ]).optional(),
@@ -2340,12 +2377,12 @@ export const CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema: 
   connect: z.union([ z.lazy(() => CelebrityWhereUniqueInputSchema),z.lazy(() => CelebrityWhereUniqueInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInput>;
 
-export const ReviewUncheckedCreateNestedManyWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutMovieInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewCreateWithoutMovieInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyMovieInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutMovieInput>;
+export const RatingUncheckedCreateNestedManyWithoutMovieInputSchema: z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutMovieInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingCreateWithoutMovieInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema),z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyMovieInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutMovieInput>;
 
 export const NullableFloatFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableFloatFieldUpdateOperationsInput> = z.object({
   set: z.number().optional().nullable(),
@@ -2408,19 +2445,19 @@ export const CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema: z.ZodType
   deleteMany: z.union([ z.lazy(() => CelebrityScalarWhereInputSchema),z.lazy(() => CelebrityScalarWhereInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUpdateManyWithoutStarredMoviesNestedInput>;
 
-export const ReviewUpdateManyWithoutMovieNestedInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithoutMovieNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewCreateWithoutMovieInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyMovieInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutMovieInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutMovieInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithoutMovieNestedInput>;
+export const RatingUpdateManyWithoutMovieNestedInputSchema: z.ZodType<Prisma.RatingUpdateManyWithoutMovieNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingCreateWithoutMovieInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema),z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyMovieInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutMovieInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutMovieInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithoutMovieNestedInput>;
 
 export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> = z.object({
   set: z.number().optional().nullable(),
@@ -2469,19 +2506,19 @@ export const CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema: 
   deleteMany: z.union([ z.lazy(() => CelebrityScalarWhereInputSchema),z.lazy(() => CelebrityScalarWhereInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInput>;
 
-export const ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutMovieNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewCreateWithoutMovieInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyMovieInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutMovieInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutMovieInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutMovieNestedInput>;
+export const RatingUncheckedUpdateManyWithoutMovieNestedInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutMovieNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingCreateWithoutMovieInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema),z.lazy(() => RatingCreateOrConnectWithoutMovieInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyMovieInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutMovieInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutMovieInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutMovieInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutMovieInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutMovieNestedInput>;
 
 export const GenreCreateNestedManyWithoutShowsInputSchema: z.ZodType<Prisma.GenreCreateNestedManyWithoutShowsInput> = z.object({
   create: z.union([ z.lazy(() => GenreCreateWithoutShowsInputSchema),z.lazy(() => GenreCreateWithoutShowsInputSchema).array(),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema).array() ]).optional(),
@@ -2507,12 +2544,12 @@ export const CelebrityCreateNestedManyWithoutStarredShowsInputSchema: z.ZodType<
   connect: z.union([ z.lazy(() => CelebrityWhereUniqueInputSchema),z.lazy(() => CelebrityWhereUniqueInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityCreateNestedManyWithoutStarredShowsInput>;
 
-export const ReviewCreateNestedManyWithoutShowInputSchema: z.ZodType<Prisma.ReviewCreateNestedManyWithoutShowInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewCreateWithoutShowInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyShowInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewCreateNestedManyWithoutShowInput>;
+export const RatingCreateNestedManyWithoutShowInputSchema: z.ZodType<Prisma.RatingCreateNestedManyWithoutShowInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingCreateWithoutShowInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema),z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyShowInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingCreateNestedManyWithoutShowInput>;
 
 export const GenreUncheckedCreateNestedManyWithoutShowsInputSchema: z.ZodType<Prisma.GenreUncheckedCreateNestedManyWithoutShowsInput> = z.object({
   create: z.union([ z.lazy(() => GenreCreateWithoutShowsInputSchema),z.lazy(() => GenreCreateWithoutShowsInputSchema).array(),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema).array() ]).optional(),
@@ -2532,12 +2569,12 @@ export const CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema: z
   connect: z.union([ z.lazy(() => CelebrityWhereUniqueInputSchema),z.lazy(() => CelebrityWhereUniqueInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedCreateNestedManyWithoutStarredShowsInput>;
 
-export const ReviewUncheckedCreateNestedManyWithoutShowInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutShowInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewCreateWithoutShowInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyShowInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateNestedManyWithoutShowInput>;
+export const RatingUncheckedCreateNestedManyWithoutShowInputSchema: z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutShowInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingCreateWithoutShowInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema),z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyShowInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateNestedManyWithoutShowInput>;
 
 export const GenreUpdateManyWithoutShowsNestedInputSchema: z.ZodType<Prisma.GenreUpdateManyWithoutShowsNestedInput> = z.object({
   create: z.union([ z.lazy(() => GenreCreateWithoutShowsInputSchema),z.lazy(() => GenreCreateWithoutShowsInputSchema).array(),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema).array() ]).optional(),
@@ -2588,19 +2625,19 @@ export const CelebrityUpdateManyWithoutStarredShowsNestedInputSchema: z.ZodType<
   deleteMany: z.union([ z.lazy(() => CelebrityScalarWhereInputSchema),z.lazy(() => CelebrityScalarWhereInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUpdateManyWithoutStarredShowsNestedInput>;
 
-export const ReviewUpdateManyWithoutShowNestedInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithoutShowNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewCreateWithoutShowInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutShowInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyShowInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutShowInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutShowInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutShowInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithoutShowNestedInput>;
+export const RatingUpdateManyWithoutShowNestedInputSchema: z.ZodType<Prisma.RatingUpdateManyWithoutShowNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingCreateWithoutShowInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema),z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutShowInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyShowInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutShowInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutShowInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutShowInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithoutShowNestedInput>;
 
 export const GenreUncheckedUpdateManyWithoutShowsNestedInputSchema: z.ZodType<Prisma.GenreUncheckedUpdateManyWithoutShowsNestedInput> = z.object({
   create: z.union([ z.lazy(() => GenreCreateWithoutShowsInputSchema),z.lazy(() => GenreCreateWithoutShowsInputSchema).array(),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema),z.lazy(() => GenreUncheckedCreateWithoutShowsInputSchema).array() ]).optional(),
@@ -2641,37 +2678,37 @@ export const CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema: z
   deleteMany: z.union([ z.lazy(() => CelebrityScalarWhereInputSchema),z.lazy(() => CelebrityScalarWhereInputSchema).array() ]).optional(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInput>;
 
-export const ReviewUncheckedUpdateManyWithoutShowNestedInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutShowNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewCreateWithoutShowInputSchema).array(),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema),z.lazy(() => ReviewCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => ReviewUpsertWithWhereUniqueWithoutShowInputSchema),z.lazy(() => ReviewUpsertWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => ReviewCreateManyShowInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => ReviewWhereUniqueInputSchema),z.lazy(() => ReviewWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => ReviewUpdateWithWhereUniqueWithoutShowInputSchema),z.lazy(() => ReviewUpdateWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => ReviewUpdateManyWithWhereWithoutShowInputSchema),z.lazy(() => ReviewUpdateManyWithWhereWithoutShowInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutShowNestedInput>;
+export const RatingUncheckedUpdateManyWithoutShowNestedInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutShowNestedInput> = z.object({
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingCreateWithoutShowInputSchema).array(),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema),z.lazy(() => RatingCreateOrConnectWithoutShowInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => RatingUpsertWithWhereUniqueWithoutShowInputSchema),z.lazy(() => RatingUpsertWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => RatingCreateManyShowInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => RatingWhereUniqueInputSchema),z.lazy(() => RatingWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => RatingUpdateWithWhereUniqueWithoutShowInputSchema),z.lazy(() => RatingUpdateWithWhereUniqueWithoutShowInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => RatingUpdateManyWithWhereWithoutShowInputSchema),z.lazy(() => RatingUpdateManyWithWhereWithoutShowInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutShowNestedInput>;
 
-export const MovieCreateNestedOneWithoutReviewInputSchema: z.ZodType<Prisma.MovieCreateNestedOneWithoutReviewInput> = z.object({
-  create: z.union([ z.lazy(() => MovieCreateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => MovieCreateOrConnectWithoutReviewInputSchema).optional(),
+export const MovieCreateNestedOneWithoutRatingInputSchema: z.ZodType<Prisma.MovieCreateNestedOneWithoutRatingInput> = z.object({
+  create: z.union([ z.lazy(() => MovieCreateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => MovieCreateOrConnectWithoutRatingInputSchema).optional(),
   connect: z.lazy(() => MovieWhereUniqueInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieCreateNestedOneWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieCreateNestedOneWithoutRatingInput>;
 
-export const ShowCreateNestedOneWithoutReviewInputSchema: z.ZodType<Prisma.ShowCreateNestedOneWithoutReviewInput> = z.object({
-  create: z.union([ z.lazy(() => ShowCreateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => ShowCreateOrConnectWithoutReviewInputSchema).optional(),
+export const ShowCreateNestedOneWithoutRatingInputSchema: z.ZodType<Prisma.ShowCreateNestedOneWithoutRatingInput> = z.object({
+  create: z.union([ z.lazy(() => ShowCreateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => ShowCreateOrConnectWithoutRatingInputSchema).optional(),
   connect: z.lazy(() => ShowWhereUniqueInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowCreateNestedOneWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowCreateNestedOneWithoutRatingInput>;
 
-export const UserCreateNestedOneWithoutReviewInputSchema: z.ZodType<Prisma.UserCreateNestedOneWithoutReviewInput> = z.object({
-  create: z.union([ z.lazy(() => UserCreateWithoutReviewInputSchema),z.lazy(() => UserUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutReviewInputSchema).optional(),
+export const UserCreateNestedOneWithoutRatingInputSchema: z.ZodType<Prisma.UserCreateNestedOneWithoutRatingInput> = z.object({
+  create: z.union([ z.lazy(() => UserCreateWithoutRatingInputSchema),z.lazy(() => UserUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutRatingInputSchema).optional(),
   connect: z.lazy(() => UserWhereUniqueInputSchema).optional()
-}).strict() as z.ZodType<Prisma.UserCreateNestedOneWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserCreateNestedOneWithoutRatingInput>;
 
 export const FloatFieldUpdateOperationsInputSchema: z.ZodType<Prisma.FloatFieldUpdateOperationsInput> = z.object({
   set: z.number().optional(),
@@ -2681,29 +2718,33 @@ export const FloatFieldUpdateOperationsInputSchema: z.ZodType<Prisma.FloatFieldU
   divide: z.number().optional()
 }).strict() as z.ZodType<Prisma.FloatFieldUpdateOperationsInput>;
 
-export const MovieUpdateOneRequiredWithoutReviewNestedInputSchema: z.ZodType<Prisma.MovieUpdateOneRequiredWithoutReviewNestedInput> = z.object({
-  create: z.union([ z.lazy(() => MovieCreateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => MovieCreateOrConnectWithoutReviewInputSchema).optional(),
-  upsert: z.lazy(() => MovieUpsertWithoutReviewInputSchema).optional(),
+export const MovieUpdateOneWithoutRatingNestedInputSchema: z.ZodType<Prisma.MovieUpdateOneWithoutRatingNestedInput> = z.object({
+  create: z.union([ z.lazy(() => MovieCreateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => MovieCreateOrConnectWithoutRatingInputSchema).optional(),
+  upsert: z.lazy(() => MovieUpsertWithoutRatingInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => MovieWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => MovieWhereInputSchema) ]).optional(),
   connect: z.lazy(() => MovieWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => MovieUpdateToOneWithWhereWithoutReviewInputSchema),z.lazy(() => MovieUpdateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutReviewInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.MovieUpdateOneRequiredWithoutReviewNestedInput>;
+  update: z.union([ z.lazy(() => MovieUpdateToOneWithWhereWithoutRatingInputSchema),z.lazy(() => MovieUpdateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutRatingInputSchema) ]).optional(),
+}).strict() as z.ZodType<Prisma.MovieUpdateOneWithoutRatingNestedInput>;
 
-export const ShowUpdateOneRequiredWithoutReviewNestedInputSchema: z.ZodType<Prisma.ShowUpdateOneRequiredWithoutReviewNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ShowCreateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => ShowCreateOrConnectWithoutReviewInputSchema).optional(),
-  upsert: z.lazy(() => ShowUpsertWithoutReviewInputSchema).optional(),
+export const ShowUpdateOneWithoutRatingNestedInputSchema: z.ZodType<Prisma.ShowUpdateOneWithoutRatingNestedInput> = z.object({
+  create: z.union([ z.lazy(() => ShowCreateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => ShowCreateOrConnectWithoutRatingInputSchema).optional(),
+  upsert: z.lazy(() => ShowUpsertWithoutRatingInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => ShowWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => ShowWhereInputSchema) ]).optional(),
   connect: z.lazy(() => ShowWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => ShowUpdateToOneWithWhereWithoutReviewInputSchema),z.lazy(() => ShowUpdateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutReviewInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ShowUpdateOneRequiredWithoutReviewNestedInput>;
+  update: z.union([ z.lazy(() => ShowUpdateToOneWithWhereWithoutRatingInputSchema),z.lazy(() => ShowUpdateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutRatingInputSchema) ]).optional(),
+}).strict() as z.ZodType<Prisma.ShowUpdateOneWithoutRatingNestedInput>;
 
-export const UserUpdateOneRequiredWithoutReviewNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutReviewNestedInput> = z.object({
-  create: z.union([ z.lazy(() => UserCreateWithoutReviewInputSchema),z.lazy(() => UserUncheckedCreateWithoutReviewInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutReviewInputSchema).optional(),
-  upsert: z.lazy(() => UserUpsertWithoutReviewInputSchema).optional(),
+export const UserUpdateOneRequiredWithoutRatingNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutRatingNestedInput> = z.object({
+  create: z.union([ z.lazy(() => UserCreateWithoutRatingInputSchema),z.lazy(() => UserUncheckedCreateWithoutRatingInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutRatingInputSchema).optional(),
+  upsert: z.lazy(() => UserUpsertWithoutRatingInputSchema).optional(),
   connect: z.lazy(() => UserWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => UserUpdateToOneWithWhereWithoutReviewInputSchema),z.lazy(() => UserUpdateWithoutReviewInputSchema),z.lazy(() => UserUncheckedUpdateWithoutReviewInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.UserUpdateOneRequiredWithoutReviewNestedInput>;
+  update: z.union([ z.lazy(() => UserUpdateToOneWithWhereWithoutRatingInputSchema),z.lazy(() => UserUpdateWithoutRatingInputSchema),z.lazy(() => UserUncheckedUpdateWithoutRatingInputSchema) ]).optional(),
+}).strict() as z.ZodType<Prisma.UserUpdateOneRequiredWithoutRatingNestedInput>;
 
 export const MovieCreateNestedManyWithoutGenresInputSchema: z.ZodType<Prisma.MovieCreateNestedManyWithoutGenresInput> = z.object({
   create: z.union([ z.lazy(() => MovieCreateWithoutGenresInputSchema),z.lazy(() => MovieCreateWithoutGenresInputSchema).array(),z.lazy(() => MovieUncheckedCreateWithoutGenresInputSchema),z.lazy(() => MovieUncheckedCreateWithoutGenresInputSchema).array() ]).optional(),
@@ -3055,64 +3096,64 @@ export const NestedFloatWithAggregatesFilterSchema: z.ZodType<Prisma.NestedFloat
   _max: z.lazy(() => NestedFloatFilterSchema).optional()
 }).strict() as z.ZodType<Prisma.NestedFloatWithAggregatesFilter>;
 
-export const ReviewCreateWithoutUserInputSchema: z.ZodType<Prisma.ReviewCreateWithoutUserInput> = z.object({
+export const RatingCreateWithoutUserInputSchema: z.ZodType<Prisma.RatingCreateWithoutUserInput> = z.object({
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movie: z.lazy(() => MovieCreateNestedOneWithoutReviewInputSchema),
-  show: z.lazy(() => ShowCreateNestedOneWithoutReviewInputSchema)
-}).strict() as z.ZodType<Prisma.ReviewCreateWithoutUserInput>;
+  movie: z.lazy(() => MovieCreateNestedOneWithoutRatingInputSchema).optional(),
+  show: z.lazy(() => ShowCreateNestedOneWithoutRatingInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingCreateWithoutUserInput>;
 
-export const ReviewUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateWithoutUserInput> = z.object({
+export const RatingUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedCreateWithoutUserInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
-  showId: z.number().int()
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateWithoutUserInput>;
+  movieId: z.number().int().optional().nullable(),
+  showId: z.number().int().optional().nullable()
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateWithoutUserInput>;
 
-export const ReviewCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.ReviewCreateOrConnectWithoutUserInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewCreateOrConnectWithoutUserInput>;
+export const RatingCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.RatingCreateOrConnectWithoutUserInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingCreateOrConnectWithoutUserInput>;
 
-export const ReviewCreateManyUserInputEnvelopeSchema: z.ZodType<Prisma.ReviewCreateManyUserInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => ReviewCreateManyUserInputSchema),z.lazy(() => ReviewCreateManyUserInputSchema).array() ]),
+export const RatingCreateManyUserInputEnvelopeSchema: z.ZodType<Prisma.RatingCreateManyUserInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => RatingCreateManyUserInputSchema),z.lazy(() => RatingCreateManyUserInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyUserInputEnvelope>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyUserInputEnvelope>;
 
-export const ReviewUpsertWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutUserInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => ReviewUpdateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutUserInputSchema) ]),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutUserInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutUserInput>;
+export const RatingUpsertWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutUserInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => RatingUpdateWithoutUserInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutUserInputSchema) ]),
+  create: z.union([ z.lazy(() => RatingCreateWithoutUserInputSchema),z.lazy(() => RatingUncheckedCreateWithoutUserInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutUserInput>;
 
-export const ReviewUpdateWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutUserInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateWithoutUserInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutUserInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutUserInput>;
+export const RatingUpdateWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutUserInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateWithoutUserInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutUserInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutUserInput>;
 
-export const ReviewUpdateManyWithWhereWithoutUserInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutUserInput> = z.object({
-  where: z.lazy(() => ReviewScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateManyMutationInputSchema),z.lazy(() => ReviewUncheckedUpdateManyWithoutUserInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutUserInput>;
+export const RatingUpdateManyWithWhereWithoutUserInputSchema: z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutUserInput> = z.object({
+  where: z.lazy(() => RatingScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateManyMutationInputSchema),z.lazy(() => RatingUncheckedUpdateManyWithoutUserInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutUserInput>;
 
-export const ReviewScalarWhereInputSchema: z.ZodType<Prisma.ReviewScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => ReviewScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => ReviewScalarWhereInputSchema),z.lazy(() => ReviewScalarWhereInputSchema).array() ]).optional(),
+export const RatingScalarWhereInputSchema: z.ZodType<Prisma.RatingScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => RatingScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => RatingScalarWhereInputSchema),z.lazy(() => RatingScalarWhereInputSchema).array() ]).optional(),
   id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   rating: z.union([ z.lazy(() => FloatFilterSchema),z.number() ]).optional(),
-  comment: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  comment: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
-  movieId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
-  showId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  movieId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  showId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
   userId: z.union([ z.lazy(() => UuidFilterSchema),z.string() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewScalarWhereInput>;
+}).strict() as z.ZodType<Prisma.RatingScalarWhereInput>;
 
 export const MovieCreateWithoutDirectorInputSchema: z.ZodType<Prisma.MovieCreateWithoutDirectorInput> = z.object({
   title: z.string(),
@@ -3125,7 +3166,7 @@ export const MovieCreateWithoutDirectorInputSchema: z.ZodType<Prisma.MovieCreate
   genres: z.lazy(() => GenreCreateNestedManyWithoutMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieCreateWithoutDirectorInput>;
 
 export const MovieUncheckedCreateWithoutDirectorInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutDirectorInput> = z.object({
@@ -3140,7 +3181,7 @@ export const MovieUncheckedCreateWithoutDirectorInputSchema: z.ZodType<Prisma.Mo
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutDirectorInput>;
 
 export const MovieCreateOrConnectWithoutDirectorInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutDirectorInput> = z.object({
@@ -3164,7 +3205,7 @@ export const MovieCreateWithoutWritersInputSchema: z.ZodType<Prisma.MovieCreateW
   genres: z.lazy(() => GenreCreateNestedManyWithoutMoviesInputSchema).optional(),
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieCreateWithoutWritersInput>;
 
 export const MovieUncheckedCreateWithoutWritersInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutWritersInput> = z.object({
@@ -3179,7 +3220,7 @@ export const MovieUncheckedCreateWithoutWritersInputSchema: z.ZodType<Prisma.Mov
   directorId: z.number().int().optional().nullable(),
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutWritersInput>;
 
 export const MovieCreateOrConnectWithoutWritersInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutWritersInput> = z.object({
@@ -3198,7 +3239,7 @@ export const MovieCreateWithoutStarringInputSchema: z.ZodType<Prisma.MovieCreate
   genres: z.lazy(() => GenreCreateNestedManyWithoutMoviesInputSchema).optional(),
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieCreateWithoutStarringInput>;
 
 export const MovieUncheckedCreateWithoutStarringInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutStarringInput> = z.object({
@@ -3213,7 +3254,7 @@ export const MovieUncheckedCreateWithoutStarringInputSchema: z.ZodType<Prisma.Mo
   directorId: z.number().int().optional().nullable(),
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutStarringInput>;
 
 export const MovieCreateOrConnectWithoutStarringInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutStarringInput> = z.object({
@@ -3232,7 +3273,7 @@ export const ShowCreateWithoutStarringInputSchema: z.ZodType<Prisma.ShowCreateWi
   genres: z.lazy(() => GenreCreateNestedManyWithoutShowsInputSchema).optional(),
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowCreateWithoutStarringInput>;
 
 export const ShowUncheckedCreateWithoutStarringInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutStarringInput> = z.object({
@@ -3247,7 +3288,7 @@ export const ShowUncheckedCreateWithoutStarringInputSchema: z.ZodType<Prisma.Sho
   directorId: z.number().int().optional().nullable(),
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutStarringInput>;
 
 export const ShowCreateOrConnectWithoutStarringInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutStarringInput> = z.object({
@@ -3266,7 +3307,7 @@ export const ShowCreateWithoutWritersInputSchema: z.ZodType<Prisma.ShowCreateWit
   genres: z.lazy(() => GenreCreateNestedManyWithoutShowsInputSchema).optional(),
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowCreateWithoutWritersInput>;
 
 export const ShowUncheckedCreateWithoutWritersInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutWritersInput> = z.object({
@@ -3281,7 +3322,7 @@ export const ShowUncheckedCreateWithoutWritersInputSchema: z.ZodType<Prisma.Show
   directorId: z.number().int().optional().nullable(),
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutWritersInput>;
 
 export const ShowCreateOrConnectWithoutWritersInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutWritersInput> = z.object({
@@ -3300,7 +3341,7 @@ export const ShowCreateWithoutDirectorInputSchema: z.ZodType<Prisma.ShowCreateWi
   genres: z.lazy(() => GenreCreateNestedManyWithoutShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowCreateWithoutDirectorInput>;
 
 export const ShowUncheckedCreateWithoutDirectorInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutDirectorInput> = z.object({
@@ -3315,7 +3356,7 @@ export const ShowUncheckedCreateWithoutDirectorInputSchema: z.ZodType<Prisma.Sho
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutDirectorInput>;
 
 export const ShowCreateOrConnectWithoutDirectorInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutDirectorInput> = z.object({
@@ -3570,34 +3611,34 @@ export const CelebrityCreateOrConnectWithoutStarredMoviesInputSchema: z.ZodType<
   create: z.union([ z.lazy(() => CelebrityCreateWithoutStarredMoviesInputSchema),z.lazy(() => CelebrityUncheckedCreateWithoutStarredMoviesInputSchema) ]),
 }).strict() as z.ZodType<Prisma.CelebrityCreateOrConnectWithoutStarredMoviesInput>;
 
-export const ReviewCreateWithoutMovieInputSchema: z.ZodType<Prisma.ReviewCreateWithoutMovieInput> = z.object({
+export const RatingCreateWithoutMovieInputSchema: z.ZodType<Prisma.RatingCreateWithoutMovieInput> = z.object({
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  show: z.lazy(() => ShowCreateNestedOneWithoutReviewInputSchema),
-  user: z.lazy(() => UserCreateNestedOneWithoutReviewInputSchema)
-}).strict() as z.ZodType<Prisma.ReviewCreateWithoutMovieInput>;
+  show: z.lazy(() => ShowCreateNestedOneWithoutRatingInputSchema).optional(),
+  user: z.lazy(() => UserCreateNestedOneWithoutRatingInputSchema)
+}).strict() as z.ZodType<Prisma.RatingCreateWithoutMovieInput>;
 
-export const ReviewUncheckedCreateWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateWithoutMovieInput> = z.object({
+export const RatingUncheckedCreateWithoutMovieInputSchema: z.ZodType<Prisma.RatingUncheckedCreateWithoutMovieInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  showId: z.number().int(),
+  showId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateWithoutMovieInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateWithoutMovieInput>;
 
-export const ReviewCreateOrConnectWithoutMovieInputSchema: z.ZodType<Prisma.ReviewCreateOrConnectWithoutMovieInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewCreateOrConnectWithoutMovieInput>;
+export const RatingCreateOrConnectWithoutMovieInputSchema: z.ZodType<Prisma.RatingCreateOrConnectWithoutMovieInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingCreateOrConnectWithoutMovieInput>;
 
-export const ReviewCreateManyMovieInputEnvelopeSchema: z.ZodType<Prisma.ReviewCreateManyMovieInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => ReviewCreateManyMovieInputSchema),z.lazy(() => ReviewCreateManyMovieInputSchema).array() ]),
+export const RatingCreateManyMovieInputEnvelopeSchema: z.ZodType<Prisma.RatingCreateManyMovieInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => RatingCreateManyMovieInputSchema),z.lazy(() => RatingCreateManyMovieInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyMovieInputEnvelope>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyMovieInputEnvelope>;
 
 export const GenreUpsertWithWhereUniqueWithoutMoviesInputSchema: z.ZodType<Prisma.GenreUpsertWithWhereUniqueWithoutMoviesInput> = z.object({
   where: z.lazy(() => GenreWhereUniqueInputSchema),
@@ -3707,21 +3748,21 @@ export const CelebrityUpdateManyWithWhereWithoutStarredMoviesInputSchema: z.ZodT
   data: z.union([ z.lazy(() => CelebrityUpdateManyMutationInputSchema),z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesInputSchema) ]),
 }).strict() as z.ZodType<Prisma.CelebrityUpdateManyWithWhereWithoutStarredMoviesInput>;
 
-export const ReviewUpsertWithWhereUniqueWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutMovieInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => ReviewUpdateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutMovieInputSchema) ]),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutMovieInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutMovieInput>;
+export const RatingUpsertWithWhereUniqueWithoutMovieInputSchema: z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutMovieInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => RatingUpdateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutMovieInputSchema) ]),
+  create: z.union([ z.lazy(() => RatingCreateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedCreateWithoutMovieInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutMovieInput>;
 
-export const ReviewUpdateWithWhereUniqueWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutMovieInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateWithoutMovieInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutMovieInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutMovieInput>;
+export const RatingUpdateWithWhereUniqueWithoutMovieInputSchema: z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutMovieInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateWithoutMovieInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutMovieInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutMovieInput>;
 
-export const ReviewUpdateManyWithWhereWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutMovieInput> = z.object({
-  where: z.lazy(() => ReviewScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateManyMutationInputSchema),z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutMovieInput>;
+export const RatingUpdateManyWithWhereWithoutMovieInputSchema: z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutMovieInput> = z.object({
+  where: z.lazy(() => RatingScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateManyMutationInputSchema),z.lazy(() => RatingUncheckedUpdateManyWithoutMovieInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutMovieInput>;
 
 export const GenreCreateWithoutShowsInputSchema: z.ZodType<Prisma.GenreCreateWithoutShowsInput> = z.object({
   name: z.string(),
@@ -3839,34 +3880,34 @@ export const CelebrityCreateOrConnectWithoutStarredShowsInputSchema: z.ZodType<P
   create: z.union([ z.lazy(() => CelebrityCreateWithoutStarredShowsInputSchema),z.lazy(() => CelebrityUncheckedCreateWithoutStarredShowsInputSchema) ]),
 }).strict() as z.ZodType<Prisma.CelebrityCreateOrConnectWithoutStarredShowsInput>;
 
-export const ReviewCreateWithoutShowInputSchema: z.ZodType<Prisma.ReviewCreateWithoutShowInput> = z.object({
+export const RatingCreateWithoutShowInputSchema: z.ZodType<Prisma.RatingCreateWithoutShowInput> = z.object({
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movie: z.lazy(() => MovieCreateNestedOneWithoutReviewInputSchema),
-  user: z.lazy(() => UserCreateNestedOneWithoutReviewInputSchema)
-}).strict() as z.ZodType<Prisma.ReviewCreateWithoutShowInput>;
+  movie: z.lazy(() => MovieCreateNestedOneWithoutRatingInputSchema).optional(),
+  user: z.lazy(() => UserCreateNestedOneWithoutRatingInputSchema)
+}).strict() as z.ZodType<Prisma.RatingCreateWithoutShowInput>;
 
-export const ReviewUncheckedCreateWithoutShowInputSchema: z.ZodType<Prisma.ReviewUncheckedCreateWithoutShowInput> = z.object({
+export const RatingUncheckedCreateWithoutShowInputSchema: z.ZodType<Prisma.RatingUncheckedCreateWithoutShowInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
+  movieId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewUncheckedCreateWithoutShowInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedCreateWithoutShowInput>;
 
-export const ReviewCreateOrConnectWithoutShowInputSchema: z.ZodType<Prisma.ReviewCreateOrConnectWithoutShowInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewCreateOrConnectWithoutShowInput>;
+export const RatingCreateOrConnectWithoutShowInputSchema: z.ZodType<Prisma.RatingCreateOrConnectWithoutShowInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingCreateOrConnectWithoutShowInput>;
 
-export const ReviewCreateManyShowInputEnvelopeSchema: z.ZodType<Prisma.ReviewCreateManyShowInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => ReviewCreateManyShowInputSchema),z.lazy(() => ReviewCreateManyShowInputSchema).array() ]),
+export const RatingCreateManyShowInputEnvelopeSchema: z.ZodType<Prisma.RatingCreateManyShowInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => RatingCreateManyShowInputSchema),z.lazy(() => RatingCreateManyShowInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyShowInputEnvelope>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyShowInputEnvelope>;
 
 export const GenreUpsertWithWhereUniqueWithoutShowsInputSchema: z.ZodType<Prisma.GenreUpsertWithWhereUniqueWithoutShowsInput> = z.object({
   where: z.lazy(() => GenreWhereUniqueInputSchema),
@@ -3954,23 +3995,23 @@ export const CelebrityUpdateManyWithWhereWithoutStarredShowsInputSchema: z.ZodTy
   data: z.union([ z.lazy(() => CelebrityUpdateManyMutationInputSchema),z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsInputSchema) ]),
 }).strict() as z.ZodType<Prisma.CelebrityUpdateManyWithWhereWithoutStarredShowsInput>;
 
-export const ReviewUpsertWithWhereUniqueWithoutShowInputSchema: z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutShowInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => ReviewUpdateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutShowInputSchema) ]),
-  create: z.union([ z.lazy(() => ReviewCreateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedCreateWithoutShowInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpsertWithWhereUniqueWithoutShowInput>;
+export const RatingUpsertWithWhereUniqueWithoutShowInputSchema: z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutShowInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => RatingUpdateWithoutShowInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutShowInputSchema) ]),
+  create: z.union([ z.lazy(() => RatingCreateWithoutShowInputSchema),z.lazy(() => RatingUncheckedCreateWithoutShowInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpsertWithWhereUniqueWithoutShowInput>;
 
-export const ReviewUpdateWithWhereUniqueWithoutShowInputSchema: z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutShowInput> = z.object({
-  where: z.lazy(() => ReviewWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateWithoutShowInputSchema),z.lazy(() => ReviewUncheckedUpdateWithoutShowInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithWhereUniqueWithoutShowInput>;
+export const RatingUpdateWithWhereUniqueWithoutShowInputSchema: z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutShowInput> = z.object({
+  where: z.lazy(() => RatingWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateWithoutShowInputSchema),z.lazy(() => RatingUncheckedUpdateWithoutShowInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateWithWhereUniqueWithoutShowInput>;
 
-export const ReviewUpdateManyWithWhereWithoutShowInputSchema: z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutShowInput> = z.object({
-  where: z.lazy(() => ReviewScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => ReviewUpdateManyMutationInputSchema),z.lazy(() => ReviewUncheckedUpdateManyWithoutShowInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyWithWhereWithoutShowInput>;
+export const RatingUpdateManyWithWhereWithoutShowInputSchema: z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutShowInput> = z.object({
+  where: z.lazy(() => RatingScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => RatingUpdateManyMutationInputSchema),z.lazy(() => RatingUncheckedUpdateManyWithoutShowInputSchema) ]),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyWithWhereWithoutShowInput>;
 
-export const MovieCreateWithoutReviewInputSchema: z.ZodType<Prisma.MovieCreateWithoutReviewInput> = z.object({
+export const MovieCreateWithoutRatingInputSchema: z.ZodType<Prisma.MovieCreateWithoutRatingInput> = z.object({
   title: z.string(),
   releaseDate: z.coerce.date().optional().nullable(),
   rating: z.number().optional().nullable(),
@@ -3982,9 +4023,9 @@ export const MovieCreateWithoutReviewInputSchema: z.ZodType<Prisma.MovieCreateWi
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredMoviesInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieCreateWithoutRatingInput>;
 
-export const MovieUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutReviewInput> = z.object({
+export const MovieUncheckedCreateWithoutRatingInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutRatingInput> = z.object({
   id: z.number().int().optional(),
   title: z.string(),
   releaseDate: z.coerce.date().optional().nullable(),
@@ -3997,14 +4038,14 @@ export const MovieUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.Movi
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutRatingInput>;
 
-export const MovieCreateOrConnectWithoutReviewInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutReviewInput> = z.object({
+export const MovieCreateOrConnectWithoutRatingInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutRatingInput> = z.object({
   where: z.lazy(() => MovieWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => MovieCreateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedCreateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.MovieCreateOrConnectWithoutReviewInput>;
+  create: z.union([ z.lazy(() => MovieCreateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedCreateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.MovieCreateOrConnectWithoutRatingInput>;
 
-export const ShowCreateWithoutReviewInputSchema: z.ZodType<Prisma.ShowCreateWithoutReviewInput> = z.object({
+export const ShowCreateWithoutRatingInputSchema: z.ZodType<Prisma.ShowCreateWithoutRatingInput> = z.object({
   title: z.string(),
   releaseDate: z.coerce.date().optional().nullable(),
   rating: z.number().optional().nullable(),
@@ -4016,9 +4057,9 @@ export const ShowCreateWithoutReviewInputSchema: z.ZodType<Prisma.ShowCreateWith
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredShowsInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowCreateWithoutRatingInput>;
 
-export const ShowUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutReviewInput> = z.object({
+export const ShowUncheckedCreateWithoutRatingInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutRatingInput> = z.object({
   id: z.number().int().optional(),
   title: z.string(),
   releaseDate: z.coerce.date().optional().nullable(),
@@ -4031,14 +4072,14 @@ export const ShowUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.ShowU
   genres: z.lazy(() => GenreUncheckedCreateNestedManyWithoutShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutRatingInput>;
 
-export const ShowCreateOrConnectWithoutReviewInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutReviewInput> = z.object({
+export const ShowCreateOrConnectWithoutRatingInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutRatingInput> = z.object({
   where: z.lazy(() => ShowWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => ShowCreateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedCreateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ShowCreateOrConnectWithoutReviewInput>;
+  create: z.union([ z.lazy(() => ShowCreateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedCreateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.ShowCreateOrConnectWithoutRatingInput>;
 
-export const UserCreateWithoutReviewInputSchema: z.ZodType<Prisma.UserCreateWithoutReviewInput> = z.object({
+export const UserCreateWithoutRatingInputSchema: z.ZodType<Prisma.UserCreateWithoutRatingInput> = z.object({
   id: z.string().optional(),
   email: z.string(),
   name: z.string(),
@@ -4046,9 +4087,9 @@ export const UserCreateWithoutReviewInputSchema: z.ZodType<Prisma.UserCreateWith
   password: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable()
-}).strict() as z.ZodType<Prisma.UserCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserCreateWithoutRatingInput>;
 
-export const UserUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutReviewInput> = z.object({
+export const UserUncheckedCreateWithoutRatingInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutRatingInput> = z.object({
   id: z.string().optional(),
   email: z.string(),
   name: z.string(),
@@ -4056,25 +4097,25 @@ export const UserUncheckedCreateWithoutReviewInputSchema: z.ZodType<Prisma.UserU
   password: z.string(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable()
-}).strict() as z.ZodType<Prisma.UserUncheckedCreateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserUncheckedCreateWithoutRatingInput>;
 
-export const UserCreateOrConnectWithoutReviewInputSchema: z.ZodType<Prisma.UserCreateOrConnectWithoutReviewInput> = z.object({
+export const UserCreateOrConnectWithoutRatingInputSchema: z.ZodType<Prisma.UserCreateOrConnectWithoutRatingInput> = z.object({
   where: z.lazy(() => UserWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => UserCreateWithoutReviewInputSchema),z.lazy(() => UserUncheckedCreateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.UserCreateOrConnectWithoutReviewInput>;
+  create: z.union([ z.lazy(() => UserCreateWithoutRatingInputSchema),z.lazy(() => UserUncheckedCreateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.UserCreateOrConnectWithoutRatingInput>;
 
-export const MovieUpsertWithoutReviewInputSchema: z.ZodType<Prisma.MovieUpsertWithoutReviewInput> = z.object({
-  update: z.union([ z.lazy(() => MovieUpdateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutReviewInputSchema) ]),
-  create: z.union([ z.lazy(() => MovieCreateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedCreateWithoutReviewInputSchema) ]),
+export const MovieUpsertWithoutRatingInputSchema: z.ZodType<Prisma.MovieUpsertWithoutRatingInput> = z.object({
+  update: z.union([ z.lazy(() => MovieUpdateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutRatingInputSchema) ]),
+  create: z.union([ z.lazy(() => MovieCreateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedCreateWithoutRatingInputSchema) ]),
   where: z.lazy(() => MovieWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieUpsertWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieUpsertWithoutRatingInput>;
 
-export const MovieUpdateToOneWithWhereWithoutReviewInputSchema: z.ZodType<Prisma.MovieUpdateToOneWithWhereWithoutReviewInput> = z.object({
+export const MovieUpdateToOneWithWhereWithoutRatingInputSchema: z.ZodType<Prisma.MovieUpdateToOneWithWhereWithoutRatingInput> = z.object({
   where: z.lazy(() => MovieWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => MovieUpdateWithoutReviewInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.MovieUpdateToOneWithWhereWithoutReviewInput>;
+  data: z.union([ z.lazy(() => MovieUpdateWithoutRatingInputSchema),z.lazy(() => MovieUncheckedUpdateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.MovieUpdateToOneWithWhereWithoutRatingInput>;
 
-export const MovieUpdateWithoutReviewInputSchema: z.ZodType<Prisma.MovieUpdateWithoutReviewInput> = z.object({
+export const MovieUpdateWithoutRatingInputSchema: z.ZodType<Prisma.MovieUpdateWithoutRatingInput> = z.object({
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   releaseDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   rating: z.union([ z.number(),z.lazy(() => NullableFloatFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -4086,9 +4127,9 @@ export const MovieUpdateWithoutReviewInputSchema: z.ZodType<Prisma.MovieUpdateWi
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieUpdateWithoutRatingInput>;
 
-export const MovieUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutReviewInput> = z.object({
+export const MovieUncheckedUpdateWithoutRatingInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutRatingInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   releaseDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -4101,20 +4142,20 @@ export const MovieUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.Movi
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutRatingInput>;
 
-export const ShowUpsertWithoutReviewInputSchema: z.ZodType<Prisma.ShowUpsertWithoutReviewInput> = z.object({
-  update: z.union([ z.lazy(() => ShowUpdateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutReviewInputSchema) ]),
-  create: z.union([ z.lazy(() => ShowCreateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedCreateWithoutReviewInputSchema) ]),
+export const ShowUpsertWithoutRatingInputSchema: z.ZodType<Prisma.ShowUpsertWithoutRatingInput> = z.object({
+  update: z.union([ z.lazy(() => ShowUpdateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutRatingInputSchema) ]),
+  create: z.union([ z.lazy(() => ShowCreateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedCreateWithoutRatingInputSchema) ]),
   where: z.lazy(() => ShowWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowUpsertWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowUpsertWithoutRatingInput>;
 
-export const ShowUpdateToOneWithWhereWithoutReviewInputSchema: z.ZodType<Prisma.ShowUpdateToOneWithWhereWithoutReviewInput> = z.object({
+export const ShowUpdateToOneWithWhereWithoutRatingInputSchema: z.ZodType<Prisma.ShowUpdateToOneWithWhereWithoutRatingInput> = z.object({
   where: z.lazy(() => ShowWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => ShowUpdateWithoutReviewInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.ShowUpdateToOneWithWhereWithoutReviewInput>;
+  data: z.union([ z.lazy(() => ShowUpdateWithoutRatingInputSchema),z.lazy(() => ShowUncheckedUpdateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.ShowUpdateToOneWithWhereWithoutRatingInput>;
 
-export const ShowUpdateWithoutReviewInputSchema: z.ZodType<Prisma.ShowUpdateWithoutReviewInput> = z.object({
+export const ShowUpdateWithoutRatingInputSchema: z.ZodType<Prisma.ShowUpdateWithoutRatingInput> = z.object({
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   releaseDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   rating: z.union([ z.number(),z.lazy(() => NullableFloatFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -4126,9 +4167,9 @@ export const ShowUpdateWithoutReviewInputSchema: z.ZodType<Prisma.ShowUpdateWith
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredShowsNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowUpdateWithoutRatingInput>;
 
-export const ShowUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutReviewInput> = z.object({
+export const ShowUncheckedUpdateWithoutRatingInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutRatingInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   releaseDate: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -4141,20 +4182,20 @@ export const ShowUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.ShowU
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutRatingInput>;
 
-export const UserUpsertWithoutReviewInputSchema: z.ZodType<Prisma.UserUpsertWithoutReviewInput> = z.object({
-  update: z.union([ z.lazy(() => UserUpdateWithoutReviewInputSchema),z.lazy(() => UserUncheckedUpdateWithoutReviewInputSchema) ]),
-  create: z.union([ z.lazy(() => UserCreateWithoutReviewInputSchema),z.lazy(() => UserUncheckedCreateWithoutReviewInputSchema) ]),
+export const UserUpsertWithoutRatingInputSchema: z.ZodType<Prisma.UserUpsertWithoutRatingInput> = z.object({
+  update: z.union([ z.lazy(() => UserUpdateWithoutRatingInputSchema),z.lazy(() => UserUncheckedUpdateWithoutRatingInputSchema) ]),
+  create: z.union([ z.lazy(() => UserCreateWithoutRatingInputSchema),z.lazy(() => UserUncheckedCreateWithoutRatingInputSchema) ]),
   where: z.lazy(() => UserWhereInputSchema).optional()
-}).strict() as z.ZodType<Prisma.UserUpsertWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserUpsertWithoutRatingInput>;
 
-export const UserUpdateToOneWithWhereWithoutReviewInputSchema: z.ZodType<Prisma.UserUpdateToOneWithWhereWithoutReviewInput> = z.object({
+export const UserUpdateToOneWithWhereWithoutRatingInputSchema: z.ZodType<Prisma.UserUpdateToOneWithWhereWithoutRatingInput> = z.object({
   where: z.lazy(() => UserWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => UserUpdateWithoutReviewInputSchema),z.lazy(() => UserUncheckedUpdateWithoutReviewInputSchema) ]),
-}).strict() as z.ZodType<Prisma.UserUpdateToOneWithWhereWithoutReviewInput>;
+  data: z.union([ z.lazy(() => UserUpdateWithoutRatingInputSchema),z.lazy(() => UserUncheckedUpdateWithoutRatingInputSchema) ]),
+}).strict() as z.ZodType<Prisma.UserUpdateToOneWithWhereWithoutRatingInput>;
 
-export const UserUpdateWithoutReviewInputSchema: z.ZodType<Prisma.UserUpdateWithoutReviewInput> = z.object({
+export const UserUpdateWithoutRatingInputSchema: z.ZodType<Prisma.UserUpdateWithoutRatingInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -4162,9 +4203,9 @@ export const UserUpdateWithoutReviewInputSchema: z.ZodType<Prisma.UserUpdateWith
   password: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict() as z.ZodType<Prisma.UserUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserUpdateWithoutRatingInput>;
 
-export const UserUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.UserUncheckedUpdateWithoutReviewInput> = z.object({
+export const UserUncheckedUpdateWithoutRatingInputSchema: z.ZodType<Prisma.UserUncheckedUpdateWithoutRatingInput> = z.object({
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   email: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -4172,7 +4213,7 @@ export const UserUncheckedUpdateWithoutReviewInputSchema: z.ZodType<Prisma.UserU
   password: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict() as z.ZodType<Prisma.UserUncheckedUpdateWithoutReviewInput>;
+}).strict() as z.ZodType<Prisma.UserUncheckedUpdateWithoutRatingInput>;
 
 export const MovieCreateWithoutGenresInputSchema: z.ZodType<Prisma.MovieCreateWithoutGenresInput> = z.object({
   title: z.string(),
@@ -4185,7 +4226,7 @@ export const MovieCreateWithoutGenresInputSchema: z.ZodType<Prisma.MovieCreateWi
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedMoviesInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieCreateWithoutGenresInput>;
 
 export const MovieUncheckedCreateWithoutGenresInputSchema: z.ZodType<Prisma.MovieUncheckedCreateWithoutGenresInput> = z.object({
@@ -4200,7 +4241,7 @@ export const MovieUncheckedCreateWithoutGenresInputSchema: z.ZodType<Prisma.Movi
   directorId: z.number().int().optional().nullable(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenMoviesInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredMoviesInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutMovieInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedCreateWithoutGenresInput>;
 
 export const MovieCreateOrConnectWithoutGenresInputSchema: z.ZodType<Prisma.MovieCreateOrConnectWithoutGenresInput> = z.object({
@@ -4219,7 +4260,7 @@ export const ShowCreateWithoutGenresInputSchema: z.ZodType<Prisma.ShowCreateWith
   director: z.lazy(() => CelebrityCreateNestedOneWithoutDirectedShowsInputSchema).optional(),
   writers: z.lazy(() => CelebrityCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowCreateWithoutGenresInput>;
 
 export const ShowUncheckedCreateWithoutGenresInputSchema: z.ZodType<Prisma.ShowUncheckedCreateWithoutGenresInput> = z.object({
@@ -4234,7 +4275,7 @@ export const ShowUncheckedCreateWithoutGenresInputSchema: z.ZodType<Prisma.ShowU
   directorId: z.number().int().optional().nullable(),
   writers: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutWrittenShowsInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedCreateNestedManyWithoutStarredShowsInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedCreateNestedManyWithoutShowInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedCreateNestedManyWithoutShowInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedCreateWithoutGenresInput>;
 
 export const ShowCreateOrConnectWithoutGenresInputSchema: z.ZodType<Prisma.ShowCreateOrConnectWithoutGenresInput> = z.object({
@@ -4274,44 +4315,44 @@ export const ShowUpdateManyWithWhereWithoutGenresInputSchema: z.ZodType<Prisma.S
   data: z.union([ z.lazy(() => ShowUpdateManyMutationInputSchema),z.lazy(() => ShowUncheckedUpdateManyWithoutGenresInputSchema) ]),
 }).strict() as z.ZodType<Prisma.ShowUpdateManyWithWhereWithoutGenresInput>;
 
-export const ReviewCreateManyUserInputSchema: z.ZodType<Prisma.ReviewCreateManyUserInput> = z.object({
+export const RatingCreateManyUserInputSchema: z.ZodType<Prisma.RatingCreateManyUserInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
-  showId: z.number().int()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyUserInput>;
+  movieId: z.number().int().optional().nullable(),
+  showId: z.number().int().optional().nullable()
+}).strict() as z.ZodType<Prisma.RatingCreateManyUserInput>;
 
-export const ReviewUpdateWithoutUserInputSchema: z.ZodType<Prisma.ReviewUpdateWithoutUserInput> = z.object({
+export const RatingUpdateWithoutUserInputSchema: z.ZodType<Prisma.RatingUpdateWithoutUserInput> = z.object({
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movie: z.lazy(() => MovieUpdateOneRequiredWithoutReviewNestedInputSchema).optional(),
-  show: z.lazy(() => ShowUpdateOneRequiredWithoutReviewNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithoutUserInput>;
+  movie: z.lazy(() => MovieUpdateOneWithoutRatingNestedInputSchema).optional(),
+  show: z.lazy(() => ShowUpdateOneWithoutRatingNestedInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingUpdateWithoutUserInput>;
 
-export const ReviewUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateWithoutUserInput> = z.object({
+export const RatingUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateWithoutUserInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateWithoutUserInput>;
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateWithoutUserInput>;
 
-export const ReviewUncheckedUpdateManyWithoutUserInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutUserInput> = z.object({
+export const RatingUncheckedUpdateManyWithoutUserInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutUserInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutUserInput>;
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutUserInput>;
 
 export const MovieCreateManyDirectorInputSchema: z.ZodType<Prisma.MovieCreateManyDirectorInput> = z.object({
   id: z.number().int().optional(),
@@ -4346,7 +4387,7 @@ export const MovieUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.MovieUpdate
   genres: z.lazy(() => GenreUpdateManyWithoutMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUpdateWithoutDirectorInput>;
 
 export const MovieUncheckedUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutDirectorInput> = z.object({
@@ -4361,7 +4402,7 @@ export const MovieUncheckedUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.Mo
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutDirectorInput>;
 
 export const MovieUncheckedUpdateManyWithoutDirectorInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateManyWithoutDirectorInput> = z.object({
@@ -4386,7 +4427,7 @@ export const MovieUpdateWithoutWritersInputSchema: z.ZodType<Prisma.MovieUpdateW
   genres: z.lazy(() => GenreUpdateManyWithoutMoviesNestedInputSchema).optional(),
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUpdateWithoutWritersInput>;
 
 export const MovieUncheckedUpdateWithoutWritersInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutWritersInput> = z.object({
@@ -4401,7 +4442,7 @@ export const MovieUncheckedUpdateWithoutWritersInputSchema: z.ZodType<Prisma.Mov
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutWritersInput>;
 
 export const MovieUncheckedUpdateManyWithoutWritersInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateManyWithoutWritersInput> = z.object({
@@ -4427,7 +4468,7 @@ export const MovieUpdateWithoutStarringInputSchema: z.ZodType<Prisma.MovieUpdate
   genres: z.lazy(() => GenreUpdateManyWithoutMoviesNestedInputSchema).optional(),
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUpdateWithoutStarringInput>;
 
 export const MovieUncheckedUpdateWithoutStarringInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutStarringInput> = z.object({
@@ -4442,7 +4483,7 @@ export const MovieUncheckedUpdateWithoutStarringInputSchema: z.ZodType<Prisma.Mo
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutStarringInput>;
 
 export const MovieUncheckedUpdateManyWithoutStarringInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateManyWithoutStarringInput> = z.object({
@@ -4468,7 +4509,7 @@ export const ShowUpdateWithoutStarringInputSchema: z.ZodType<Prisma.ShowUpdateWi
   genres: z.lazy(() => GenreUpdateManyWithoutShowsNestedInputSchema).optional(),
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUpdateWithoutStarringInput>;
 
 export const ShowUncheckedUpdateWithoutStarringInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutStarringInput> = z.object({
@@ -4483,7 +4524,7 @@ export const ShowUncheckedUpdateWithoutStarringInputSchema: z.ZodType<Prisma.Sho
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutStarringInput>;
 
 export const ShowUncheckedUpdateManyWithoutStarringInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutStarringInput> = z.object({
@@ -4509,7 +4550,7 @@ export const ShowUpdateWithoutWritersInputSchema: z.ZodType<Prisma.ShowUpdateWit
   genres: z.lazy(() => GenreUpdateManyWithoutShowsNestedInputSchema).optional(),
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUpdateWithoutWritersInput>;
 
 export const ShowUncheckedUpdateWithoutWritersInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutWritersInput> = z.object({
@@ -4524,7 +4565,7 @@ export const ShowUncheckedUpdateWithoutWritersInputSchema: z.ZodType<Prisma.Show
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutWritersInput>;
 
 export const ShowUncheckedUpdateManyWithoutWritersInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutWritersInput> = z.object({
@@ -4550,7 +4591,7 @@ export const ShowUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.ShowUpdateWi
   genres: z.lazy(() => GenreUpdateManyWithoutShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUpdateWithoutDirectorInput>;
 
 export const ShowUncheckedUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutDirectorInput> = z.object({
@@ -4565,7 +4606,7 @@ export const ShowUncheckedUpdateWithoutDirectorInputSchema: z.ZodType<Prisma.Sho
   genres: z.lazy(() => GenreUncheckedUpdateManyWithoutShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutDirectorInput>;
 
 export const ShowUncheckedUpdateManyWithoutDirectorInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutDirectorInput> = z.object({
@@ -4579,15 +4620,15 @@ export const ShowUncheckedUpdateManyWithoutDirectorInputSchema: z.ZodType<Prisma
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutDirectorInput>;
 
-export const ReviewCreateManyMovieInputSchema: z.ZodType<Prisma.ReviewCreateManyMovieInput> = z.object({
+export const RatingCreateManyMovieInputSchema: z.ZodType<Prisma.RatingCreateManyMovieInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  showId: z.number().int(),
+  showId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyMovieInput>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyMovieInput>;
 
 export const GenreUpdateWithoutMoviesInputSchema: z.ZodType<Prisma.GenreUpdateWithoutMoviesInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -4683,44 +4724,44 @@ export const CelebrityUncheckedUpdateManyWithoutStarredMoviesInputSchema: z.ZodT
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedUpdateManyWithoutStarredMoviesInput>;
 
-export const ReviewUpdateWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUpdateWithoutMovieInput> = z.object({
+export const RatingUpdateWithoutMovieInputSchema: z.ZodType<Prisma.RatingUpdateWithoutMovieInput> = z.object({
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  show: z.lazy(() => ShowUpdateOneRequiredWithoutReviewNestedInputSchema).optional(),
-  user: z.lazy(() => UserUpdateOneRequiredWithoutReviewNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithoutMovieInput>;
+  show: z.lazy(() => ShowUpdateOneWithoutRatingNestedInputSchema).optional(),
+  user: z.lazy(() => UserUpdateOneRequiredWithoutRatingNestedInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingUpdateWithoutMovieInput>;
 
-export const ReviewUncheckedUpdateWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateWithoutMovieInput> = z.object({
+export const RatingUncheckedUpdateWithoutMovieInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateWithoutMovieInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateWithoutMovieInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateWithoutMovieInput>;
 
-export const ReviewUncheckedUpdateManyWithoutMovieInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutMovieInput> = z.object({
+export const RatingUncheckedUpdateManyWithoutMovieInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutMovieInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  showId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  showId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutMovieInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutMovieInput>;
 
-export const ReviewCreateManyShowInputSchema: z.ZodType<Prisma.ReviewCreateManyShowInput> = z.object({
+export const RatingCreateManyShowInputSchema: z.ZodType<Prisma.RatingCreateManyShowInput> = z.object({
   id: z.number().int().optional(),
   rating: z.number(),
-  comment: z.string(),
+  comment: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional().nullable(),
-  movieId: z.number().int(),
+  movieId: z.number().int().optional().nullable(),
   userId: z.string()
-}).strict() as z.ZodType<Prisma.ReviewCreateManyShowInput>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyShowInput>;
 
 export const GenreUpdateWithoutShowsInputSchema: z.ZodType<Prisma.GenreUpdateWithoutShowsInput> = z.object({
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -4816,34 +4857,34 @@ export const CelebrityUncheckedUpdateManyWithoutStarredShowsInputSchema: z.ZodTy
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict() as z.ZodType<Prisma.CelebrityUncheckedUpdateManyWithoutStarredShowsInput>;
 
-export const ReviewUpdateWithoutShowInputSchema: z.ZodType<Prisma.ReviewUpdateWithoutShowInput> = z.object({
+export const RatingUpdateWithoutShowInputSchema: z.ZodType<Prisma.RatingUpdateWithoutShowInput> = z.object({
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movie: z.lazy(() => MovieUpdateOneRequiredWithoutReviewNestedInputSchema).optional(),
-  user: z.lazy(() => UserUpdateOneRequiredWithoutReviewNestedInputSchema).optional()
-}).strict() as z.ZodType<Prisma.ReviewUpdateWithoutShowInput>;
+  movie: z.lazy(() => MovieUpdateOneWithoutRatingNestedInputSchema).optional(),
+  user: z.lazy(() => UserUpdateOneRequiredWithoutRatingNestedInputSchema).optional()
+}).strict() as z.ZodType<Prisma.RatingUpdateWithoutShowInput>;
 
-export const ReviewUncheckedUpdateWithoutShowInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateWithoutShowInput> = z.object({
+export const RatingUncheckedUpdateWithoutShowInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateWithoutShowInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateWithoutShowInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateWithoutShowInput>;
 
-export const ReviewUncheckedUpdateManyWithoutShowInputSchema: z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutShowInput> = z.object({
+export const RatingUncheckedUpdateManyWithoutShowInputSchema: z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutShowInput> = z.object({
   id: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   rating: z.union([ z.number(),z.lazy(() => FloatFieldUpdateOperationsInputSchema) ]).optional(),
-  comment: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  comment: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  movieId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  movieId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   userId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewUncheckedUpdateManyWithoutShowInput>;
+}).strict() as z.ZodType<Prisma.RatingUncheckedUpdateManyWithoutShowInput>;
 
 export const MovieUpdateWithoutGenresInputSchema: z.ZodType<Prisma.MovieUpdateWithoutGenresInput> = z.object({
   title: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -4856,7 +4897,7 @@ export const MovieUpdateWithoutGenresInputSchema: z.ZodType<Prisma.MovieUpdateWi
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedMoviesNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUpdateWithoutGenresInput>;
 
 export const MovieUncheckedUpdateWithoutGenresInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateWithoutGenresInput> = z.object({
@@ -4871,7 +4912,7 @@ export const MovieUncheckedUpdateWithoutGenresInputSchema: z.ZodType<Prisma.Movi
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenMoviesNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredMoviesNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutMovieNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.MovieUncheckedUpdateWithoutGenresInput>;
 
 export const MovieUncheckedUpdateManyWithoutGenresInputSchema: z.ZodType<Prisma.MovieUncheckedUpdateManyWithoutGenresInput> = z.object({
@@ -4897,7 +4938,7 @@ export const ShowUpdateWithoutGenresInputSchema: z.ZodType<Prisma.ShowUpdateWith
   director: z.lazy(() => CelebrityUpdateOneWithoutDirectedShowsNestedInputSchema).optional(),
   writers: z.lazy(() => CelebrityUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUpdateWithoutGenresInput>;
 
 export const ShowUncheckedUpdateWithoutGenresInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateWithoutGenresInput> = z.object({
@@ -4912,7 +4953,7 @@ export const ShowUncheckedUpdateWithoutGenresInputSchema: z.ZodType<Prisma.ShowU
   directorId: z.union([ z.number().int(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   writers: z.lazy(() => CelebrityUncheckedUpdateManyWithoutWrittenShowsNestedInputSchema).optional(),
   starring: z.lazy(() => CelebrityUncheckedUpdateManyWithoutStarredShowsNestedInputSchema).optional(),
-  Review: z.lazy(() => ReviewUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
+  Rating: z.lazy(() => RatingUncheckedUpdateManyWithoutShowNestedInputSchema).optional()
 }).strict() as z.ZodType<Prisma.ShowUncheckedUpdateWithoutGenresInput>;
 
 export const ShowUncheckedUpdateManyWithoutGenresInputSchema: z.ZodType<Prisma.ShowUncheckedUpdateManyWithoutGenresInput> = z.object({
@@ -5179,67 +5220,67 @@ export const ShowFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ShowFindUniqueOrT
   where: ShowWhereUniqueInputSchema,
 }).strict() as z.ZodType<Prisma.ShowFindUniqueOrThrowArgs>;
 
-export const ReviewFindFirstArgsSchema: z.ZodType<Prisma.ReviewFindFirstArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereInputSchema.optional(),
-  orderBy: z.union([ ReviewOrderByWithRelationInputSchema.array(),ReviewOrderByWithRelationInputSchema ]).optional(),
-  cursor: ReviewWhereUniqueInputSchema.optional(),
+export const RatingFindFirstArgsSchema: z.ZodType<Prisma.RatingFindFirstArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereInputSchema.optional(),
+  orderBy: z.union([ RatingOrderByWithRelationInputSchema.array(),RatingOrderByWithRelationInputSchema ]).optional(),
+  cursor: RatingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ ReviewScalarFieldEnumSchema,ReviewScalarFieldEnumSchema.array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewFindFirstArgs>;
+  distinct: z.union([ RatingScalarFieldEnumSchema,RatingScalarFieldEnumSchema.array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingFindFirstArgs>;
 
-export const ReviewFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ReviewFindFirstOrThrowArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereInputSchema.optional(),
-  orderBy: z.union([ ReviewOrderByWithRelationInputSchema.array(),ReviewOrderByWithRelationInputSchema ]).optional(),
-  cursor: ReviewWhereUniqueInputSchema.optional(),
+export const RatingFindFirstOrThrowArgsSchema: z.ZodType<Prisma.RatingFindFirstOrThrowArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereInputSchema.optional(),
+  orderBy: z.union([ RatingOrderByWithRelationInputSchema.array(),RatingOrderByWithRelationInputSchema ]).optional(),
+  cursor: RatingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ ReviewScalarFieldEnumSchema,ReviewScalarFieldEnumSchema.array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewFindFirstOrThrowArgs>;
+  distinct: z.union([ RatingScalarFieldEnumSchema,RatingScalarFieldEnumSchema.array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingFindFirstOrThrowArgs>;
 
-export const ReviewFindManyArgsSchema: z.ZodType<Prisma.ReviewFindManyArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereInputSchema.optional(),
-  orderBy: z.union([ ReviewOrderByWithRelationInputSchema.array(),ReviewOrderByWithRelationInputSchema ]).optional(),
-  cursor: ReviewWhereUniqueInputSchema.optional(),
+export const RatingFindManyArgsSchema: z.ZodType<Prisma.RatingFindManyArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereInputSchema.optional(),
+  orderBy: z.union([ RatingOrderByWithRelationInputSchema.array(),RatingOrderByWithRelationInputSchema ]).optional(),
+  cursor: RatingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-  distinct: z.union([ ReviewScalarFieldEnumSchema,ReviewScalarFieldEnumSchema.array() ]).optional(),
-}).strict() as z.ZodType<Prisma.ReviewFindManyArgs>;
+  distinct: z.union([ RatingScalarFieldEnumSchema,RatingScalarFieldEnumSchema.array() ]).optional(),
+}).strict() as z.ZodType<Prisma.RatingFindManyArgs>;
 
-export const ReviewAggregateArgsSchema: z.ZodType<Prisma.ReviewAggregateArgs> = z.object({
-  where: ReviewWhereInputSchema.optional(),
-  orderBy: z.union([ ReviewOrderByWithRelationInputSchema.array(),ReviewOrderByWithRelationInputSchema ]).optional(),
-  cursor: ReviewWhereUniqueInputSchema.optional(),
+export const RatingAggregateArgsSchema: z.ZodType<Prisma.RatingAggregateArgs> = z.object({
+  where: RatingWhereInputSchema.optional(),
+  orderBy: z.union([ RatingOrderByWithRelationInputSchema.array(),RatingOrderByWithRelationInputSchema ]).optional(),
+  cursor: RatingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() as z.ZodType<Prisma.ReviewAggregateArgs>;
+}).strict() as z.ZodType<Prisma.RatingAggregateArgs>;
 
-export const ReviewGroupByArgsSchema: z.ZodType<Prisma.ReviewGroupByArgs> = z.object({
-  where: ReviewWhereInputSchema.optional(),
-  orderBy: z.union([ ReviewOrderByWithAggregationInputSchema.array(),ReviewOrderByWithAggregationInputSchema ]).optional(),
-  by: ReviewScalarFieldEnumSchema.array(),
-  having: ReviewScalarWhereWithAggregatesInputSchema.optional(),
+export const RatingGroupByArgsSchema: z.ZodType<Prisma.RatingGroupByArgs> = z.object({
+  where: RatingWhereInputSchema.optional(),
+  orderBy: z.union([ RatingOrderByWithAggregationInputSchema.array(),RatingOrderByWithAggregationInputSchema ]).optional(),
+  by: RatingScalarFieldEnumSchema.array(),
+  having: RatingScalarWhereWithAggregatesInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
-}).strict() as z.ZodType<Prisma.ReviewGroupByArgs>;
+}).strict() as z.ZodType<Prisma.RatingGroupByArgs>;
 
-export const ReviewFindUniqueArgsSchema: z.ZodType<Prisma.ReviewFindUniqueArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.ReviewFindUniqueArgs>;
+export const RatingFindUniqueArgsSchema: z.ZodType<Prisma.RatingFindUniqueArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereUniqueInputSchema,
+}).strict() as z.ZodType<Prisma.RatingFindUniqueArgs>;
 
-export const ReviewFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ReviewFindUniqueOrThrowArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.ReviewFindUniqueOrThrowArgs>;
+export const RatingFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.RatingFindUniqueOrThrowArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereUniqueInputSchema,
+}).strict() as z.ZodType<Prisma.RatingFindUniqueOrThrowArgs>;
 
 export const GenreFindFirstArgsSchema: z.ZodType<Prisma.GenreFindFirstArgs> = z.object({
   select: GenreSelectSchema.optional(),
@@ -5487,51 +5528,51 @@ export const ShowDeleteManyArgsSchema: z.ZodType<Prisma.ShowDeleteManyArgs> = z.
   where: ShowWhereInputSchema.optional(),
 }).strict() as z.ZodType<Prisma.ShowDeleteManyArgs>;
 
-export const ReviewCreateArgsSchema: z.ZodType<Prisma.ReviewCreateArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  data: z.union([ ReviewCreateInputSchema,ReviewUncheckedCreateInputSchema ]),
-}).strict() as z.ZodType<Prisma.ReviewCreateArgs>;
+export const RatingCreateArgsSchema: z.ZodType<Prisma.RatingCreateArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  data: z.union([ RatingCreateInputSchema,RatingUncheckedCreateInputSchema ]),
+}).strict() as z.ZodType<Prisma.RatingCreateArgs>;
 
-export const ReviewUpsertArgsSchema: z.ZodType<Prisma.ReviewUpsertArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereUniqueInputSchema,
-  create: z.union([ ReviewCreateInputSchema,ReviewUncheckedCreateInputSchema ]),
-  update: z.union([ ReviewUpdateInputSchema,ReviewUncheckedUpdateInputSchema ]),
-}).strict() as z.ZodType<Prisma.ReviewUpsertArgs>;
+export const RatingUpsertArgsSchema: z.ZodType<Prisma.RatingUpsertArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereUniqueInputSchema,
+  create: z.union([ RatingCreateInputSchema,RatingUncheckedCreateInputSchema ]),
+  update: z.union([ RatingUpdateInputSchema,RatingUncheckedUpdateInputSchema ]),
+}).strict() as z.ZodType<Prisma.RatingUpsertArgs>;
 
-export const ReviewCreateManyArgsSchema: z.ZodType<Prisma.ReviewCreateManyArgs> = z.object({
-  data: z.union([ ReviewCreateManyInputSchema,ReviewCreateManyInputSchema.array() ]),
+export const RatingCreateManyArgsSchema: z.ZodType<Prisma.RatingCreateManyArgs> = z.object({
+  data: z.union([ RatingCreateManyInputSchema,RatingCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict() as z.ZodType<Prisma.ReviewCreateManyArgs>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyArgs>;
 
-export const ReviewCreateManyAndReturnArgsSchema: z.ZodType<Prisma.ReviewCreateManyAndReturnArgs> = z.object({
-  data: z.union([ ReviewCreateManyInputSchema,ReviewCreateManyInputSchema.array() ]),
+export const RatingCreateManyAndReturnArgsSchema: z.ZodType<Prisma.RatingCreateManyAndReturnArgs> = z.object({
+  data: z.union([ RatingCreateManyInputSchema,RatingCreateManyInputSchema.array() ]),
   skipDuplicates: z.boolean().optional(),
-}).strict() as z.ZodType<Prisma.ReviewCreateManyAndReturnArgs>;
+}).strict() as z.ZodType<Prisma.RatingCreateManyAndReturnArgs>;
 
-export const ReviewDeleteArgsSchema: z.ZodType<Prisma.ReviewDeleteArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  where: ReviewWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.ReviewDeleteArgs>;
+export const RatingDeleteArgsSchema: z.ZodType<Prisma.RatingDeleteArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  where: RatingWhereUniqueInputSchema,
+}).strict() as z.ZodType<Prisma.RatingDeleteArgs>;
 
-export const ReviewUpdateArgsSchema: z.ZodType<Prisma.ReviewUpdateArgs> = z.object({
-  select: ReviewSelectSchema.optional(),
-  include: ReviewIncludeSchema.optional(),
-  data: z.union([ ReviewUpdateInputSchema,ReviewUncheckedUpdateInputSchema ]),
-  where: ReviewWhereUniqueInputSchema,
-}).strict() as z.ZodType<Prisma.ReviewUpdateArgs>;
+export const RatingUpdateArgsSchema: z.ZodType<Prisma.RatingUpdateArgs> = z.object({
+  select: RatingSelectSchema.optional(),
+  include: RatingIncludeSchema.optional(),
+  data: z.union([ RatingUpdateInputSchema,RatingUncheckedUpdateInputSchema ]),
+  where: RatingWhereUniqueInputSchema,
+}).strict() as z.ZodType<Prisma.RatingUpdateArgs>;
 
-export const ReviewUpdateManyArgsSchema: z.ZodType<Prisma.ReviewUpdateManyArgs> = z.object({
-  data: z.union([ ReviewUpdateManyMutationInputSchema,ReviewUncheckedUpdateManyInputSchema ]),
-  where: ReviewWhereInputSchema.optional(),
-}).strict() as z.ZodType<Prisma.ReviewUpdateManyArgs>;
+export const RatingUpdateManyArgsSchema: z.ZodType<Prisma.RatingUpdateManyArgs> = z.object({
+  data: z.union([ RatingUpdateManyMutationInputSchema,RatingUncheckedUpdateManyInputSchema ]),
+  where: RatingWhereInputSchema.optional(),
+}).strict() as z.ZodType<Prisma.RatingUpdateManyArgs>;
 
-export const ReviewDeleteManyArgsSchema: z.ZodType<Prisma.ReviewDeleteManyArgs> = z.object({
-  where: ReviewWhereInputSchema.optional(),
-}).strict() as z.ZodType<Prisma.ReviewDeleteManyArgs>;
+export const RatingDeleteManyArgsSchema: z.ZodType<Prisma.RatingDeleteManyArgs> = z.object({
+  where: RatingWhereInputSchema.optional(),
+}).strict() as z.ZodType<Prisma.RatingDeleteManyArgs>;
 
 export const GenreCreateArgsSchema: z.ZodType<Prisma.GenreCreateArgs> = z.object({
   select: GenreSelectSchema.optional(),
