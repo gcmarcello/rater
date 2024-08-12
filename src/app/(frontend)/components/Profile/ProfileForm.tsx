@@ -3,7 +3,6 @@ import { DialogActions, DialogHeader } from "../../_shared/components/Dialog";
 import Text from "../../_shared/components/Text";
 import {
   Description,
-  Details,
   FieldGroup,
   Fieldset,
   Form,
@@ -15,35 +14,24 @@ import { SubmitButton } from "../../_shared/form/components/SubmitButton";
 import Label from "../../_shared/form/components/Label";
 import Input from "../../_shared/form/components/Input";
 import Button from "../../_shared/components/Button";
-import useSWR from "swr";
-import { fetcher, mutator, updater } from "@/app/libs/swr/fetcher";
 import useNextStore from "../../hooks/useNextStore";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { PublicUser } from "@/app/types/User";
-import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { Spinner } from "../../_shared/components/Spinner";
-import { Loading } from "../../_shared/components/Loading";
-import useSWRMutation from "swr/mutation";
 import toast from "react-hot-toast";
-import Alert, {
-  AlertActions,
-  AlertTitle,
-} from "../../_shared/components/Alert";
-import { useState } from "react";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import { AccountRemovalModal } from "./AccountRemovalModal";
+import { useFetch, useMutation } from "@/app/libs/swr/fetcher";
+import { Loading } from "../../_shared/components/Loading";
 
 export default function ProfileForm() {
   const auth = useNextStore(useAuthStore, (state) => state);
   const { setIsAccountRemovalModalOpen } = useGlobalStore();
 
-  const { isLoading } = useSWR<PublicUser, ErrorResponse, any>(
+  const { isLoading } = useFetch<PublicUser>(
     auth?.getSession()?.id
       ? `/api/users?where=${encodeURI(`{"id":"${auth?.getSession()?.id}"}`)}`
       : null,
-    fetcher,
     {
-      onError: (error) => {},
       onSuccess: (data) => {
         form.setValue("email", data.email);
         form.setValue("name", data.name);
@@ -55,18 +43,13 @@ export default function ProfileForm() {
     }
   );
 
-  const { trigger, error } = useSWRMutation<
-    PublicUser,
-    ErrorResponse,
+  const { trigger, error } = useMutation<UpdateUserDto, PublicUser>(
     "/api/users",
-    UpdateUserDto,
-    UpdateUserDto
-  >("/api/users", updater<UpdateUserDto>, {
-    onSuccess: (data) => {
-      toast.success("Salvo com sucesso!");
-    },
-    throwOnError: false,
-  });
+    "PUT",
+    {
+      onSuccess: (data) => toast.success("Salvo com sucesso!"),
+    }
+  );
 
   const { Field, ...form } = useForm({
     schema: updateUserDto,

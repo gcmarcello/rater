@@ -18,8 +18,6 @@ import {
   DialogHeader,
 } from "../../_shared/components/Dialog";
 import { useForm } from "../../_shared/form/hooks/useForm";
-import { mutator } from "@/app/libs/swr/fetcher";
-import useSWRMutation from "swr/mutation";
 import { handleFormError } from "../../_shared/form/functions/formErrors";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { Session } from "@/app/types/Session";
@@ -27,6 +25,7 @@ import { ErrorResponse } from "@/app/types/ErrorResponse";
 import useNextStore from "../../hooks/useNextStore";
 import toast from "react-hot-toast";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
+import { useMutation } from "@/app/libs/swr/fetcher";
 
 export default function LoginForm() {
   const { Field, ...form } = useForm({
@@ -37,24 +36,21 @@ export default function LoginForm() {
   const auth = useNextStore(useAuthStore, (state) => state);
   const { setIsAuthModalOpen, setModalForm, modalForm } = useAuthModalStore();
 
-  const { trigger, error } = useSWRMutation<
-    Session,
-    ErrorResponse,
+  const { trigger } = useMutation<LoginDto, Session>(
     "/api/auth/login",
-    LoginDto,
-    LoginDto
-  >("/api/auth/login", mutator<LoginDto>, {
-    onError: (error) => {
-      form.setValue("password", "");
-      handleFormError(error, form);
-    },
-    onSuccess: (data: Session) => {
-      auth?.login(data);
-      setIsAuthModalOpen(false);
-      toast.success("Logado com sucesso!");
-    },
-    throwOnError: false,
-  });
+    "POST",
+    {
+      onError: (error) => {
+        form.setValue("password", "");
+        handleFormError(error, form);
+      },
+      onSuccess: (data) => {
+        auth?.login(data);
+        setIsAuthModalOpen(false);
+        toast.success("Logado com sucesso!");
+      },
+    }
+  );
 
   return (
     <>

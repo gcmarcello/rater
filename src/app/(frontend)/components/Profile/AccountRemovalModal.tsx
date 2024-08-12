@@ -10,21 +10,18 @@ import { Description, Form } from "../../_shared/form/components/Form";
 import { useForm } from "../../_shared/form/hooks/useForm";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import useSWRMutation from "swr/mutation";
-import { deleter } from "@/app/libs/swr/fetcher";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
 import toast from "react-hot-toast";
 import Label from "../../_shared/form/components/Label";
 import useNextStore from "../../hooks/useNextStore";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { SubmitButton } from "../../_shared/form/components/SubmitButton";
+import { useMutation } from "@/app/libs/swr/fetcher";
 
 export function AccountRemovalModal() {
   const auth = useNextStore(useAuthStore, (state) => state);
-  const {
-    setIsAccountRemovalModalOpen,
-    isAccountRemovalModalOpen,
-    setIsProfileModalOpen,
-  } = useGlobalStore();
+  const { setIsAccountRemovalModalOpen, isAccountRemovalModalOpen } =
+    useGlobalStore();
 
   const { Field, ...form } = useForm({
     schema: deleteUserDto,
@@ -33,13 +30,8 @@ export function AccountRemovalModal() {
     },
   });
 
-  const { trigger, error } = useSWRMutation<
-    any,
-    ErrorResponse,
-    string,
-    DeleteUserDto
-  >(`/api/users/`, deleter, {
-    onSuccess: (data) => {
+  const { trigger } = useMutation<DeleteUserDto, any>(`/api/users/`, "DELETE", {
+    onSuccess: () => {
       auth?.logout();
       useGlobalStore.setState({
         isProfileModalOpen: false,
@@ -47,7 +39,6 @@ export function AccountRemovalModal() {
       });
       toast.success("Conta deletada com sucesso!");
     },
-    throwOnError: false,
   });
 
   return (

@@ -6,12 +6,12 @@ import Hero from "./components/Hero";
 import MainPageContainer from "./components/MainPageContainer";
 import { Genre, Movie } from "@prisma/client";
 import styled from "styled-components";
-import { fetcher } from "../libs/swr/fetcher";
 import { MovieWithGenres } from "../types/Movies";
 import { useGlobalStore } from "./hooks/useGlobalStore";
 import { useAuthStore } from "./hooks/useAuthStore";
 import { Spinner } from "./_shared/components/Spinner";
 import { LoadingOverlay } from "./_shared/components/Loading";
+import { useFetch } from "../libs/swr/fetcher";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -33,17 +33,16 @@ export default function Home() {
     featuredMovies,
   } = useGlobalStore();
 
-  useSWR<Genre[]>(genres ? "/api/genres" : null, fetcher, {
+  useFetch<Genre[]>(genres ? "/api/genres" : null, {
     onSuccess: (data) => setGenres(data),
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
 
-  const { isLoading: isLoadingMovies } = useSWR<MovieWithGenres[]>(
+  const { isLoading: isLoadingMovies } = useFetch<MovieWithGenres[]>(
     featuredMovies
       ? "/api/movies?take=4&where={%22highlighted%22:true}&orderBy={%22rating%22:%22desc%22}"
       : null,
-    fetcher,
     {
       onSuccess: (data) => handleHighlightedMovies(data),
       revalidateOnFocus: false,

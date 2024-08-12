@@ -17,11 +17,11 @@ import { DialogActions, DialogHeader } from "../../_shared/components/Dialog";
 import { useForm } from "../../_shared/form/hooks/useForm";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
 import { ErrorResponse } from "@/app/types/ErrorResponse";
-import { mutator } from "@/app/libs/swr/fetcher";
 import useSWRMutation from "swr/mutation";
 import { handleFormError } from "../../_shared/form/functions/formErrors";
 import { Session } from "@/app/types/Session";
 import toast from "react-hot-toast";
+import { useMutation } from "@/app/libs/swr/fetcher";
 
 export default function SignupForm() {
   const { Field, ...form } = useForm({
@@ -31,24 +31,21 @@ export default function SignupForm() {
 
   const { setModalForm } = useAuthModalStore();
 
-  const { trigger, error } = useSWRMutation<
-    Session,
-    ErrorResponse,
+  const { trigger, error } = useMutation<SignupDto, Session>(
     "/api/auth/signup",
-    SignupDto,
-    SignupDto
-  >("/api/auth/signup", mutator<SignupDto>, {
-    onError: (error) => {
-      handleFormError(error, form);
-    },
-    onSuccess: (data: Session) => {
-      setModalForm("login");
-      toast.success("Cadastrado com sucesso! Você já pode fazer login.", {
-        duration: 5000,
-      });
-    },
-    throwOnError: false,
-  });
+    "POST",
+    {
+      onError: (error) => {
+        handleFormError(error, form);
+      },
+      onSuccess: () => {
+        setModalForm("login");
+        toast.success("Cadastrado com sucesso! Você já pode fazer login.", {
+          duration: 5000,
+        });
+      },
+    }
+  );
 
   return (
     <>

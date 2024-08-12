@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { Session } from "@/app/types/Session";
 import { UserService } from "../(resources)/users/service";
+import { logout } from "../(resources)/auth/action";
 
 export function Authentication<T>() {
   return function (
