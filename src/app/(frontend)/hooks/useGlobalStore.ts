@@ -13,9 +13,19 @@ export type GlobalStoreProps = {
   setIsProfileModalOpen: (value: boolean) => void;
   isAccountRemovalModalOpen: boolean;
   setIsAccountRemovalModalOpen: (value: boolean) => void;
+  toBeRatedMovie: MovieWithGenres | null;
+  setToBeRatedMovie: (movie?: MovieWithGenres) => void;
+  toBeRatedShow: MovieWithGenres | null;
+  setToBeRatedShow: (show?: MovieWithGenres) => void;
+  clearToBeRated: () => void;
 };
 
 export const useGlobalStore = create<GlobalStoreProps>((set) => ({
+  toBeRatedMovie: null,
+  setToBeRatedMovie: (movie) => set({ toBeRatedMovie: movie }),
+  toBeRatedShow: null,
+  setToBeRatedShow: (show) => set({ toBeRatedShow: show }),
+  clearToBeRated: () => set({ toBeRatedMovie: null, toBeRatedShow: null }),
   genres: [],
   setGenres: () => {},
   highlightedMovie: null,
