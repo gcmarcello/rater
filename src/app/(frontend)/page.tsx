@@ -90,6 +90,10 @@ export default function Home() {
     "/api/movies?take=8&orderBy={%22releaseDate%22:%22desc%22}"
   );
 
+  const { data: recommendedMovies } = useFetch<MovieWithGenres[]>(
+    "/api/movies/recommendations"
+  );
+
   const { data: ratedMovies, mutate } = useFetch<MovieWithGenres[]>(
     ratings.length
       ? `/api/movies?where=${encodeURIComponent(
@@ -110,9 +114,10 @@ export default function Home() {
     elementRef: recommendedMedia,
   });
 
+  if (isLoadingMovies) return <LoadingOverlay />;
+
   return (
-    <MainContainer>
-      {isLoadingMovies && <LoadingOverlay />}
+    <>
       {highlightedMovie && featuredMovies && (
         <MainPageContainer>
           <Hero key={highlightedMovie?.id} movie={highlightedMovie} />
@@ -217,24 +222,27 @@ export default function Home() {
           <Text $variant="white" size={20}>
             Filmes Recomendados
           </Text>
+          <Text $variant="white" size={20}>
+            Filmes Recomendados
+          </Text>
           <div>
             <CarouselScrollLeftButton
-              onClick={() => xRated(-768)}
-              fill={canXRated(-768) ? "white" : "gray"}
+              onClick={() => xRecommended(-768)}
+              fill={canXRecommended(-768) ? "white" : "gray"}
               width={24}
               height={24}
             />
             <CarouselScrollRightButton
-              onClick={() => xRated(768)}
-              fill={canXRated(768) ? "white" : "gray"}
+              onClick={() => xRecommended(768)}
+              fill={canXRecommended(768) ? "white" : "gray"}
               width={24}
               height={24}
             />
           </div>
         </SectionTitle>
-        {ratedMovies ? (
-          <Carousel ref={ratedMedia}>
-            {ratedMovies.map((movie) => (
+        {recommendedMovies ? (
+          <Carousel ref={recommendedMedia}>
+            {recommendedMovies.map((movie) => (
               <CarouselItem key={movie.id}>
                 <MediaCard movie={movie} />
               </CarouselItem>
@@ -265,6 +273,6 @@ export default function Home() {
       </Section>
 
       <RatingAlert revalidate={mutate} />
-    </MainContainer>
+    </>
   );
 }
