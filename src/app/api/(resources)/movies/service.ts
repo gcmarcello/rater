@@ -36,14 +36,9 @@ export class MovieService {
     });
   }
 
-  @Authentication()
-  static async getMovieRecommendations(
-    request: ParsedRequestWithUser<Prisma.MovieFindManyArgs>
-  ) {
-    const user = request.user;
-
+  static async getMovieRecommendations(userId: string) {
     const ratings = await prisma.rating.findMany({
-      where: { userId: user.id },
+      where: { userId },
       include: { movie: { include: { genres: true } } },
     });
 
