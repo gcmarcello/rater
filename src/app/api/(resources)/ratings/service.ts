@@ -4,6 +4,8 @@ import { Validation } from "../../decorators/Validation";
 import { Authentication } from "../../decorators/Authentication";
 import prisma from "../../infrastructure/prisma";
 import { MovieService } from "../movies/service";
+import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
+import { Prisma } from "@prisma/client";
 
 export class RatingsService {
   @Authentication()
@@ -55,5 +57,19 @@ export class RatingsService {
         },
       });
     }
+  }
+
+  @Authentication()
+  @Validation(RatingFindManyArgsSchema, { validateSearchParams: false })
+  static async getRatings(
+    request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>
+  ) {
+    return await prisma.rating.findMany({
+      ...request.parsedSearchParams,
+      where: {
+        ...request.parsedSearchParams,
+        userId: request.user.id,
+      },
+    });
   }
 }

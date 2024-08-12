@@ -104,7 +104,7 @@ export function MediaCard({
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
 
-  const { setToBeRatedMovie } = useGlobalStore();
+  const { setToBeRatedMovie, ratings } = useGlobalStore();
 
   if (movie)
     return (
@@ -118,12 +118,21 @@ export function MediaCard({
                   : setIsAuthModalOpen(true)
               }
             >
-              <Image
-                src={"/star.svg"}
-                height={20}
-                width={20}
-                alt="highlighted icon"
-              />
+              {ratings.find((rating) => rating.movieId === movie.id) ? (
+                <Image
+                  src={"/fullstar.svg"}
+                  height={20}
+                  width={20}
+                  alt="highlighted icon"
+                />
+              ) : (
+                <Image
+                  src={"/star.svg"}
+                  height={20}
+                  width={20}
+                  alt="highlighted icon"
+                />
+              )}
             </MediaCardStarIndicator>
             <MediaCardStarIndicator>
               <Image src="/star.png" width={20} height={20} alt="Star" />

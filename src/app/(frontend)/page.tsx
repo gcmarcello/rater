@@ -3,13 +3,12 @@ import MainContainer from "@/app/(frontend)/components/Container";
 import useSWR from "swr";
 import { MediaCard } from "./components/MediaCard";
 import MainPageContainer from "./components/MainPageContainer";
-import { Genre, Movie } from "@prisma/client";
+import { Genre, Rating } from "@prisma/client";
 import styled from "styled-components";
 import { MovieWithGenres } from "../types/Movies";
 import { useGlobalStore } from "./hooks/useGlobalStore";
 import { LoadingOverlay } from "./_shared/components/Loading";
 import { useFetch } from "../libs/swr/fetcher";
-import { useRef, useState } from "react";
 import { RatingAlert } from "./components/Rating/RatingAlert";
 import { Hero } from "./components/Hero";
 import Text from "./_shared/components/Text";
@@ -42,18 +41,21 @@ const Sidebar = styled.div`
 
 export default function Home() {
   const {
-    genres,
     setGenres,
     handleHighlightedMovies,
     highlightedMovie,
     featuredMovies,
+    setRatings,
   } = useGlobalStore();
-  const ref = useRef<HTMLInputElement>(null);
 
-  useFetch<Genre[]>(genres ? "/api/genres" : null, {
+  useFetch<Genre[]>("/api/genres", {
     onSuccess: (data) => setGenres(data),
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
+  });
+
+  useFetch<Rating[]>("/api/ratings", {
+    onSuccess: (data) => setRatings(data),
   });
 
   const { isLoading: isLoadingMovies } = useFetch<MovieWithGenres[]>(

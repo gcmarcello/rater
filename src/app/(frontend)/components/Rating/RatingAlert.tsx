@@ -21,13 +21,11 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 
 export function RatingAlert() {
-  const { toBeRatedMovie, toBeRatedShow, clearToBeRated } = useGlobalStore();
+  const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings } =
+    useGlobalStore();
 
   const { Field, ...form } = useForm({
     schema: upsertRatingDto,
-    defaultValues: {
-      movieId: toBeRatedMovie?.id,
-    },
   });
 
   const { trigger } = useMutation<UpsertRatingDto, Rating>(
@@ -42,10 +40,22 @@ export function RatingAlert() {
   );
 
   useEffect(() => {
-    if (toBeRatedMovie) return form.setValue("movieId", toBeRatedMovie.id);
+    if (toBeRatedMovie) {
+      form.setValue("movieId", toBeRatedMovie.id);
 
-    if (toBeRatedShow) return form.setValue("showId", toBeRatedShow.id);
-  }, [toBeRatedMovie, toBeRatedShow, form]);
+      const movieRating = ratings?.find((r) => r.movieId === toBeRatedMovie.id);
+      if (movieRating) {
+        form.setValue("rating", movieRating.rating);
+        form.setValue("comment", movieRating.comment ?? undefined);
+      }
+    } else if (toBeRatedShow) {
+      const showRating = ratings?.find((r) => r.showId === toBeRatedShow?.id);
+      if (showRating) {
+        form.setValue("rating", showRating.rating);
+        form.setValue("comment", showRating.comment ?? undefined);
+      }
+    }
+  }, [toBeRatedMovie, toBeRatedShow, ratings]);
 
   return (
     <Alert
@@ -62,7 +72,8 @@ export function RatingAlert() {
           size={20}
           variant="white"
         >
-          Sua avaliação
+          Sua avaliação -{" "}
+          {ratings.find((r) => r.movieId === toBeRatedMovie?.id)?.rating}
         </Text>
         <Text size={20} variant="white">
           {toBeRatedMovie?.title}

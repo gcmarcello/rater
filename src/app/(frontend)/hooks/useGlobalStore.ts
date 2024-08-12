@@ -1,5 +1,5 @@
 import { MovieWithGenres } from "@/app/types/Movies";
-import { Genre } from "@prisma/client";
+import { Genre, Rating } from "@prisma/client";
 import { Session } from "inspector";
 import { create } from "zustand";
 
@@ -18,6 +18,8 @@ export type GlobalStoreProps = {
   toBeRatedShow: MovieWithGenres | null;
   setToBeRatedShow: (show?: MovieWithGenres) => void;
   clearToBeRated: () => void;
+  ratings: Rating[];
+  setRatings: (ratings: Rating[]) => void;
 };
 
 export const useGlobalStore = create<GlobalStoreProps>((set) => ({
@@ -41,4 +43,6 @@ export const useGlobalStore = create<GlobalStoreProps>((set) => ({
   isAccountRemovalModalOpen: false,
   setIsAccountRemovalModalOpen: (value) =>
     set({ isAccountRemovalModalOpen: value }),
+  ratings: [],
+  setRatings: (ratings) => set({ ratings }),
 }));
