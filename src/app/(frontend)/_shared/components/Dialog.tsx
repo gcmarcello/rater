@@ -11,6 +11,9 @@ import {
   fadeInAnimation,
   slideInAnimation,
 } from "@/app/libs/styled-components/animations";
+import { useMutation } from "@/app/libs/swr/fetcher";
+import { User } from "@prisma/client";
+import { UpdateUserDto } from "@/app/api/(resources)/users/dto";
 
 type DialogProps = {
   size?: "sm" | "md" | "lg";
