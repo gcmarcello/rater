@@ -54,6 +54,7 @@ export default function Textarea(props: HeadlessTextareaProps) {
           <StyledTextarea
             rows={6}
             variant={error ? "error" : "normal"}
+            value={value || ""}
             onChange={fieldOnChange}
             id={id}
             {...props}
