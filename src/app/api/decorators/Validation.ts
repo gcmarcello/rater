@@ -3,6 +3,7 @@ import { ParsedRequest, ParsedRequestWithUser } from "../../types/Request";
 
 type ValidationOptions = {
   validateSearchParams?: boolean;
+  validateBody?: boolean;
 };
 
 export function Validation<T>(
@@ -28,9 +29,13 @@ export function Validation<T>(
         return await originalMethod!.apply(this, [newRequest]);
       }
 
-      (request as any).parsedBody = await request.json();
+      if (request.body) {
+        (request as any).parsedBody = await request.json();
 
-      await validateBody(request.parsedBody, zodSchema);
+        await validateBody(request.parsedBody, zodSchema);
+
+        return await originalMethod!.apply(this, [newRequest]);
+      }
 
       return await originalMethod!.apply(this, [newRequest]);
     };
