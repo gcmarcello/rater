@@ -1,34 +1,17 @@
 import { ParsedRequest, ParsedRequestWithUser } from "@/app/types/Request";
-import { UpdateUserDto } from "./dto";
+import { DeleteUserDto, UpdateUserDto } from "./dto";
 import { ServerResponse } from "../../classes/ServerResponse";
 import { UserService } from "./service";
+import { UsersController } from "./controller";
 
 export async function GET(request: ParsedRequestWithUser<any>) {
-  try {
-    const user = await UserService.read(request);
-    return ServerResponse.json(user);
-  } catch (error) {
-    console.log(error);
-    return ServerResponse.err(error);
-  }
+  return await UsersController.read(request);
 }
 
 export async function PUT(request: ParsedRequestWithUser<UpdateUserDto>) {
-  try {
-    const updateUser = await UserService.update(request);
-    return ServerResponse.json(updateUser);
-  } catch (error) {
-    console.log(error);
-    return ServerResponse.err(error);
-  }
+  return await UsersController.update(request);
 }
 
-export async function DELETE(request: ParsedRequestWithUser<any>) {
-  try {
-    const deleteUser = await UserService.delete(request);
-    return ServerResponse.json(deleteUser);
-  } catch (error) {
-    console.log(error);
-    return ServerResponse.err(error);
-  }
+export async function DELETE(request: ParsedRequestWithUser<DeleteUserDto>) {
+  return await UsersController.delete(request);
 }

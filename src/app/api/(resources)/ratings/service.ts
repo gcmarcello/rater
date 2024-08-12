@@ -8,11 +8,8 @@ import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { Prisma } from "@prisma/client";
 
 export class RatingsService {
-  @Authentication()
-  @Validation(upsertRatingDto)
-  static async upsertRating(request: ParsedRequestWithUser<UpsertRatingDto>) {
-    const { movieId, showId, rating, comment } = request.parsedBody;
-    const user = request.user;
+  static async upsertRating(data: UpsertRatingDto, userId: string) {
+    const { movieId, showId, rating, comment } = data;
 
     if (movieId) {
       const movie = await prisma.movie.findUnique({
@@ -22,12 +19,12 @@ export class RatingsService {
         throw { status: 404, message: "Movie not found" };
       }
       const newRating = await prisma.rating.upsert({
-        where: { userId_movieId: { movieId: movieId, userId: user.id } },
+        where: { userId_movieId: { movieId: movieId, userId } },
         create: {
           rating,
           comment,
           movieId: movieId,
-          userId: user.id,
+          userId,
         },
         update: {
           rating,
@@ -44,12 +41,12 @@ export class RatingsService {
         throw { status: 404, message: "Show not found" };
       }
       return await prisma.rating.upsert({
-        where: { userId_showId: { showId: showId, userId: user.id } },
+        where: { userId_showId: { showId: showId, userId } },
         create: {
           rating,
           comment,
           showId: showId,
-          userId: user.id,
+          userId,
         },
         update: {
           rating,
@@ -59,16 +56,12 @@ export class RatingsService {
     }
   }
 
-  @Authentication()
-  @Validation(RatingFindManyArgsSchema, { validateSearchParams: false })
-  static async getRatings(
-    request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>
-  ) {
+  static async getRatings(data: Prisma.RatingFindManyArgs, userId: string) {
     return await prisma.rating.findMany({
-      ...request.parsedSearchParams,
+      ...data,
       where: {
-        ...request.parsedSearchParams,
-        userId: request.user.id,
+        ...data,
+        userId,
       },
     });
   }
