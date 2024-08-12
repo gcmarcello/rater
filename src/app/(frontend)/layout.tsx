@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/app/(frontend)/components/Header";
 import StyledComponentsRegistry from "../libs/styled-components/registry";
 import { Toaster } from "react-hot-toast";
+import { Footer } from "./_shared/components/Footer";
+import MainContainer from "./components/Container";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,8 @@ export default function RootLayout({
       <body style={{ backgroundColor: "#121212" }} className={inter.className}>
         <StyledComponentsRegistry>
           <Header />
-          {children}
+          <MainContainer>{children}</MainContainer>
+          <Footer />
           <Toaster />
         </StyledComponentsRegistry>
       </body>
