@@ -124,7 +124,7 @@ export function Hero({
                     alt="highlighted icon"
                   />
                   <>
-                    <Text variant="white">Em Destaque</Text>
+                    <Text $variant="white">Em Destaque</Text>
                   </>
                 </Indicator>
                 <Indicator onClick={() => setToBeRatedMovie(movie)}>

@@ -20,7 +20,7 @@ import { Movie, Rating } from "@prisma/client";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
-export function RatingAlert() {
+export function RatingAlert({ revalidate }: { revalidate: () => void }) {
   const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings } =
     useGlobalStore();
 
@@ -35,6 +35,7 @@ export function RatingAlert() {
       onSuccess: () => {
         toast.success("Avaliação enviada com sucesso");
         clearToBeRated();
+        revalidate();
       },
     }
   );
@@ -70,12 +71,12 @@ export function RatingAlert() {
             marginBottom: 8,
           }}
           size={20}
-          variant="white"
+          $variant="white"
         >
           Sua avaliação -{" "}
           {ratings.find((r) => r.movieId === toBeRatedMovie?.id)?.rating}
         </Text>
-        <Text size={20} variant="white">
+        <Text size={20} $variant="white">
           {toBeRatedMovie?.title}
         </Text>
       </AlertTitle>

@@ -22,6 +22,10 @@ import Carousel, {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
 } from "./_shared/components/Carousel";
+import Image from "next/image";
+import Button from "./_shared/components/Button";
+import useNextStore from "./hooks/useNextStore";
+import { useAuthStore } from "./hooks/useAuthStore";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -54,21 +58,20 @@ const Sidebar = styled.div`
 `;
 
 export default function Home() {
+  const auth = useNextStore(useAuthStore, (state) => state);
   const {
     setGenres,
     handleHighlightedMovies,
     highlightedMovie,
     featuredMovies,
     setRatings,
+    ratings,
   } = useGlobalStore();
 
-  const carouselRef = React.useRef<HTMLDivElement>(null);
-
-  useFetch<Genre[]>("/api/genres", {
-    onSuccess: (data) => setGenres(data),
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const latestMedia = React.useRef<HTMLDivElement>(null);
+  const ratedMedia = React.useRef<HTMLDivElement>(null);
+  const recommendedMedia = React.useRef<HTMLDivElement>(null);
+  const celebrities = React.useRef<HTMLDivElement>(null);
 
   useFetch<Rating[]>("/api/ratings", {
     onSuccess: (data) => setRatings(data),
@@ -83,14 +86,29 @@ export default function Home() {
     }
   );
 
-  const { isLoading: isLoadingLatestMovies, data: latestReleases } = useFetch<
-    MovieWithGenres[]
-  >("/api/movies?take=8&orderBy={%22releaseDate%22:%22desc%22}", {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const { data: latestReleases } = useFetch<MovieWithGenres[]>(
+    "/api/movies?take=8&orderBy={%22releaseDate%22:%22desc%22}"
+  );
 
-  const { x, y, canX, canY } = useScroll({ elementRef: carouselRef });
+  const { data: ratedMovies, mutate } = useFetch<MovieWithGenres[]>(
+    ratings.length
+      ? `/api/movies?where=${encodeURIComponent(
+          JSON.stringify({
+            id: { in: ratings.map((rating) => rating.movieId) },
+          })
+        )}`
+      : null
+  );
+
+  const { x: xLatest, canX: canXLatest } = useScroll({
+    elementRef: latestMedia,
+  });
+  const { x: xRated, canX: canXRated } = useScroll({
+    elementRef: ratedMedia,
+  });
+  const { x: xRecommended, canX: canXRecommended } = useScroll({
+    elementRef: recommendedMedia,
+  });
 
   return (
     <MainContainer>
@@ -100,7 +118,7 @@ export default function Home() {
           <Hero key={highlightedMovie?.id} movie={highlightedMovie} />
           <Sidebar>
             <SectionTitle>
-              <Text variant="white" size={20}>
+              <Text $variant="white" size={20}>
                 Destaques Também
               </Text>
             </SectionTitle>
@@ -112,27 +130,28 @@ export default function Home() {
           </Sidebar>
         </MainPageContainer>
       )}
+
       <Section>
         <SectionTitle>
-          <Text variant="white" size={20}>
+          <Text $variant="white" size={20}>
             Últimos Lançamentos
           </Text>
           <div>
             <CarouselScrollLeftButton
-              onClick={() => x(-768)}
-              fill={canX(-768) ? "white" : "gray"}
+              onClick={() => xLatest(-768)}
+              fill={canXLatest(-768) ? "white" : "gray"}
               width={24}
               height={24}
             />
             <CarouselScrollRightButton
-              onClick={() => x(768)}
-              fill={canX(768) ? "white" : "gray"}
+              onClick={() => xLatest(768)}
+              fill={canXLatest(768) ? "white" : "gray"}
               width={24}
               height={24}
             />
           </div>
         </SectionTitle>
-        <Carousel ref={carouselRef}>
+        <Carousel ref={latestMedia}>
           {latestReleases?.map((movie) => (
             <CarouselItem key={movie.id}>
               <MediaCard movie={movie} />
@@ -141,7 +160,111 @@ export default function Home() {
         </Carousel>
       </Section>
 
-      <RatingAlert />
+      <Section>
+        <SectionTitle>
+          <Text $variant="white" size={20}>
+            Filmes Assistidos
+          </Text>
+          <div>
+            <CarouselScrollLeftButton
+              onClick={() => xRated(-768)}
+              fill={canXRated(-768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+            <CarouselScrollRightButton
+              onClick={() => xRated(768)}
+              fill={canXRated(768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+          </div>
+        </SectionTitle>
+        {ratedMovies ? (
+          <Carousel ref={ratedMedia}>
+            {ratedMovies.map((movie) => (
+              <CarouselItem key={movie.id}>
+                <MediaCard movie={movie} />
+              </CarouselItem>
+            ))}
+          </Carousel>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              flexGrow: 1,
+            }}
+          >
+            <Image
+              src={"/clapperboard.svg"}
+              alt="clapperboard"
+              width={48}
+              height={48}
+            />
+            <Text>Ops, nenhum filme avaliado ainda. </Text>
+            <Text $weight={400}>Que tal adicionar um?</Text>
+            {!auth?.getSession() && <Button $variant="secondary">Login</Button>}
+          </div>
+        )}
+      </Section>
+
+      <Section>
+        <SectionTitle>
+          <Text $variant="white" size={20}>
+            Filmes Recomendados
+          </Text>
+          <div>
+            <CarouselScrollLeftButton
+              onClick={() => xRated(-768)}
+              fill={canXRated(-768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+            <CarouselScrollRightButton
+              onClick={() => xRated(768)}
+              fill={canXRated(768) ? "white" : "gray"}
+              width={24}
+              height={24}
+            />
+          </div>
+        </SectionTitle>
+        {ratedMovies ? (
+          <Carousel ref={ratedMedia}>
+            {ratedMovies.map((movie) => (
+              <CarouselItem key={movie.id}>
+                <MediaCard movie={movie} />
+              </CarouselItem>
+            ))}
+          </Carousel>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              flexGrow: 1,
+            }}
+          >
+            <Image
+              src={"/clapperboard.svg"}
+              alt="clapperboard"
+              width={48}
+              height={48}
+            />
+            <Text>Ops, nenhum filme avaliado ainda. </Text>
+            <Text $weight={400}>Que tal adicionar um?</Text>
+            {!auth?.getSession() && <Button $variant="secondary">Login</Button>}
+          </div>
+        )}
+      </Section>
+
+      <RatingAlert revalidate={mutate} />
     </MainContainer>
   );
 }

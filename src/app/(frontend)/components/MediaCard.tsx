@@ -30,7 +30,6 @@ const Card = styled.div<MediaCardProps>`
   min-width: 167px;
   height: 254px;
   border-radius: 24px;
-  cursor: pointer;
   transition-duration: 0.3s;
 
   &:hover {

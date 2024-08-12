@@ -55,12 +55,12 @@ const DangerButton = styled(BaselineButton)`
 `;
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "tertiary" | "danger";
+  $variant?: "primary" | "secondary" | "tertiary" | "danger";
   children: React.ReactNode | string;
 }
 
 export default function Button(props: ButtonProps) {
-  switch (props.variant) {
+  switch (props.$variant) {
     case "primary":
       return (
         <PrimaryWhiteButton {...props}>{props.children}</PrimaryWhiteButton>

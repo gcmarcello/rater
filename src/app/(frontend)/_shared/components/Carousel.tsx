@@ -28,9 +28,14 @@ const StyledCarouselScrollLeftButton = styled(ChevronLeftIcon)`
   cursor: pointer;
   border-radius: 50%;
   transition-duration: 0.3s;
+  display: none;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: inline-block;
   }
 `;
 
@@ -38,9 +43,14 @@ const StyledCarouselScrollRightButton = styled(ChevronRightIcon)`
   cursor: pointer;
   border-radius: 50%;
   transition-duration: 0.3s;
+  display: none;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: inline-block;
   }
 `;
 

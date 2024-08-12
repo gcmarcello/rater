@@ -10,7 +10,7 @@ import { useField } from "../hooks/useField";
 import { useFormContext } from "../context/form.ctx";
 
 type TextareaProps = {
-  variant?: "normal" | "error";
+  $variant?: "normal" | "error";
 };
 
 const StyledTextarea = styled(HeadlessTextarea)<TextareaProps>`
@@ -28,7 +28,7 @@ const StyledTextarea = styled(HeadlessTextarea)<TextareaProps>`
   resize: none;
 
   border: ${(props) =>
-    props.variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
+    props.$variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
 
   &:disabled {
     color: #585858;
@@ -53,7 +53,7 @@ export default function Textarea(props: HeadlessTextareaProps) {
         <>
           <StyledTextarea
             rows={6}
-            variant={error ? "error" : "normal"}
+            $variant={error ? "error" : "normal"}
             value={value || ""}
             onChange={fieldOnChange}
             id={id}

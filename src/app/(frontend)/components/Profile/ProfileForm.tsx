@@ -29,7 +29,9 @@ export default function ProfileForm() {
 
   const { isLoading } = useFetch<PublicUser>(
     auth?.getSession()?.id
-      ? `/api/users?where=${encodeURI(`{"id":"${auth?.getSession()?.id}"}`)}`
+      ? `/api/users?where=${encodeURIComponent(
+          `{"id":"${auth?.getSession()?.id}"}`
+        )}`
       : null,
     {
       onSuccess: (data) => {
@@ -72,7 +74,7 @@ export default function ProfileForm() {
         onSubmit={(data) => trigger(data)}
       >
         <Fieldset>
-          <Text size={20} variant="white">
+          <Text size={20} $variant="white">
             Usuário
           </Text>
           <Description>
@@ -93,7 +95,7 @@ export default function ProfileForm() {
         </Fieldset>
 
         <Fieldset>
-          <Text size={20} variant="white">
+          <Text size={20} $variant="white">
             E-mail
           </Text>
           <Description>
@@ -109,7 +111,7 @@ export default function ProfileForm() {
         </Fieldset>
 
         <Fieldset>
-          <Text size={20} variant="white">
+          <Text size={20} $variant="white">
             Encerramento da conta
           </Text>
           <Description>
@@ -123,7 +125,7 @@ export default function ProfileForm() {
               marginRight: "auto",
               marginTop: "16px",
             }}
-            variant="danger"
+            $variant="danger"
           >
             Deletar conta
           </Button>
@@ -131,7 +133,7 @@ export default function ProfileForm() {
         <ErrorMessage />
 
         <DialogActions>
-          <SubmitButton variant="primary">Salvar Alterações</SubmitButton>
+          <SubmitButton $variant="primary">Salvar Alterações</SubmitButton>
         </DialogActions>
       </Form>
     </>

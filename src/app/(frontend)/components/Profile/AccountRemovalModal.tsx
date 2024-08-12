@@ -47,7 +47,7 @@ export function AccountRemovalModal() {
       setIsOpen={setIsAccountRemovalModalOpen}
       onClose={() => form.setValue("keepRatings", false)}
     >
-      <Text size={20} variant="white">
+      <Text size={20} $variant="white">
         Encerramento da conta
       </Text>
       <Description>
@@ -63,13 +63,13 @@ export function AccountRemovalModal() {
           <Button
             onClick={() => setIsAccountRemovalModalOpen(false)}
             style={{ padding: "16px 28px", flexGrow: 1, width: "100%" }}
-            variant="secondary"
+            $variant="secondary"
           >
             Cancelar
           </Button>
           <SubmitButton
             style={{ padding: "16px 28px", flexGrow: 1, width: "100%" }}
-            variant="primary"
+            $variant="primary"
           >
             Confirmar
           </SubmitButton>

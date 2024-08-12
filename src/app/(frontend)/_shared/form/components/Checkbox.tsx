@@ -45,7 +45,7 @@ export default function Checkbox(props: HeadlessCheckboxProps) {
       render={({ field: { onChange: fieldOnChange, value, ...field } }) => (
         <>
           <StyledCheckbox
-            variant={error ? "error" : "normal"}
+            $variant={error ? "error" : "normal"}
             onChange={(checked: boolean) => {
               props.onChange && props.onChange(checked);
               fieldOnChange(checked);

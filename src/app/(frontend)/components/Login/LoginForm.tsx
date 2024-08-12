@@ -78,7 +78,7 @@ export default function LoginForm() {
           <SubmitButton
             style={{ width: "100%" }}
             type="submit"
-            variant="secondary"
+            $variant="secondary"
           >
             Fazer Login
           </SubmitButton>
@@ -89,7 +89,7 @@ export default function LoginForm() {
               onClick={() => {
                 setModalForm("signup");
               }}
-              variant="white"
+              $variant="white"
             >
               Clique Aqui.
             </Text>

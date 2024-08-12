@@ -82,7 +82,7 @@ export default function SignupForm() {
           <SubmitButton
             style={{ width: "100%" }}
             type="submit"
-            variant="secondary"
+            $variant="secondary"
           >
             Cadastrar
           </SubmitButton>
@@ -93,7 +93,7 @@ export default function SignupForm() {
               onClick={() => {
                 setModalForm("login");
               }}
-              variant="white"
+              $variant="white"
             >
               Clique Aqui.
             </Text>

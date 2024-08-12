@@ -12,7 +12,7 @@ import { useFormContext } from "../context/form.ctx";
 
 type InputProps = {
   type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url";
-  variant?: "normal" | "error";
+  $variant?: "normal" | "error";
 };
 
 const StyledInput = styled(HeadlessInput)<InputProps>`
@@ -29,7 +29,7 @@ const StyledInput = styled(HeadlessInput)<InputProps>`
   flex-grow: 1;
 
   border: ${(props) =>
-    props.variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
+    props.$variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
 
   &:disabled {
     color: #585858;
@@ -90,7 +90,7 @@ export default function Input({
         render={({ field: { onChange: fieldOnChange, value, ...field } }) => (
           <>
             <StyledInput
-              variant={error ? "error" : "normal"}
+              $variant={error ? "error" : "normal"}
               onChange={(e: Event) => {
                 const value = (e.target as any)?.value;
                 onChange && onChange(value);

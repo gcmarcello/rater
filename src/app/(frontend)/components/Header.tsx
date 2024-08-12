@@ -37,9 +37,9 @@ export default function Header() {
           <>
             <Button
               onClick={() => setIsAuthModalOpen(true)}
-              variant="secondary"
+              $variant="secondary"
             >
-              <Text variant="white">Login</Text>
+              <Text $variant="white">Login</Text>
             </Button>
             <Dialog isOpen={isAuthModalOpen} setIsOpen={setIsAuthModalOpen}>
               <AuthModal />
