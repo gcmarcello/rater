@@ -33,7 +33,7 @@ model User {
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  Review    Review[]
+  Rating    Rating[]
 
   @@schema("public")
 }
@@ -71,7 +71,7 @@ model Movie {
   directorId  Int?
   writers     Celebrity[] @relation(name: "Writers")
   starring    Celebrity[] @relation(name: "Starring")
-  Review      Review[]
+  Rating      Rating[]
 
   @@schema("public")
 }
@@ -91,24 +91,26 @@ model Show {
   directorId  Int?
   writers     Celebrity[] @relation(name: "WritersShow")
   starring    Celebrity[] @relation(name: "StarringShow")
-  Review      Review[]
+  Rating      Rating[]
 
   @@schema("public")
 }
 
-model Review {
+model Rating {
   id        Int       @id @default(autoincrement())
   rating    Float
-  comment   String
+  comment   String?
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  movie     Movie     @relation(fields: [movieId], references: [id])
-  movieId   Int
-  show      Show      @relation(fields: [showId], references: [id])
-  showId    Int
+  movie     Movie?    @relation(fields: [movieId], references: [id])
+  movieId   Int?
+  show      Show?     @relation(fields: [showId], references: [id])
+  showId    Int?
   user      User      @relation(fields: [userId], references: [id])
   userId    String    @db.Uuid
 
+  @@unique([userId, showId])
+  @@unique([userId, movieId])
   @@schema("public")
 }
 
