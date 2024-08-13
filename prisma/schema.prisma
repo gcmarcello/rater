@@ -74,18 +74,19 @@ model Movie {
 }
 
 model Show {
-  id          Int       @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
   releaseDate DateTime?
   rating      Float?
   genres      Genre[]
-  highlighted Boolean   @default(false)
+  highlighted Boolean      @default(false)
   /// [ShowOptions]
-  options     Json?     @db.JsonB
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
+  options     Json?        @db.JsonB
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
   Rating      Rating[]
   Crew        Crew[]
+  CastedRole  CastedRole[]
 
   @@schema("public")
 }
@@ -122,8 +123,10 @@ model Genre {
 model CastedRole {
   id          Int       @id @default(autoincrement())
   role        String
-  movie       Movie     @relation(fields: [movieId], references: [id])
-  movieId     Int
+  movie       Movie?    @relation(fields: [movieId], references: [id])
+  movieId     Int?
+  show        Show?     @relation(fields: [showId], references: [id])
+  showId      Int?
   celebrity   Celebrity @relation(fields: [celebrityId], references: [id])
   celebrityId Int
   createdAt   DateTime  @default(now())
