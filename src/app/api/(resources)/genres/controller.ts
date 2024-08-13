@@ -2,9 +2,10 @@ import { ServerResponse } from "../../classes/ServerResponse";
 import { GenreService } from "./service";
 
 export class GenreController {
-  static async getGenres() {
+  constructor(private genreService: GenreService) {}
+  async getGenres() {
     try {
-      const genres = await GenreService.getGenres();
+      const genres = await this.genreService.getGenres();
       return ServerResponse.json(genres);
     } catch (error) {
       console.log(error);

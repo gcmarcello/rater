@@ -14,14 +14,14 @@ import { randomUUID } from "crypto";
 import { z } from "zod";
 
 export class UserService {
-  static async update(data: UpdateUserDto, userId: string) {
+  async update(data: UpdateUserDto, userId: string) {
     return await prisma.user.update({
       where: { id: userId },
       data,
     });
   }
 
-  static async read(userId: string) {
+  async read(userId: string) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { id: true, name: true, email: true, realName: true },
@@ -30,7 +30,7 @@ export class UserService {
     return user;
   }
 
-  static async delete(data: DeleteUserDto, userId: string) {
+  async delete(data: DeleteUserDto, userId: string) {
     if (!data.keepRatings) {
       await prisma.rating.deleteMany({
         where: { userId: userId },
@@ -48,7 +48,7 @@ export class UserService {
     return { message: "User anonymized successfully" };
   }
 
-  static async verifyActiveUser(id: string) {
+  async verifyActiveUser(id: string) {
     const potentialUser = await prisma.user.findUniqueOrThrow({
       where: { id },
     });

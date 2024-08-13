@@ -1,7 +1,7 @@
 import prisma from "../../infrastructure/prisma";
 
 export class ShowService {
-  static async updateShowRating(id: number) {
+  async updateShowRating(id: number) {
     const show = await prisma.show.findUnique({
       where: { id },
       include: { Rating: true },

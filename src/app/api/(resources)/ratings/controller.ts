@@ -8,13 +8,13 @@ import { Validation } from "../../decorators/Validation";
 import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 
 export class RatingsController {
+  constructor(private ratingsService: RatingsService) {}
+
   @Authentication()
   @Validation(RatingFindManyArgsSchema, { validateSearchParams: false })
-  static async getRatings(
-    request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>
-  ) {
+  async getRatings(request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>) {
     try {
-      const rating = await RatingsService.getRatings(
+      const rating = await this.ratingsService.getRatings(
         request.parsedBody,
         request.user.id
       );
@@ -27,9 +27,9 @@ export class RatingsController {
 
   @Authentication()
   @Validation(upsertRatingDto)
-  static async upsertRating(request: ParsedRequestWithUser<UpsertRatingDto>) {
+  async upsertRating(request: ParsedRequestWithUser<UpsertRatingDto>) {
     try {
-      const rating = await RatingsService.upsertRating(
+      const rating = await this.ratingsService.upsertRating(
         request.parsedBody,
         request.user.id
       );

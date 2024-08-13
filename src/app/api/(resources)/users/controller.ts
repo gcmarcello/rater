@@ -13,10 +13,11 @@ import { use } from "react";
 import { UserFindUniqueArgsSchema } from "../../../../../prisma/generated/zod";
 
 export class UsersController {
+  constructor(private userService: UserService) {}
   @Authentication()
-  static async read(request: ParsedRequestWithUser<any>) {
+  async read(request: ParsedRequestWithUser<any>) {
     try {
-      const user = await UserService.read(request.user.id);
+      const user = await this.userService.read(request.user.id);
       return ServerResponse.json(user);
     } catch (error) {
       console.error(error);
@@ -26,9 +27,9 @@ export class UsersController {
 
   @Authentication()
   @Validation(updateUserDto)
-  static async update(request: ParsedRequestWithUser<UpdateUserDto>) {
+  async update(request: ParsedRequestWithUser<UpdateUserDto>) {
     try {
-      const updateUser = await UserService.update(
+      const updateUser = await this.userService.update(
         request.parsedBody,
         request.user.id
       );
@@ -41,9 +42,9 @@ export class UsersController {
 
   @Authentication()
   @Validation(deleteUserDto)
-  static async delete(request: ParsedRequestWithUser<DeleteUserDto>) {
+  async delete(request: ParsedRequestWithUser<DeleteUserDto>) {
     try {
-      const deleteUser = await UserService.delete(
+      const deleteUser = await this.userService.delete(
         request.parsedBody,
         request.user.id
       );

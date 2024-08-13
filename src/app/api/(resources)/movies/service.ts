@@ -9,7 +9,7 @@ import {
 } from "../../../types/Request";
 
 export class MovieService {
-  static async getMovies(data: Prisma.MovieFindManyArgs) {
+  async getMovies(data: Prisma.MovieFindManyArgs) {
     const movies = await prisma.movie.findMany({
       ...data,
       take: data.take ? Math.min(data.take, 100) : 10,
@@ -18,7 +18,7 @@ export class MovieService {
     return movies;
   }
 
-  static async updateMovieRating(id: number) {
+  async updateMovieRating(id: number) {
     const movie = await prisma.movie.findUnique({
       where: { id },
       include: { Rating: true },
@@ -36,7 +36,7 @@ export class MovieService {
     });
   }
 
-  static async getMovieRecommendations(userId: string) {
+  async getMovieRecommendations(userId: string) {
     const ratings = await prisma.rating.findMany({
       where: { userId },
       include: { movie: { include: { genres: true } } },

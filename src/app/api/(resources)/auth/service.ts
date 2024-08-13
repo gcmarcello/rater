@@ -7,7 +7,7 @@ import { Session } from "@/app/types/Session";
 import dayjs from "dayjs";
 
 export class AuthService {
-  static async signup(data: SignupDto) {
+  async signup(data: SignupDto) {
     const existingEmail = await prisma.user.findUnique({
       where: { email: data.email.toLocaleLowerCase() },
     });
@@ -25,7 +25,7 @@ export class AuthService {
     return { message: "Usuário criado com sucesso." };
   }
 
-  static async login(data: LoginDto) {
+  async login(data: LoginDto) {
     const existingUser = await prisma.user.findUnique({
       where: { email: data.email.toLocaleLowerCase() },
     });

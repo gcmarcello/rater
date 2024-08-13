@@ -8,7 +8,8 @@ import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { Prisma } from "@prisma/client";
 
 export class RatingsService {
-  static async upsertRating(data: UpsertRatingDto, userId: string) {
+  constructor(private movieService: MovieService) {}
+  async upsertRating(data: UpsertRatingDto, userId: string) {
     const { movieId, showId, rating, comment } = data;
 
     if (movieId) {
@@ -31,7 +32,7 @@ export class RatingsService {
           comment,
         },
       });
-      await MovieService.updateMovieRating(movieId);
+      await this.movieService.updateMovieRating(movieId);
       return newRating;
     } else if (showId) {
       const show = await prisma.show.findUnique({
@@ -56,7 +57,7 @@ export class RatingsService {
     }
   }
 
-  static async getRatings(data: Prisma.RatingFindManyArgs, userId: string) {
+  async getRatings(data: Prisma.RatingFindManyArgs, userId: string) {
     return await prisma.rating.findMany({
       ...data,
       where: {

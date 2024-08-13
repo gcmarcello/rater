@@ -5,10 +5,11 @@ import { Validation } from "../../decorators/Validation";
 import { ServerResponse } from "../../classes/ServerResponse";
 
 export class AuthController {
+  constructor(private authService: AuthService) {}
   @Validation(loginDto)
-  static async login(request: ParsedRequest<LoginDto>) {
+  async login(request: ParsedRequest<LoginDto>) {
     try {
-      const user = await AuthService.login(request.parsedBody);
+      const user = await this.authService.login(request.parsedBody);
       return ServerResponse.json(user);
     } catch (error) {
       console.error(error);
@@ -17,9 +18,9 @@ export class AuthController {
   }
 
   @Validation(signupDto)
-  static async signup(request: ParsedRequest<SignupDto>) {
+  async signup(request: ParsedRequest<SignupDto>) {
     try {
-      const user = await AuthService.signup(request.parsedBody);
+      const user = await this.authService.signup(request.parsedBody);
       return ServerResponse.json(user);
     } catch (error) {
       console.error(error);

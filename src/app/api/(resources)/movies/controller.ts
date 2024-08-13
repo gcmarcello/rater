@@ -10,10 +10,13 @@ import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { Authentication } from "../../decorators/Authentication";
 
 export class MovieController {
+  constructor(private movieService: MovieService) {}
   @Validation(MovieFindManyArgsSchema, { validateSearchParams: true })
-  static async getMovies(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
+  async getMovies(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
     try {
-      const movies = await MovieService.getMovies(request.parsedSearchParams);
+      const movies = await this.movieService.getMovies(
+        request.parsedSearchParams
+      );
       return ServerResponse.json(movies);
     } catch (error) {
       console.log(error);
@@ -22,9 +25,9 @@ export class MovieController {
   }
 
   @Authentication()
-  static async getMovieRecommendations(request: ParsedRequestWithUser<any>) {
+  async getMovieRecommendations(request: ParsedRequestWithUser<any>) {
     try {
-      const recommendations = await MovieService.getMovieRecommendations(
+      const recommendations = await this.movieService.getMovieRecommendations(
         request.user.id
       );
       return ServerResponse.json(recommendations);
