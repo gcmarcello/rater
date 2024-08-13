@@ -29,6 +29,8 @@ import { useAuthStore } from "./hooks/useAuthStore";
 import { useAuthModalStore } from "./hooks/useAuthModalStore";
 import { LatestReleases } from "./components/MainPage/LatestReleases";
 import { RatedMovies } from "./components/MainPage/RatedMovies";
+import { RecommendedMovies } from "./components/MainPage/RecommendedMovies";
+import { HighlightedCelebrities } from "./components/MainPage/HighlightedCelebrities";
 
 const AdjacentList = styled.div`
   display: flex;
@@ -63,22 +65,15 @@ const Sidebar = styled.div`
 export default function Home() {
   const auth = useNextStore(useAuthStore, (state) => state);
   const {
-    setGenres,
     handleHighlightedMovies,
     highlightedMovie,
     featuredMovies,
     setRatings,
-    ratings,
-    setRatedMovies,
-    ratedMovies,
   } = useGlobalStore();
 
-  const { setIsAuthModalOpen } = useAuthModalStore();
-
-  const recommendedMedia = React.useRef<HTMLDivElement>(null);
   const celebrities = React.useRef<HTMLDivElement>(null);
 
-  useFetch<Rating[]>("/api/ratings", {
+  useFetch<Rating[]>(auth?.getSession() ? "/api/ratings" : null, {
     onSuccess: (data) => setRatings(data),
   });
 
@@ -90,14 +85,6 @@ export default function Home() {
       revalidateOnReconnect: false,
     }
   );
-
-  const { data: recommendedMovies } = useFetch<MovieWithGenres[]>(
-    auth?.getSession() ? "/api/movies/recommendations" : null
-  );
-
-  const { x: xRecommended, canX: canXRecommended } = useScroll({
-    elementRef: recommendedMedia,
-  });
 
   if (isLoadingMovies) return <LoadingOverlay />;
 
@@ -123,70 +110,8 @@ export default function Home() {
 
       <LatestReleases />
       <RatedMovies />
-
-      <Section>
-        <SectionTitle>
-          <div style={{ display: "flex", gap: "12px", alignItems: "baseline" }}>
-            <Text $variant="white" size={24}>
-              Filmes Recomendados
-            </Text>
-            {!auth?.getSession() && (
-              <Text
-                onClick={() => setIsAuthModalOpen(true)}
-                $variant="white"
-                $weight={400}
-                size={16}
-              >
-                Faça <span style={{ fontWeight: 600 }}>login</span> para
-                recomendações personalizadas!
-              </Text>
-            )}
-          </div>
-          <div>
-            <CarouselScrollLeftButton
-              onClick={() => xRecommended(-768)}
-              fill={canXRecommended(-768) ? "white" : "gray"}
-              width={24}
-              height={24}
-            />
-            <CarouselScrollRightButton
-              onClick={() => xRecommended(768)}
-              fill={canXRecommended(768) ? "white" : "gray"}
-              width={24}
-              height={24}
-            />
-          </div>
-        </SectionTitle>
-        {recommendedMovies ? (
-          <Carousel ref={recommendedMedia}>
-            {recommendedMovies.map((movie) => (
-              <CarouselItem key={movie.id}>
-                <MediaCard movie={movie} />
-              </CarouselItem>
-            ))}
-          </Carousel>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "12px",
-              flexGrow: 1,
-            }}
-          >
-            <Image
-              src={"/clapperboard.svg"}
-              alt="clapperboard"
-              width={48}
-              height={48}
-            />
-            <Text>Ops, nenhum filme recomendado para você. </Text>
-            <Text $weight={400}>Aguarde, mais conteúdo aqui em breve!</Text>
-          </div>
-        )}
-      </Section>
+      <RecommendedMovies />
+      <HighlightedCelebrities />
 
       <RatingAlert />
     </>

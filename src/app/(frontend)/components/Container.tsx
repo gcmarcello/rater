@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 100dvw;
+  gap: 12px;
   min-height: calc(100dvh - 84px - 67px);
   padding: 0 12px 12px 12px;
 
