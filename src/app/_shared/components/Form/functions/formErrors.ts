@@ -8,7 +8,7 @@ type MutationError<T extends FieldValues> = {
   path?: ("root" | `root.${string}` | Path<T>)[];
 };
 
-type FormFields<T> = T extends FieldValues ? T : FieldValues;
+export type FormFields<T> = T extends FieldValues ? T : FieldValues;
 
 export function handleFormError<T>(
   error: any,
