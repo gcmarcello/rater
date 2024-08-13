@@ -1,7 +1,12 @@
 import { ErrorResponse } from "@/app/_shared/types/ErrorResponse";
-import useSWR, { SWRConfiguration } from "swr";
+import { SWRConfiguration } from "swr";
 import useSWRImmutable from "swr/immutable";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
+import {
+  FormFields,
+  handleFormError,
+} from "../../components/Form/functions/formErrors";
+import { UseFormReturn } from "../../components/Form/hooks/useForm";
 
 async function handleResponse(r: Response) {
   const parsedResponse = await r.json();
@@ -39,7 +44,9 @@ async function put<T>(url: string, { arg }: { arg: T }) {
 export const useMutation = <I, O>(
   url: string,
   method: "POST" | "PUT" | "DELETE",
-  options?: SWRMutationConfiguration<O, ErrorResponse, string, I>
+  options?: SWRMutationConfiguration<O, ErrorResponse, string, I> & {
+    form?: UseFormReturn<FormFields<I>>;
+  }
 ) => {
   let methodFn;
 
@@ -52,6 +59,10 @@ export const useMutation = <I, O>(
   return useSWRMutation<O, ErrorResponse, string, I>(url, methodFn, {
     ...options,
     throwOnError: false,
+    onError: (error) => {
+      options?.onError && options.onError(error, url, {});
+      options?.form && handleFormError(error, options.form);
+    },
   });
 };
 
