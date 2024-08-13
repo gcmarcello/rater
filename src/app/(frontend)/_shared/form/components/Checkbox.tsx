@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { CheckIcon } from "@heroicons/react/24/solid";
 
 type CheckboxProps = HeadlessCheckboxProps & {
-  variant?: "normal" | "error";
+  $variant?: "normal" | "error";
   invalid?: boolean;
 };
 
