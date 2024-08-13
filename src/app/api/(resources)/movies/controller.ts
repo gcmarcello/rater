@@ -1,7 +1,7 @@
 import {
   type ParsedRequestWithUser,
   type ParsedRequest,
-} from "@/app/types/Request";
+} from "@/app/_shared/types/Request";
 import { Prisma } from "@prisma/client";
 import { MovieService } from "./service";
 import { ServerResponse } from "../../classes/ServerResponse";

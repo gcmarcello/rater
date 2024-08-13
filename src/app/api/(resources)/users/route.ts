@@ -1,7 +1,5 @@
-import { ParsedRequest, ParsedRequestWithUser } from "@/app/types/Request";
+import { ParsedRequestWithUser } from "@/app/_shared/types/Request";
 import { DeleteUserDto, UpdateUserDto } from "./dto";
-import { ServerResponse } from "../../classes/ServerResponse";
-import { UserService } from "./service";
 import { UsersController } from "./controller";
 
 export async function GET(request: ParsedRequestWithUser<any>) {

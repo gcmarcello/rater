@@ -1,16 +1,5 @@
-import { type ParsedRequestWithUser } from "@/app/types/Request";
-import {
-  deleteUserDto,
-  DeleteUserDto,
-  updateUserDto,
-  UpdateUserDto,
-} from "./dto";
-import { Authentication } from "../../decorators/Authentication";
-import { Validation } from "../../decorators/Validation";
-import prisma from "../../infrastructure/prisma";
-import { Prisma } from "@prisma/client";
-import { UserFindUniqueArgsSchema } from "../../../../../prisma/generated/zod";
 import { randomUUID } from "crypto";
+import { DeleteUserDto, UpdateUserDto } from "./dto";
 import { z } from "zod";
 
 export class UserService {

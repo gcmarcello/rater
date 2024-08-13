@@ -1,10 +1,6 @@
-import { type ParsedRequestWithUser } from "@/app/types/Request";
-import { upsertRatingDto, UpsertRatingDto } from "./dto";
-import { Validation } from "../../decorators/Validation";
-import { Authentication } from "../../decorators/Authentication";
+import { UpsertRatingDto } from "./dto";
 import prisma from "../../infrastructure/prisma";
 import { MovieService } from "../movies/service";
-import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { Prisma } from "@prisma/client";
 
 export class RatingsService {

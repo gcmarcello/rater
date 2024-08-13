@@ -1,12 +1,5 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../infrastructure/prisma";
-import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
-import { Validation } from "../../decorators/Validation";
-import { Authentication } from "../../decorators/Authentication";
-import {
-  type ParsedRequestWithUser,
-  type ParsedRequest,
-} from "../../../types/Request";
 
 export class MovieService {
   async getMovies(data: Prisma.MovieFindManyArgs) {

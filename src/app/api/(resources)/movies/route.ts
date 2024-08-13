@@ -1,4 +1,7 @@
-import { ParsedRequest } from "../../../types/Request";
+import {
+  type ParsedRequestWithUser,
+  type ParsedRequest,
+} from "@/app/_shared/types/Request";
 import { Prisma } from "@prisma/client";
 import { MovieController } from "./controller";
 

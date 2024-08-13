@@ -1,4 +1,4 @@
-import { ParsedRequestWithUser } from "@/app/types/Request";
+import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
 import { UpsertRatingDto } from "./dto";
 import { RatingsService } from "./service";
 import { ServerResponse } from "../../classes/ServerResponse";

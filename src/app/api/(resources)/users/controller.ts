@@ -1,4 +1,4 @@
-import { type ParsedRequestWithUser } from "@/app/types/Request";
+import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
 import { ServerResponse } from "../../classes/ServerResponse";
 import { Authentication } from "../../decorators/Authentication";
 import { Validation } from "../../decorators/Validation";
@@ -9,8 +9,6 @@ import {
   UpdateUserDto,
 } from "./dto";
 import { UserService } from "./service";
-import { use } from "react";
-import { UserFindUniqueArgsSchema } from "../../../../../prisma/generated/zod";
 
 export class UsersController {
   private userService: UserService;

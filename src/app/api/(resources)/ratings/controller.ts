@@ -1,4 +1,4 @@
-import { type ParsedRequestWithUser } from "@/app/types/Request";
+import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
 import { ServerResponse } from "../../classes/ServerResponse";
 import { RatingsService } from "./service";
 import { Prisma } from "@prisma/client";

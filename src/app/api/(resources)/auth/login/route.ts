@@ -1,4 +1,4 @@
-import { ParsedRequest } from "../../../../types/Request";
+import { ParsedRequest } from "@/app/_shared/types/Request";
 import { AuthController } from "../controller";
 import { LoginDto } from "../dto";
 import { ServerResponse } from "@/app/api/classes/ServerResponse";

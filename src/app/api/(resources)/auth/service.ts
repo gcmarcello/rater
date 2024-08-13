@@ -3,8 +3,8 @@ import prisma from "../../infrastructure/prisma";
 import { compareData, hashData } from "../../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { Session } from "@/app/types/Session";
 import dayjs from "dayjs";
+import { Session } from "@/app/_shared/types/Session";
 
 export class AuthService {
   async signup(data: SignupDto) {

@@ -1,8 +1,8 @@
-import { type ParsedRequest } from "@/app/types/Request";
 import { AuthService } from "./service";
 import { loginDto, LoginDto, SignupDto, signupDto } from "./dto";
 import { Validation } from "../../decorators/Validation";
 import { ServerResponse } from "../../classes/ServerResponse";
+import { type ParsedRequest } from "@/app/_shared/types/Request";
 
 export class AuthController {
   private authService: AuthService;
