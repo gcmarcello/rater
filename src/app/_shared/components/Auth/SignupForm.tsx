@@ -14,7 +14,6 @@ import {
   Fieldset,
 } from "../Form/components/Form";
 import { SubmitButton } from "../Form/components/SubmitButton";
-import { handleFormError } from "../Form/functions/formErrors";
 import Text from "../Text";
 import Input from "../Form/components/Input";
 import Label from "../Form/components/Label";
@@ -31,9 +30,6 @@ export default function SignupForm() {
     "/api/auth/signup",
     "POST",
     {
-      onError: (error) => {
-        handleFormError(error, form);
-      },
       onSuccess: () => {
         setModalForm("login");
         toast.success("Cadastrado com sucesso! Você já pode fazer login.", {

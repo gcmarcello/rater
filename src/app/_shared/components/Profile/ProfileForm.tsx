@@ -44,17 +44,18 @@ export default function ProfileForm() {
     }
   );
 
+  const { Field, ...form } = useForm({
+    schema: updateUserDto,
+  });
+
   const { trigger, error } = useMutation<UpdateUserDto, PublicUser>(
     "/api/users",
     "PUT",
     {
+      form,
       onSuccess: (data) => toast.success("Salvo com sucesso!"),
     }
   );
-
-  const { Field, ...form } = useForm({
-    schema: updateUserDto,
-  });
 
   if (isLoading) {
     return <Loading />;

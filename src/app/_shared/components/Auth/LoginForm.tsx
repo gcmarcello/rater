@@ -15,7 +15,6 @@ import {
   Form,
 } from "../Form/components/Form";
 import { SubmitButton } from "../Form/components/SubmitButton";
-import { handleFormError } from "../Form/functions/formErrors";
 import Text from "../Text";
 import { Session } from "../../types/Session";
 import Label from "../Form/components/Label";
@@ -36,7 +35,6 @@ export default function LoginForm() {
     {
       onError: (error) => {
         form.setValue("password", "");
-        handleFormError(error, form);
       },
       onSuccess: (data) => {
         auth?.login(data);
