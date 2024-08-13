@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import useNextStore from "../../hooks/useNextStore";
-import { useFetch, useMutation } from "../../libs/swr/fetcher";
+import { useFetch, useFetchMutable, useMutation } from "../../libs/swr/fetcher";
 import { PublicUser } from "../../types/User";
 import { DialogHeader, DialogActions } from "../Dialog";
 import ErrorMessage from "../Form/components/ErrorMessage";
@@ -21,31 +21,40 @@ import Text from "../Text";
 import Label from "../Form/components/Label";
 import Input from "../Form/components/Input";
 import Button from "../Button";
+import { useEffect } from "react";
 
 export default function ProfileForm() {
   const auth = useNextStore(useAuthStore, (state) => state);
-  const { setIsAccountRemovalModalOpen } = useGlobalStore();
+  const { setIsAccountRemovalModalOpen, isProfileModalOpen } = useGlobalStore();
 
-  const { isLoading } = useFetch<PublicUser>(
-    auth?.getSession()?.id
-      ? `/api/users?where=${encodeURIComponent(
-          `{"id":"${auth?.getSession()?.id}"}`
-        )}`
-      : null,
+  const { isLoading, data } = useFetch<PublicUser>(
+    auth?.getSession()?.id ? `/api/users` : null,
     {
       onSuccess: (data) => {
         form.setValue("email", data.email);
         form.setValue("name", data.name);
         data.realName && form.setValue("realName", data.realName);
+        sessionStorage.setItem("user", JSON.stringify(data));
       },
       throwOnError: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
+      revalidateOnMount: true,
     }
   );
 
+  useEffect(() => {
+    if (!data) return;
+    form.setValue("email", data.email);
+    form.setValue("name", data.name);
+    data.realName && form.setValue("realName", data.realName);
+  }, []);
+
   const { Field, ...form } = useForm({
     schema: updateUserDto,
+    defaultValues: {
+      email: data?.email,
+      name: data?.name,
+      realName: data?.realName ?? "",
+    },
   });
 
   const { trigger, error } = useMutation<UpdateUserDto, PublicUser>(
@@ -57,7 +66,7 @@ export default function ProfileForm() {
     }
   );
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return <Loading />;
   }
 
