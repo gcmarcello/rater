@@ -1,5 +1,6 @@
 "use client";
 import styled from "styled-components";
+import Text from "./Text";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -8,5 +9,9 @@ const StyledFooter = styled.footer`
   min-height: 67px;
 `;
 export function Footer() {
-  return <StyledFooter>© 2024 Rader. All rights reserved</StyledFooter>;
+  return (
+    <StyledFooter>
+      <Text $variant="white">© 2024 Rater. All rights reserved</Text>
+    </StyledFooter>
+  );
 }

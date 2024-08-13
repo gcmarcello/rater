@@ -54,6 +54,7 @@ const StyledAlertPanel = styled(DialogPanel)<AlertProps>`
   border: 2px solid rgba(35, 35, 35, 1);
   padding: 24px;
   animation: ${slideInAnimation} 0.5s linear;
+  width: 100%;
 
   @media screen and (min-width: 1024px) {
     overflow: hidden;

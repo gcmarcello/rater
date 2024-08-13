@@ -5,29 +5,30 @@ export type TextProps = {
   size?: number;
   $variant?: "white" | "dark";
   $weight?: 300 | 400 | 500 | 600 | 700;
+  $color?: string;
   children: React.ReactNode;
 } & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const WhiteText = styled.p<TextProps>`
-  color: white;
+  color: ${(props) => props.$color ?? "white"};
   font-weight: ${(props) => props.$weight ?? 600};
   font-size: ${(props) => `${props.size}px`};
 `;
 
 const DarkText = styled.p<TextProps>`
-  color: #121212;
+  color: ${(props) => props.$color ?? "#121212"};
   font-weight: ${(props) => props.$weight ?? 600};
   font-size: ${(props) => `${props.size}px`};
 `;
 
 const WhiteAnchor = styled.a<TextProps>`
-  color: white;
+  color: ${(props) => props.$color ?? "white"};
   font-weight: ${(props) => props.$weight ?? 600};
   font-size: ${(props) => `${props.size}px`};
 `;
 
 const DarkAnchor = styled.a<TextProps>`
-  color: #121212;
+  color: ${(props) => props.$color ?? "#121212"};
   font-weight: ${(props) => props.$weight ?? 600};
   font-size: ${(props) => `${props.size}px`};
 `;
