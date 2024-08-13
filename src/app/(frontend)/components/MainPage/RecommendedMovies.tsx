@@ -16,13 +16,17 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import useNextStore from "../../hooks/useNextStore";
 import { useRef } from "react";
 import Image from "next/image";
+import { HideOnMobile } from "../../_shared/components/MediaQuery";
 
 export function RecommendedMovies() {
   const auth = useNextStore(useAuthStore, (state) => state);
   const { ratings, ratedMovies, setRatedMovies } = useGlobalStore();
   const { setIsAuthModalOpen } = useAuthModalStore();
   const { data: recommendedMovies } = useFetch<MovieWithGenres[]>(
-    auth?.getSession() ? "/api/movies/recommendations" : null
+    auth?.getSession()
+      ? "/api/movies/recommendations"
+      : "/api/movies?take=6&where={%22highlighted%22:true}&skip=4&orderBy={%22rating%22:%22desc%22}",
+    { onSuccess: (data) => console.log(data) }
   );
   const recommendedMedia = useRef<HTMLDivElement>(null);
   const { x: xRecommended, canX: canXRecommended } = useScroll({
@@ -36,17 +40,19 @@ export function RecommendedMovies() {
             <Text $variant="white" size={24}>
               Filmes Recomendados
             </Text>
-            {!auth?.getSession() && (
-              <Text
-                onClick={() => setIsAuthModalOpen(true)}
-                $variant="white"
-                $weight={400}
-                size={16}
-              >
-                Faça <span style={{ fontWeight: 600 }}>login</span> para
-                recomendações personalizadas!
-              </Text>
-            )}
+            <HideOnMobile>
+              {!auth?.getSession() && (
+                <Text
+                  onClick={() => setIsAuthModalOpen(true)}
+                  $variant="white"
+                  $weight={400}
+                  size={16}
+                >
+                  Faça <span style={{ fontWeight: 600 }}>login</span> para
+                  recomendações personalizadas!
+                </Text>
+              )}
+            </HideOnMobile>
           </div>
           <div>
             <CarouselScrollLeftButton

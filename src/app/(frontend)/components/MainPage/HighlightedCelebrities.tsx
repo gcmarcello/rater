@@ -27,7 +27,7 @@ export function HighlightedCelebrities() {
       <Section>
         <SectionTitle>
           <Text $variant="white" size={24}>
-            Últimos Lançamentos
+            Celebridades
           </Text>
           <div>
             <CarouselScrollLeftButton
