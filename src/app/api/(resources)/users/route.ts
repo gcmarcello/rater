@@ -1,15 +1,41 @@
-import { ParsedRequestWithUser } from "@/app/_shared/types/Request";
-import { DeleteUserDto, UpdateUserDto } from "./dto";
+import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import {
+  deleteUserDto,
+  DeleteUserDto,
+  updateUserDto,
+  UpdateUserDto,
+} from "./dto";
 import { UsersController } from "./controller";
+import { UserService } from "./service";
+import { Authentication } from "../../decorators/Authentication";
+import { Validation } from "../../decorators/Validation";
+import { response, routeHandler } from "../../handler";
 
-export async function GET(request: ParsedRequestWithUser<any>) {
-  return await new UsersController().read(request);
+class UsersRoutes {
+  constructor(private userService: UserService) {
+    this.userService = new UserService();
+  }
+
+  @Authentication()
+  async GET(request: ParsedRequestWithUser<any>) {
+    return response(this.userService.read(request.user.id));
+  }
+
+  @Authentication()
+  @Validation(updateUserDto)
+  async PUT(request: ParsedRequestWithUser<UpdateUserDto>) {
+    return response(
+      this.userService.update(request.parsedBody, request.user.id)
+    );
+  }
+
+  @Authentication()
+  @Validation(deleteUserDto)
+  async DELETE(request: ParsedRequestWithUser<DeleteUserDto>) {
+    return response(
+      this.userService.delete(request.parsedBody, request.user.id)
+    );
+  }
 }
 
-export async function PUT(request: ParsedRequestWithUser<UpdateUserDto>) {
-  return await new UsersController().update(request);
-}
-
-export async function DELETE(request: ParsedRequestWithUser<DeleteUserDto>) {
-  return await new UsersController().delete(request);
-}
+export const { GET, PUT, DELETE } = routeHandler(UsersRoutes);

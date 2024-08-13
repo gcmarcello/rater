@@ -1,10 +1,20 @@
-import {
-  type ParsedRequestWithUser,
-  type ParsedRequest,
-} from "@/app/_shared/types/Request";
+import { type ParsedRequest } from "@/app/_shared/types/Request";
 import { Prisma } from "@prisma/client";
-import { MovieController } from "./controller";
+import { response, routeHandler } from "../../handler";
+import { Validation } from "../../decorators/Validation";
+import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
+import { MovieService } from "./service";
 
-export async function GET(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
-  return new MovieController().getMovies(request);
+export class MovieRoutes {
+  private movieService: MovieService;
+  constructor() {
+    this.movieService = new MovieService();
+  }
+
+  @Validation(MovieFindManyArgsSchema, { validateSearchParams: true })
+  async GET(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
+    return response(this.movieService.getMovies(request.parsedSearchParams));
+  }
 }
+
+export const { GET } = routeHandler(MovieRoutes);

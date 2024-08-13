@@ -1,16 +1,30 @@
 import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
-import { UpsertRatingDto } from "./dto";
-import { RatingsService } from "./service";
-import { ServerResponse } from "../../classes/ServerResponse";
+import { upsertRatingDto, UpsertRatingDto } from "./dto";
 import { Prisma } from "@prisma/client";
-import { RatingsController } from "./controller";
+import { response, routeHandler } from "@/app/api/handler";
+import { RatingsService } from "./service";
+import { Authentication } from "../../decorators/Authentication";
+import { Validation } from "../../decorators/Validation";
+class RatingsRoutes {
+  constructor(private ratingsService: RatingsService) {
+    this.ratingsService = new RatingsService();
+  }
 
-export async function GET(
-  request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>
-) {
-  return await new RatingsController().getRatings(request);
+  @Authentication()
+  async GET(request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>) {
+    return response(this.ratingsService.getRatings(request.user.id));
+  }
+
+  @Authentication()
+  @Validation(upsertRatingDto)
+  async POST(request: ParsedRequestWithUser<UpsertRatingDto>) {
+    return response(
+      await this.ratingsService.upsertRating(
+        request.parsedBody,
+        request.user.id
+      )
+    );
+  }
 }
 
-export async function POST(request: ParsedRequestWithUser<UpsertRatingDto>) {
-  return await new RatingsController().upsertRating(request);
-}
+export const { GET, POST } = routeHandler(RatingsRoutes);

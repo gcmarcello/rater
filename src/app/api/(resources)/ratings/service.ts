@@ -4,7 +4,10 @@ import { MovieService } from "../movies/service";
 import { Prisma } from "@prisma/client";
 
 export class RatingsService {
-  constructor(private movieService: MovieService) {}
+  private movieService: MovieService;
+  constructor() {
+    this.movieService = new MovieService();
+  }
   async upsertRating(data: UpsertRatingDto, userId: string) {
     const { movieId, showId, rating, comment } = data;
 
@@ -53,11 +56,9 @@ export class RatingsService {
     }
   }
 
-  async getRatings(data: Prisma.RatingFindManyArgs, userId: string) {
+  async getRatings(userId: string) {
     return await prisma.rating.findMany({
-      ...data,
       where: {
-        ...data,
         userId,
       },
     });

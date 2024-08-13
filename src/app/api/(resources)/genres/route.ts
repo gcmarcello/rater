@@ -1,7 +1,15 @@
 import { GenreService } from "@/app/api/(resources)/genres/service";
-import { ServerResponse } from "@/app/api/classes/ServerResponse";
-import { GenreController } from "./controller";
+import { response, routeHandler } from "../../handler";
 
-export async function GET() {
-  return new GenreController().getGenres();
+class GenreRoutes {
+  private genreService: GenreService;
+  constructor() {
+    this.genreService = new GenreService();
+  }
+
+  async GET() {
+    return response(this.genreService.getGenres());
+  }
 }
+
+export const { GET } = routeHandler(GenreRoutes);

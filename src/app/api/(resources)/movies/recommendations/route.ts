@@ -1,7 +1,18 @@
 import { Prisma } from "@prisma/client";
-import { MovieController } from "../controller";
-import { ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { MovieService } from "../service";
+import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { response, routeHandler } from "@/app/api/handler";
+import { Authentication } from "@/app/api/decorators/Authentication";
 
-export async function GET(request: ParsedRequestWithUser<any>) {
-  return new MovieController().getMovieRecommendations(request);
+class MovieRecommendationRoutes {
+  constructor(private movieService: MovieService) {
+    this.movieService = new MovieService();
+  }
+
+  @Authentication()
+  async GET(request: ParsedRequestWithUser<any>) {
+    return response(this.movieService.getMovieRecommendations(request.user.id));
+  }
 }
+
+export const { GET } = routeHandler(MovieRecommendationRoutes);

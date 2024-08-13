@@ -1,8 +1,18 @@
-import { ParsedRequest } from "@/app/_shared/types/Request";
-import { AuthController } from "../controller";
-import { SignupDto } from "../dto";
-import { ServerResponse } from "@/app/api/classes/ServerResponse";
+import { type ParsedRequest } from "@/app/_shared/types/Request";
+import { signupDto, SignupDto } from "../dto";
+import { AuthService } from "../service";
+import { response, routeHandler } from "@/app/api/handler";
+import { Validation } from "@/app/api/decorators/Validation";
 
-export async function POST(request: ParsedRequest<SignupDto>) {
-  return new AuthController().signup(request);
+class SignupRoutes {
+  constructor(private authService: AuthService) {
+    this.authService = new AuthService();
+  }
+
+  @Validation(signupDto)
+  async POST(request: ParsedRequest<SignupDto>) {
+    return response(this.authService.signup(request.parsedBody));
+  }
 }
+
+export const { POST } = routeHandler(SignupRoutes);
