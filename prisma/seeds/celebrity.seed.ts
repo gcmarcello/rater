@@ -1,4 +1,8 @@
 import prisma from "@/app/api/infrastructure/prisma";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+
 const mediaUrl = (id: number) =>
   `https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&language=pt-BR`;
 const creditsUrl = (id: number) =>
@@ -62,19 +66,30 @@ export async function celebritySeed(movieIds: number[]) {
       data: {
         id: star as number,
         name: starData.name,
+        popularity: starData.popularity,
+        birthDate: starData.birthday
+          ? dayjs(starData.birthday, "YYYY-MM-DD")?.toISOString()
+          : null,
         options: {
           image: `https://image.tmdb.org/t/p/w300_and_h450_bestv2${starData.profile_path}`,
         },
-        starredMovies: {
-          connect: starredMedia?.map((media: any) => ({ id: media.id })),
-        },
-        writtenMovies: {
-          connect: writtenMedia?.map((media: any) => ({ id: media.id })),
-        },
-        directedMovies: {
-          connect: directedMedia?.map((media: any) => ({ id: media.id })),
-        },
       },
+    });
+
+    await prisma.castedRole.createMany({
+      data: starredMedia?.map((media: any) => ({
+        role: media.character,
+        celebrityId: star,
+        movieId: media.id,
+      })),
+    });
+
+    await prisma.crew.createMany({
+      data: writtenMedia?.map((media: any) => ({
+        role: media.job,
+        celebrityId: star,
+        movieId: media.id,
+      })),
     });
   }
 }

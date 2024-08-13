@@ -39,59 +39,53 @@ model User {
 }
 
 model Celebrity {
-  id             Int       @id @default(autoincrement())
-  name           String
-  birthDate      DateTime?
+  id          Int          @id @default(autoincrement())
+  name        String
+  birthDate   DateTime?
+  popularity  Float?
+  highlighted Boolean      @default(false)
   /// [CelebrityOptions]
-  options        Json?     @db.JsonB
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
-  directedMovies Movie[]   @relation(name: "Director")
-  writtenMovies  Movie[]   @relation(name: "Writers")
-  starredMovies  Movie[]   @relation(name: "Starring")
-  starredShows   Show[]    @relation(name: "StarringShow")
-  writtenShows   Show[]    @relation(name: "WritersShow")
-  directedShows  Show[]    @relation(name: "DirectorShow")
+  options     Json?        @db.JsonB
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
+  castedRole  CastedRole[]
+  crew        Crew[]
 
   @@schema("public")
 }
 
 model Movie {
-  id          Int         @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   title       String
   releaseDate DateTime?
   rating      Float?
   genres      Genre[]
-  highlighted Boolean     @default(false)
+  highlighted Boolean      @default(false)
   /// [MovieOptions]
-  options     Json?       @db.JsonB
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime?   @updatedAt
-  director    Celebrity?  @relation(name: "Director", fields: [directorId], references: [id])
+  options     Json?        @db.JsonB
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?    @updatedAt
   directorId  Int?
-  writers     Celebrity[] @relation(name: "Writers")
-  starring    Celebrity[] @relation(name: "Starring")
   Rating      Rating[]
+  castedRole  CastedRole[]
+  crew        Crew[]
 
   @@schema("public")
 }
 
 model Show {
-  id          Int         @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   releaseDate DateTime?
   rating      Float?
   genres      Genre[]
-  highlighted Boolean     @default(false)
+  highlighted Boolean   @default(false)
   /// [ShowOptions]
-  options     Json?       @db.JsonB
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime?   @updatedAt
-  director    Celebrity?  @relation(name: "DirectorShow", fields: [directorId], references: [id])
-  directorId  Int?
-  writers     Celebrity[] @relation(name: "WritersShow")
-  starring    Celebrity[] @relation(name: "StarringShow")
+  options     Json?     @db.JsonB
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
   Rating      Rating[]
+  Crew        Crew[]
 
   @@schema("public")
 }
@@ -121,6 +115,42 @@ model Genre {
   shows     Show[]
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+
+  @@schema("public")
+}
+
+model CastedRole {
+  id          Int       @id @default(autoincrement())
+  role        String
+  movie       Movie     @relation(fields: [movieId], references: [id])
+  movieId     Int
+  celebrity   Celebrity @relation(fields: [celebrityId], references: [id])
+  celebrityId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([movieId, celebrityId, role])
+  @@schema("public")
+}
+
+enum CrewRole {
+  DIRECTOR
+  WRITER
+
+  @@schema("public")
+}
+
+model Crew {
+  id          Int       @id @default(autoincrement())
+  role        String
+  movie       Movie?    @relation(fields: [movieId], references: [id])
+  movieId     Int?
+  show        Show?     @relation(fields: [showId], references: [id])
+  showId      Int?
+  celebrity   Celebrity @relation(fields: [celebrityId], references: [id])
+  celebrityId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@schema("public")
 }
