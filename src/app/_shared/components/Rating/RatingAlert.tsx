@@ -2,11 +2,10 @@ import {
   upsertRatingDto,
   UpsertRatingDto,
 } from "@/app/api/(resources)/ratings/dto";
-import { Fieldset, Label, Textarea } from "@headlessui/react";
 import { Rating } from "@prisma/client";
 import { useEffect } from "react";
 import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
-import { Form } from "@/app/_shared/components/Form/components/Form";
+import { Fieldset, Form } from "@/app/_shared/components/Form/components/Form";
 import toast from "react-hot-toast";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import { useMutation } from "../../libs/swr/fetcher";
@@ -14,9 +13,11 @@ import Alert, { AlertTitle, AlertBody, AlertActions } from "../Alert";
 import { SubmitButton } from "../Form/components/SubmitButton";
 import { StarRating } from "./StarSlider";
 import Text from "../Text";
+import Label from "../Form/components/Label";
+import Textarea from "../Form/components/Textarea";
 
 export function RatingAlert() {
-  const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings } =
+  const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings, setRatings } =
     useGlobalStore();
 
   const { Field, ...form } = useForm({
@@ -28,6 +29,12 @@ export function RatingAlert() {
     "POST",
     {
       onSuccess: (data) => {
+        const updatedRating = ratings?.findIndex((r) => r.id === data.id);
+        if (updatedRating > -1) {
+          const newRatings = [...ratings];
+          newRatings[updatedRating] = data;
+          setRatings(newRatings);
+        }
         toast.success("Avaliação enviada com sucesso");
         clearToBeRated();
       },

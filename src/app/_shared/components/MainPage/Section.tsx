@@ -5,7 +5,7 @@ const StyledSection = styled.section`
   flex-direction: column;
   gap: 12px;
   margin: 24px 0;
-  min-height: 200px;
+  min-height: 300px;
   width: 100%;
 `;
 

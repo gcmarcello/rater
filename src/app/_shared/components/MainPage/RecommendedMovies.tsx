@@ -17,16 +17,16 @@ import Carousel, {
 import { HideOnMobile } from "../MediaQuery";
 import SectionTitle from "../Text/SectionTitle";
 import Text from "../Text";
+import { Loading } from "../Loading";
 
 export function RecommendedMovies() {
   const auth = useNextStore(useAuthStore, (state) => state);
-  const { ratings, ratedMovies, setRatedMovies } = useGlobalStore();
+  const { ratings } = useGlobalStore();
   const { setIsAuthModalOpen } = useAuthModalStore();
-  const { data: recommendedMovies } = useFetch<MovieWithGenres[]>(
-    auth?.getSession()
+  const { data: recommendedMovies, isLoading } = useFetch<MovieWithGenres[]>(
+    auth?.getSession() && ratings.length
       ? "/api/movies/recommendations"
-      : "/api/movies?take=6&where={%22highlighted%22:true}&skip=4&orderBy={%22rating%22:%22desc%22}",
-    { onSuccess: (data) => console.log(data) }
+      : "/api/movies?take=6&where={%22highlighted%22:true}&skip=4&orderBy={%22rating%22:%22desc%22}"
   );
   const recommendedMedia = useRef<HTMLDivElement>(null);
   const { x: xRecommended, canX: canXRecommended } = useScroll({
@@ -69,7 +69,9 @@ export function RecommendedMovies() {
             />
           </div>
         </SectionTitle>
-        {recommendedMovies ? (
+        {isLoading ? (
+          <Loading />
+        ) : recommendedMovies?.length ? (
           <Carousel ref={recommendedMedia}>
             {recommendedMovies.map((movie) => (
               <CarouselItem key={movie.id}>
