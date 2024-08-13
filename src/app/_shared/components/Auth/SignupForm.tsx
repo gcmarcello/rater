@@ -1,16 +1,23 @@
 import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
 import { SignupDto, signupDto } from "@/app/api/(resources)/auth/dto";
-import { Description, Fieldset, Label, Input } from "@headlessui/react";
 import { Session } from "inspector";
 import toast from "react-hot-toast";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
 import { useMutation } from "../../libs/swr/fetcher";
 import { DialogHeader, DialogActions } from "../Dialog";
 import ErrorMessage from "../Form/components/ErrorMessage";
-import { FormTitle, Details, Form } from "../Form/components/Form";
+import {
+  FormTitle,
+  Details,
+  Form,
+  Description,
+  Fieldset,
+} from "../Form/components/Form";
 import { SubmitButton } from "../Form/components/SubmitButton";
 import { handleFormError } from "../Form/functions/formErrors";
 import Text from "../Text";
+import Input from "../Form/components/Input";
+import Label from "../Form/components/Label";
 
 export default function SignupForm() {
   const { Field, ...form } = useForm({

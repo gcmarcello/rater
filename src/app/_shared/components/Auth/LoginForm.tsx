@@ -16,9 +16,10 @@ import {
 } from "../Form/components/Form";
 import { SubmitButton } from "../Form/components/SubmitButton";
 import { handleFormError } from "../Form/functions/formErrors";
-import { Label, Input } from "@headlessui/react";
 import Text from "../Text";
 import { Session } from "../../types/Session";
+import Label from "../Form/components/Label";
+import Input from "../Form/components/Input";
 
 export default function LoginForm() {
   const { Field, ...form } = useForm({

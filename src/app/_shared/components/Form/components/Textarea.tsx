@@ -4,8 +4,6 @@ import {
   Textarea as HeadlessTextarea,
 } from "@headlessui/react";
 import { Controller } from "react-hook-form";
-import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
 import { useField } from "../hooks/useField";
 import { useFormContext } from "../context/form.ctx";
 
