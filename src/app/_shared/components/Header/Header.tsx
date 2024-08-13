@@ -11,6 +11,7 @@ import Button from "../Button";
 import Text from "../Text";
 import Dialog from "../Dialog";
 import { Spinner } from "../Spinner";
+import Link from "next/link";
 
 const HeaderContainer = styled.div`
   width: 100dvw;
@@ -26,7 +27,9 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <Image src="/Logo.png" width={128} height={36} alt="Logo" />
+      <Link href="/">
+        <Image src="/Logo.png" width={128} height={36} alt="Logo" />
+      </Link>
       {auth ? (
         auth.getSession() ? (
           <>
