@@ -20,6 +20,8 @@ export type GlobalStoreProps = {
   clearToBeRated: () => void;
   ratings: Rating[];
   setRatings: (ratings: Rating[]) => void;
+  ratedMovies: MovieWithGenres[];
+  setRatedMovies: (movies: MovieWithGenres[]) => void;
 };
 
 export const useGlobalStore = create<GlobalStoreProps>((set) => ({
@@ -45,4 +47,6 @@ export const useGlobalStore = create<GlobalStoreProps>((set) => ({
     set({ isAccountRemovalModalOpen: value }),
   ratings: [],
   setRatings: (ratings) => set({ ratings }),
+  ratedMovies: [],
+  setRatedMovies: (movies) => set({ ratedMovies: movies }),
 }));

@@ -4,16 +4,16 @@ import {
   DropdownButton,
   DropdownItems,
   DropdownItem,
-} from "../_shared/components/Dropdown";
+} from "../../_shared/components/Dropdown";
 import {
   UserIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import styled from "styled-components";
 import { HTMLProps } from "react";
-import useNextStore from "../hooks/useNextStore";
-import { useAuthStore } from "../hooks/useAuthStore";
-import { useGlobalStore } from "../hooks/useGlobalStore";
+import useNextStore from "../../hooks/useNextStore";
+import { useAuthStore } from "../../hooks/useAuthStore";
+import { useGlobalStore } from "../../hooks/useGlobalStore";
 
 const StyledDropdownOption = styled.div`
   cursor: pointer;

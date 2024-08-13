@@ -1,12 +1,12 @@
 import { MovieWithGenres } from "@/app/types/Movies";
 import { Show } from "@prisma/client";
-import { useGlobalStore } from "../hooks/useGlobalStore";
+import { useGlobalStore } from "../../hooks/useGlobalStore";
 import styled from "styled-components";
-import { MediaCardProps } from "./MediaCard";
-import Indicator from "../_shared/components/Indicator";
+import { MediaCardProps } from "../MediaCard";
+import Indicator from "../../_shared/components/Indicator";
 import Image from "next/image";
-import Text from "../_shared/components/Text";
-import { minutesToHours } from "../utils/minutesToHours";
+import Text from "../../_shared/components/Text";
+import { minutesToHours } from "../../utils/minutesToHours";
 
 const HeroContainer = styled.div`
   display: flex;

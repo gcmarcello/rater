@@ -20,7 +20,7 @@ import { Movie, Rating } from "@prisma/client";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
-export function RatingAlert({ revalidate }: { revalidate: () => void }) {
+export function RatingAlert() {
   const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings } =
     useGlobalStore();
 
@@ -32,10 +32,9 @@ export function RatingAlert({ revalidate }: { revalidate: () => void }) {
     "/api/ratings",
     "POST",
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         toast.success("Avaliação enviada com sucesso");
         clearToBeRated();
-        revalidate();
       },
     }
   );

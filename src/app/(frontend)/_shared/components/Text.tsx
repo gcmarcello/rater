@@ -11,25 +11,25 @@ export type TextProps = {
 const WhiteText = styled.p<TextProps>`
   color: white;
   font-weight: ${(props) => props.$weight ?? 600};
-  size: ${(props) => `${props.size}px`};
+  font-size: ${(props) => `${props.size}px`};
 `;
 
 const DarkText = styled.p<TextProps>`
   color: #121212;
   font-weight: ${(props) => props.$weight ?? 600};
-  size: ${(props) => `${props.size}px`};
+  font-size: ${(props) => `${props.size}px`};
 `;
 
 const WhiteAnchor = styled.a<TextProps>`
   color: white;
   font-weight: ${(props) => props.$weight ?? 600};
-  size: ${(props) => `${props.size}px`};
+  font-size: ${(props) => `${props.size}px`};
 `;
 
 const DarkAnchor = styled.a<TextProps>`
   color: #121212;
   font-weight: ${(props) => props.$weight ?? 600};
-  size: ${(props) => `${props.size}px`};
+  font-size: ${(props) => `${props.size}px`};
 `;
 
 export default function Text(props: TextProps) {
