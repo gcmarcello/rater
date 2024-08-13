@@ -1,5 +1,5 @@
 import { ErrorResponse } from "@/app/_shared/types/ErrorResponse";
-import { SWRConfiguration } from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 import useSWRImmutable from "swr/immutable";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 import {
@@ -73,6 +73,18 @@ export const useFetch = <T>(
   }
 ) => {
   return useSWRImmutable<T, ErrorResponse>(url, get, {
+    throwOnError: false,
+    ...options,
+  });
+};
+
+export const useFetchMutable = <T>(
+  url: string | null,
+  options?: SWRConfiguration & {
+    throwOnError?: false;
+  }
+) => {
+  return useSWR<T, ErrorResponse>(url, get, {
     throwOnError: false,
     ...options,
   });
