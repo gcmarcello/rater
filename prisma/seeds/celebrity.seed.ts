@@ -71,7 +71,7 @@ export async function celebritySeed(movieIds: number[]) {
           ? dayjs(starData.birthday, "YYYY-MM-DD")?.toISOString()
           : null,
         options: {
-          image: `https://image.tmdb.org/t/p/w300_and_h450_bestv2${starData.profile_path}`,
+          image: `https://image.tmdb.org/t/p/original${starData.profile_path}`,
           birthPlace: starData.place_of_birth,
           biography: starData.biography,
         },
