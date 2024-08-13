@@ -3,5 +3,5 @@ import { ServerResponse } from "@/app/api/classes/ServerResponse";
 import { GenreController } from "./controller";
 
 export async function GET() {
-  return await GenreController.getGenres();
+  return new GenreController().getGenres();
 }

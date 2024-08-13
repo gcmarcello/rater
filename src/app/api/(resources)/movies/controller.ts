@@ -10,7 +10,10 @@ import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { Authentication } from "../../decorators/Authentication";
 
 export class MovieController {
-  constructor(private movieService: MovieService) {}
+  private movieService: MovieService;
+  constructor() {
+    this.movieService = new MovieService();
+  }
   @Validation(MovieFindManyArgsSchema, { validateSearchParams: true })
   async getMovies(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
     try {

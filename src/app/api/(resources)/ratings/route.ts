@@ -8,9 +8,9 @@ import { RatingsController } from "./controller";
 export async function GET(
   request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>
 ) {
-  return await RatingsController.getRatings(request);
+  return await new RatingsController().getRatings(request);
 }
 
 export async function POST(request: ParsedRequestWithUser<UpsertRatingDto>) {
-  return await RatingsController.upsertRating(request);
+  return await new RatingsController().upsertRating(request);
 }

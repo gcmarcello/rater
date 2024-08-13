@@ -13,7 +13,10 @@ import { use } from "react";
 import { UserFindUniqueArgsSchema } from "../../../../../prisma/generated/zod";
 
 export class UsersController {
-  constructor(private userService: UserService) {}
+  private userService: UserService;
+  constructor() {
+    this.userService = new UserService();
+  }
   @Authentication()
   async read(request: ParsedRequestWithUser<any>) {
     try {

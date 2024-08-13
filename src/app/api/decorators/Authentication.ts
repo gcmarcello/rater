@@ -33,7 +33,7 @@ export function Authentication<T>() {
           token,
           process.env.JWT_SECRET!
         ) as Session;
-        await UserService.verifyActiveUser(decodedToken.id);
+        await new UserService().verifyActiveUser(decodedToken.id);
         newRequest.user = decodedToken;
       } catch (error) {
         throw {

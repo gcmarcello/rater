@@ -5,7 +5,10 @@ import { Validation } from "../../decorators/Validation";
 import { ServerResponse } from "../../classes/ServerResponse";
 
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  private authService: AuthService;
+  constructor() {
+    this.authService = new AuthService();
+  }
   @Validation(loginDto)
   async login(request: ParsedRequest<LoginDto>) {
     try {

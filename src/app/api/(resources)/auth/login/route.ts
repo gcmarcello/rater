@@ -4,5 +4,5 @@ import { LoginDto } from "../dto";
 import { ServerResponse } from "@/app/api/classes/ServerResponse";
 
 export async function POST(request: ParsedRequest<LoginDto>) {
-  return await AuthController.login(request);
+  return new AuthController().login(request);
 }
