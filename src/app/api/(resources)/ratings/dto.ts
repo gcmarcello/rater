@@ -1,4 +1,17 @@
 import { z } from "zod";
+import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
+
+export const readShowRatingDto = z.object({
+  showId: z.number(),
+});
+
+export type ReadShowRatingDto = z.infer<typeof readShowRatingDto>;
+
+export const readMovieRatingDto = z.object({
+  movieId: z.number(),
+});
+
+export type ReadMovieRatingDto = z.infer<typeof readMovieRatingDto>;
 
 export const upsertRatingDto = z
   .object({
