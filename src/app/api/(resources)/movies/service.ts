@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../infrastructure/prisma";
+import { parseNumber } from "../../utils/parseFloat";
 
 export class MovieService {
   async getMovies(data: Prisma.MovieFindManyArgs) {
@@ -11,9 +12,17 @@ export class MovieService {
     return movies;
   }
 
-  async updateMovieRating(id: number) {
+  async getMovie(id: string | number) {
     const movie = await prisma.movie.findUnique({
-      where: { id },
+      where: { id: parseNumber(id) },
+      include: { genres: true },
+    });
+    return movie;
+  }
+
+  async updateMovieRating(id: string | number) {
+    const movie = await prisma.movie.findUnique({
+      where: { id: parseNumber(id) },
       include: { Rating: true },
     });
     if (!movie) {
@@ -24,7 +33,7 @@ export class MovieService {
       movie.Rating.length;
 
     return await prisma.movie.update({
-      where: { id },
+      where: { id: parseNumber(id) },
       data: { rating: newRatingAverage },
     });
   }
