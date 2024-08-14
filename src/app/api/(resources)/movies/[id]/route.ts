@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 import { MovieFindManyArgsSchema } from "../../../../../../prisma/generated/zod";
 import { MovieService } from "../service";
 
-export class MovieRoutes {
+class MovieRoutes {
   private movieService: MovieService;
   constructor() {
     this.movieService = new MovieService();
