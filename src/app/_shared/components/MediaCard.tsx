@@ -7,13 +7,14 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import { useAuthModalStore } from "../hooks/useAuthModalStore";
 import Indicator from "./Indicator";
 import { MovieWithGenres } from "../types/Movies";
+import Link from "next/link";
 
 export type MediaCardProps = {
   $image?: string;
   $highlighted?: boolean;
 };
 
-const Card = styled.div<MediaCardProps>`
+const Card = styled(Link)<MediaCardProps>`
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -100,7 +101,11 @@ export function MediaCard({
 
   if (movie)
     return (
-      <Card $highlighted={highlighted} $image={movie.options?.image}>
+      <Card
+        href={`/filme/${movie.id}`}
+        $highlighted={highlighted}
+        $image={movie.options?.image}
+      >
         <CardInfo>
           <div style={{ display: "flex", gap: "12px" }}>
             <MediaCardStarIndicator
