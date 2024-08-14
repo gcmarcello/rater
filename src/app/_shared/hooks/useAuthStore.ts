@@ -9,6 +9,7 @@ export type AuthStoreProps = {
   session: Session | null;
   getSession: () => Session | null;
   login: (session: Session) => void;
+  setSession: (session: Session | null) => void;
   logout: () => void;
 };
 
@@ -16,6 +17,7 @@ export const useAuthStore = create<AuthStoreProps>()(
   persist(
     (set, get) => ({
       session: null,
+      setSession: (session: Session | null) => set({ session }),
       getSession: () => {
         const currentSession = get().session;
         if (!currentSession?.exp) return null;
@@ -27,14 +29,8 @@ export const useAuthStore = create<AuthStoreProps>()(
       },
       login: (session: Session) => set({ session }),
       logout: async () => {
-        try {
-          set({ session: null });
-          await logout();
-          toast.success("Deslogado com sucesso!");
-        } catch (error) {
-          toast.error("Erro ao deslogar!");
-          console.error(error);
-        }
+        await logout();
+        set({ session: null });
       },
     }),
 

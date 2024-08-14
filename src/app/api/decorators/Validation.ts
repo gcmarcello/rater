@@ -17,19 +17,22 @@ export function Validation<T>(
     target: any,
     propertyKey: string,
     descriptor: TypedPropertyDescriptor<
-      (request: ParsedRequestWithUser<T>) => Promise<any>
+      (request: ParsedRequestWithUser<T>, params?: any) => Promise<any>
     >
   ) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (request: ParsedRequest<T>) {
+    descriptor.value = async function (
+      request: ParsedRequest<T>,
+      params?: any
+    ) {
       let newRequest = request as ParsedRequestWithUser<T>;
       if (options?.validateSearchParams && request.nextUrl.searchParams) {
         (request as any).parsedSearchParams = validateSearchParams(
           request,
           zodSchema
         );
-        return await originalMethod!.apply(this, [newRequest]);
+        return await originalMethod!.apply(this, [newRequest, params]);
       }
 
       if (request.body) {
@@ -37,10 +40,10 @@ export function Validation<T>(
 
         await validateBody(request.parsedBody, zodSchema);
 
-        return await originalMethod!.apply(this, [newRequest]);
+        return await originalMethod!.apply(this, [newRequest, params]);
       }
 
-      return await originalMethod!.apply(this, [newRequest]);
+      return await originalMethod!.apply(this, [newRequest, params]);
     };
 
     return descriptor;

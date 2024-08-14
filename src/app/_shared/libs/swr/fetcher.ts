@@ -7,9 +7,25 @@ import {
   handleFormError,
 } from "../../components/Form/functions/formErrors";
 import { UseFormReturn } from "../../components/Form/hooks/useForm";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import { useStore } from "zustand";
+
+function clientSession() {
+  const stringSession = localStorage.getItem("auth-storage");
+  if (!stringSession) return "false";
+  const parsedSession = JSON.parse(stringSession);
+  return String(!!parsedSession.state.session);
+}
 
 async function handleResponse(r: Response) {
   const parsedResponse = await r.json();
+  if (
+    (r.headers.get("X-Clear-AuthStorage") || r.status === 401) &&
+    localStorage.getItem("auth-storage")
+  ) {
+    window.dispatchEvent(new Event("storage"));
+  }
   if (!r.ok) {
     throw parsedResponse;
   }
@@ -17,13 +33,20 @@ async function handleResponse(r: Response) {
 }
 
 async function get(url: string) {
-  return fetch(url).then(async (r) => handleResponse(r));
+  return fetch(url, {
+    headers: {
+      "x-client-session": clientSession(),
+    },
+  }).then(async (r) => handleResponse(r));
 }
 
 async function post<T>(url: string, { arg }: { arg: T }) {
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(arg),
+    headers: {
+      "x-client-session": clientSession(),
+    },
   }).then(async (r) => handleResponse(r));
 }
 
@@ -31,6 +54,9 @@ async function del<T>(url: string, { arg }: { arg: T }) {
   fetch(url, {
     method: "DELETE",
     body: JSON.stringify(arg),
+    headers: {
+      "x-client-session": clientSession(),
+    },
   }).then(async (r) => handleResponse(r));
 }
 
@@ -38,6 +64,9 @@ async function put<T>(url: string, { arg }: { arg: T }) {
   return fetch(url, {
     method: "PUT",
     body: JSON.stringify(arg),
+    headers: {
+      "x-client-session": clientSession(),
+    },
   }).then(async (r) => handleResponse(r));
 }
 
