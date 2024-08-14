@@ -3,7 +3,7 @@ import { useGlobalStore } from "../../hooks/useGlobalStore";
 import styled from "styled-components";
 import { MediaCardProps } from "../MediaCard";
 import Image from "next/image";
-import { minutesToHours } from "../../utils/minutesToHours";
+import { minutesToHours } from "../../utils/numbersToString";
 import { MovieWithGenres } from "../../types/Movies";
 import Indicator from "../Indicator";
 import Text from "../Text";
