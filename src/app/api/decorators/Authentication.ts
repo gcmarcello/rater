@@ -22,12 +22,10 @@ export function Authentication<T>() {
         headers().get("x-client-session") === "true" ? true : false;
 
       if (!token) {
-        if (clientSession) {
-          headers().set("X-Clear-AuthStorage", "true");
-        }
         return ServerResponse.err({
           message: "Usuário não autenticado.",
           status: 401,
+          refreshSession: clientSession,
         });
       }
 
@@ -45,6 +43,7 @@ export function Authentication<T>() {
           return ServerResponse.err({
             message: "Usuário não encontrado.",
             status: 401,
+            refreshSession: true,
           });
         newRequest.user = decodedToken;
       } catch (error) {
@@ -52,6 +51,7 @@ export function Authentication<T>() {
         return ServerResponse.err({
           message: "Usuário não encontrado.",
           status: 401,
+          refreshSession: true,
         });
       }
 

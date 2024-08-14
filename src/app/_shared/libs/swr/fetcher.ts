@@ -20,13 +20,13 @@ function clientSession() {
 
 async function handleResponse(r: Response) {
   const parsedResponse = await r.json();
-  if (
-    (r.headers.get("X-Clear-AuthStorage") || r.status === 401) &&
-    localStorage.getItem("auth-storage")
-  ) {
-    window.dispatchEvent(new Event("storage"));
-  }
+
   if (!r.ok) {
+    if (
+      (parsedResponse as ErrorResponse[]).find((e) => e.refreshSession) &&
+      localStorage.getItem("auth-storage")
+    )
+      window.dispatchEvent(new Event("storage"));
     throw parsedResponse;
   }
   return parsedResponse;
