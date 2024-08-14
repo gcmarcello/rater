@@ -1,8 +1,12 @@
 import { ZodSchema } from "zod";
-import { ParsedRequest, ParsedRequestWithUser } from "../../types/Request";
+import {
+  type ParsedRequestWithUser,
+  type ParsedRequest,
+} from "@/app/_shared/types/Request";
 
 type ValidationOptions = {
   validateSearchParams?: boolean;
+  validateBody?: boolean;
 };
 
 export function Validation<T>(
@@ -13,26 +17,33 @@ export function Validation<T>(
     target: any,
     propertyKey: string,
     descriptor: TypedPropertyDescriptor<
-      (request: ParsedRequestWithUser<T>) => Promise<any>
+      (request: ParsedRequestWithUser<T>, params?: any) => Promise<any>
     >
   ) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (request: ParsedRequest<T>) {
+    descriptor.value = async function (
+      request: ParsedRequest<T>,
+      params?: any
+    ) {
       let newRequest = request as ParsedRequestWithUser<T>;
       if (options?.validateSearchParams && request.nextUrl.searchParams) {
         (request as any).parsedSearchParams = validateSearchParams(
           request,
           zodSchema
         );
-        return await originalMethod!.apply(this, [newRequest]);
+        return await originalMethod!.apply(this, [newRequest, params]);
       }
 
-      (request as any).parsedBody = await request.json();
+      if (request.body) {
+        (request as any).parsedBody = await request.json();
 
-      await validateBody(request.parsedBody, zodSchema);
+        await validateBody(request.parsedBody, zodSchema);
 
-      return await originalMethod!.apply(this, [newRequest]);
+        return await originalMethod!.apply(this, [newRequest, params]);
+      }
+
+      return await originalMethod!.apply(this, [newRequest, params]);
     };
 
     return descriptor;

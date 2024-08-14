@@ -1,18 +1,20 @@
-import { Validation } from "../../decorators/Validation";
-import { loginDto, LoginDto, SignupDto, signupDto } from "./dto";
+import { LoginDto, SignupDto } from "./dto";
 import prisma from "../../infrastructure/prisma";
-import { type ParsedRequest } from "../../../types/Request";
 import { compareData, hashData } from "../../utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { Session } from "@/app/types/Session";
+import dayjs from "dayjs";
+import { Session } from "@/app/_shared/types/Session";
+import { UserService } from "../users/service";
 
 export class AuthService {
-  @Validation(signupDto)
-  static async signup(request: ParsedRequest<SignupDto>) {
-    const body = request.parsedBody;
+  private userService: UserService;
+  constructor() {
+    this.userService = new UserService();
+  }
+  async signup(data: SignupDto) {
     const existingEmail = await prisma.user.findUnique({
-      where: { email: body.email.toLocaleLowerCase() },
+      where: { email: data.email.toLocaleLowerCase() },
     });
     if (existingEmail) {
       throw { path: "email", message: "Email já existe.", status: 409 };
@@ -20,21 +22,19 @@ export class AuthService {
 
     await prisma.user.create({
       data: {
-        email: body.email,
-        password: hashData(body.password),
-        name: body.name,
+        email: data.email,
+        password: hashData(data.password),
+        name: data.name,
       },
     });
     return { message: "Usuário criado com sucesso." };
   }
 
-  @Validation(loginDto)
-  static async login(request: ParsedRequest<LoginDto>): Promise<Session> {
-    const body = request.parsedBody;
+  async login(data: LoginDto) {
     const existingUser = await prisma.user.findUnique({
-      where: { email: body.email.toLocaleLowerCase() },
+      where: { email: data.email.toLocaleLowerCase() },
     });
-    if (!existingUser || !compareData(body.password, existingUser.password)) {
+    if (!existingUser || !compareData(data.password, existingUser.password)) {
       throw {
         message: "Email ou senha inválidos.",
         path: "password",
@@ -48,13 +48,22 @@ export class AuthService {
         expiresIn: "7d",
       }
     );
-    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    const expires = dayjs().add(7, "day").diff(0, "s");
     cookies().set("token", token, {
-      secure: true,
       sameSite: "strict",
       httpOnly: true,
-      expires,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     });
     return { name: existingUser.name, exp: expires, id: existingUser.id };
+  }
+
+  async verifyCookie(token: string) {
+    try {
+      const decodedInfo = jwt.verify(token, process.env.JWT_SECRET!) as Session;
+      await this.userService.verifyActiveUser(decodedInfo.id);
+    } catch (error) {
+      return false;
+    }
+    return true;
   }
 }

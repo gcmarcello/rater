@@ -1,11 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { movieSeed } from "./seeds/movies.seed";
 import { genreSeed } from "./seeds/genres.seed";
+import { celebritySeed } from "./seeds/celebrity.seed";
 const prisma = new PrismaClient();
 
 async function main() {
   await genreSeed(prisma);
-  await movieSeed(prisma);
+  const movies = await movieSeed(prisma);
+  const celebrities = await celebritySeed(movies);
 }
 
 main()

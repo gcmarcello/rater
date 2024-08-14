@@ -26,3 +26,9 @@ export const loginDto = z.object({
 });
 
 export type LoginDto = z.infer<typeof loginDto>;
+
+export const verifyDto = z.object({
+  token: z.string(),
+});
+
+export type VerifyDto = z.infer<typeof verifyDto>;

@@ -15,10 +15,12 @@ export async function movieSeed(prisma: PrismaClient) {
     async (res) => await res.json()
   );
   console.log("Fetching Complete. Seeding movies...");
-  const parsedMovies = movies.results.map((movie: any) => ({
+  const parsedMovies = movies.results.map((movie: any, index: number) => ({
+    id: movie.id,
     title: movie.title,
     releaseDate: new Date(movie.release_date),
     rating: movie.vote_average,
+    highlighted: index < 4,
     options: {
       description: movie.overview,
       ageRating: movie.adult ? 18 : 12,
@@ -37,4 +39,5 @@ export async function movieSeed(prisma: PrismaClient) {
     });
   }
   console.log("Seeding movies complete!");
+  return movies.results.map((movie: any) => movie.id);
 }
