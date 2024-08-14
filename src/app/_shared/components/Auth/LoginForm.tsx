@@ -33,6 +33,7 @@ export default function LoginForm() {
     "/api/auth/login",
     "POST",
     {
+      form,
       onError: (error) => {
         form.setValue("password", "");
       },

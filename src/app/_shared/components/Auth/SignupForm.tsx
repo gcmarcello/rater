@@ -30,6 +30,7 @@ export default function SignupForm() {
     "/api/auth/signup",
     "POST",
     {
+      form,
       onSuccess: () => {
         setModalForm("login");
         toast.success("Cadastrado com sucesso! Você já pode fazer login.", {
