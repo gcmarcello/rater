@@ -6,6 +6,7 @@ import MainContainer from "../_shared/components/Container";
 import Header from "../_shared/components/Header/Header";
 import { Footer } from "../_shared/components/Footer";
 import { Toaster } from "react-hot-toast";
+import { AuthWatcher } from "./auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <MainContainer>{children}</MainContainer>
           <Footer />
           <Toaster />
+          <AuthWatcher />
         </StyledComponentsRegistry>
       </body>
     </html>
