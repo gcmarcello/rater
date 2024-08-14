@@ -1,19 +1,12 @@
-import {
-  Description,
-  Dialog as _Dialog,
-  DialogPanel,
-  DialogTitle,
-  Transition,
-} from "@headlessui/react";
-import Button from "./Button";
-import styled, { keyframes } from "styled-components";
+import { Dialog as _Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import styled from "styled-components";
 
-import { User } from "@prisma/client";
-import { UpdateUserDto } from "@/app/api/(resources)/users/dto";
 import {
   fadeInAnimation,
   slideInAnimation,
 } from "../libs/styled-components/animations";
+import { HideOnDesktop } from "./MediaQuery";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 type DialogProps = {
   size?: "sm" | "md" | "lg";
@@ -98,6 +91,12 @@ export const DialogBody = styled(DialogTitle)`
   flex-grow: 1;
 `;
 
+export const DialogTopbar = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
 export default function Dialog({
   isOpen,
   setIsOpen,
@@ -117,7 +116,18 @@ export default function Dialog({
         className="relative z-50"
       >
         <DialogBackdrop>
-          <StyledDialogPanel size={size}>{children}</StyledDialogPanel>
+          <StyledDialogPanel size={size}>
+            <HideOnDesktop>
+              <DialogTopbar>
+                <XMarkIcon
+                  onClick={() => setIsOpen(false)}
+                  height={24}
+                  width={24}
+                />
+              </DialogTopbar>
+            </HideOnDesktop>
+            {children}
+          </StyledDialogPanel>
         </DialogBackdrop>
       </_Dialog>
     </>
