@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../infrastructure/prisma";
-import { parseNumber } from "../../utils/parseFloat";
+import { parseNumber } from "../../../_shared/utils/parseFloat";
 import { CrewCreateArgsSchema } from "../../../../../prisma/generated/zod";
 import { CreateCastDto, ReadCastDto, UpdateCastDto } from "./dto";
 

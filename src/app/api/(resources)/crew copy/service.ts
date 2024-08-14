@@ -2,22 +2,26 @@ import { Prisma } from "@prisma/client";
 import prisma from "../../infrastructure/prisma";
 import { parseNumber } from "../../../_shared/utils/parseFloat";
 import { CrewCreateArgsSchema } from "../../../../../prisma/generated/zod";
-import { CreateCrewDto, ReadCrewDto, UpdateCrewDto } from "./dto";
 
 export class CrewService {
   // CRUD
-  async createCrew(data: CreateCrewDto) {
-    return await prisma.crew.create(data);
+  async createCrew(data: Prisma.CrewCreateArgs["data"]) {
+    return await prisma.crew.create({
+      data,
+    });
   }
 
-  async readCrew(data: ReadCrewDto) {
+  async readCrew(data: Prisma.CrewFindManyArgs) {
     return await prisma.crew.findMany(data);
   }
 
-  async updateCrew(data: UpdateCrewDto, crewId: string | number) {
+  async updateCrew(
+    data: Prisma.CrewUpdateArgs["data"],
+    crewId: string | number
+  ) {
     return await prisma.crew.update({
       where: { id: parseNumber(crewId) },
-      data: data.data,
+      data,
     });
   }
 

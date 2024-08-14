@@ -1,6 +1,6 @@
 import { LoginDto, SignupDto } from "./dto";
 import prisma from "../../infrastructure/prisma";
-import { compareData, hashData } from "../../utils/bcrypt";
+import { compareData, hashData } from "../../../_shared/utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import dayjs from "dayjs";
