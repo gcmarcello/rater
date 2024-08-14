@@ -9,6 +9,8 @@ declare global {
   namespace PrismaJson {
     type CelebrityOptions = {
       image?: string;
+      birthPlace?: string;
+      biography?: string;
     };
     type MovieOptions = {
       description?: string;

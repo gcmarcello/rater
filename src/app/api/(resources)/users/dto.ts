@@ -11,3 +11,9 @@ export const updateUserDto = z.object({
 });
 
 export type UpdateUserDto = z.infer<typeof updateUserDto>;
+
+export const deleteUserDto = z.object({
+  keepRatings: z.boolean().optional(),
+});
+
+export type DeleteUserDto = z.infer<typeof deleteUserDto>;

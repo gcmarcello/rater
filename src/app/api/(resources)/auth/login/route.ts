@@ -1,13 +1,18 @@
-import { ParsedRequest } from "../../../../types/Request";
-import { LoginDto } from "../dto";
+import { type ParsedRequest } from "@/app/_shared/types/Request";
+import { loginDto, LoginDto } from "../dto";
 import { AuthService } from "../service";
-import { ServerResponse } from "@/app/api/classes/ServerResponse";
+import { response, routeHandler } from "@/app/api/handler";
+import { Validation } from "@/app/api/decorators/Validation";
 
-export async function POST(request: ParsedRequest<LoginDto>) {
-  try {
-    const login = await AuthService.login(request);
-    return ServerResponse.json(login);
-  } catch (error) {
-    return ServerResponse.err(error);
+class LoginRoutes {
+  constructor(private authService: AuthService) {
+    this.authService = new AuthService();
+  }
+
+  @Validation(loginDto)
+  async POST(request: ParsedRequest<LoginDto>) {
+    return response(this.authService.login(request.parsedBody));
   }
 }
+
+export const { POST } = routeHandler(LoginRoutes);

@@ -1,7 +1,7 @@
 import prisma from "../../infrastructure/prisma";
 
 export class GenreService {
-  static async getGenres() {
+  async getGenres() {
     return await prisma.genre.findMany();
   }
 }
