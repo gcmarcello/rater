@@ -3,7 +3,7 @@ import {
   MovieCreateArgsSchema,
   MovieFindManyArgsSchema,
   MovieUpdateArgsSchema,
-} from "../../../../../prisma/generated/zod";
+} from "../../../../prisma/generated/zod";
 
 export const createMovieDto = MovieCreateArgsSchema;
 

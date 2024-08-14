@@ -3,7 +3,7 @@ import {
   CrewCreateArgsSchema,
   CrewFindManyArgsSchema,
   CrewUpdateArgsSchema,
-} from "../../../../../prisma/generated/zod";
+} from "../../../../prisma/generated/zod";
 
 export const createCrewDto = CrewCreateArgsSchema;
 

@@ -1,20 +1,14 @@
-import FlexContainer from "@/app/_shared/components/FlexContainer";
-import {
-  HideOnDesktop,
-  HideOnMobile,
-} from "@/app/_shared/components/MediaQuery";
-import Text from "@/app/_shared/components/Text";
-import SectionTitle from "@/app/_shared/components/Text/SectionTitle";
-import { useFetch } from "@/app/_shared/libs/swr/fetcher";
+import FlexContainer from "@/_shared/components/FlexContainer";
+import { HideOnDesktop, HideOnMobile } from "@/_shared/components/MediaQuery";
+import Text from "@/_shared/components/Text";
+import SectionTitle from "@/_shared/components/Text/SectionTitle";
+import { useFetch } from "@/_shared/libs/swr/fetcher";
 import {
   CastWithCelebrity,
   CrewWithCelebrity,
-} from "@/app/_shared/types/Celebrities";
-import { MovieWithGenres } from "@/app/_shared/types/Movies";
-import {
-  minutesToHours,
-  numberToText,
-} from "@/app/_shared/utils/numbersToString";
+} from "@/_shared/types/Celebrities";
+import { MovieWithGenres } from "@/_shared/types/Movies";
+import { minutesToHours, numberToText } from "@/_shared/utils/numbersToString";
 import Image from "next/image";
 import styled from "styled-components";
 

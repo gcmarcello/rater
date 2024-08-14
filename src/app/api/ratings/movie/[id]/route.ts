@@ -1,7 +1,7 @@
 import { response, routeHandler } from "@/app/api/handler";
 import { RatingsService } from "../../service";
-import { type ParsedRequest } from "@/app/_shared/types/Request";
-import { Validation } from "@/app/api/decorators/Validation";
+import { type ParsedRequest } from "@/_shared/types/Request";
+import { Validation } from "@/_shared/decorators/Validation";
 import { readMovieRatingDto, ReadMovieRatingDto } from "../../dto";
 
 class MovieRatingRoutes {

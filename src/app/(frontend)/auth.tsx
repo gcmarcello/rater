@@ -1,8 +1,8 @@
 "use client";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import useNextStore from "../_shared/hooks/useNextStore";
-import { useAuthStore } from "../_shared/hooks/useAuthStore";
+import useNextStore from "@/_shared/hooks/useNextStore";
+import { useAuthStore } from "@/_shared/hooks/useAuthStore";
 
 export function AuthWatcher() {
   const auth = useNextStore(useAuthStore, (state) => state);

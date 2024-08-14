@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RatingFindManyArgsSchema } from "../../../../../prisma/generated/zod";
+import { RatingFindManyArgsSchema } from "../../../../prisma/generated/zod";
 
 export const readShowRatingDto = z.object({
   showId: z.number(),

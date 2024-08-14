@@ -1,5 +1,5 @@
-import { GenreService } from "@/app/api/(resources)/genres/service";
-import { response, routeHandler } from "../../handler";
+import { GenreService } from "@/app/api/genres/service";
+import { response, routeHandler } from "../handler";
 
 class GenreRoutes {
   private genreService: GenreService;

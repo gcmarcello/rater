@@ -1,4 +1,4 @@
-import prisma from "../../infrastructure/prisma";
+import prisma from "@/_shared/infrastructure/prisma";
 
 export class ShowService {
   async updateShowRating(id: number) {

@@ -2,13 +2,13 @@ import Carousel, {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
   CarouselItem,
-} from "@/app/_shared/components/Carousel";
-import { CelebrityCard } from "@/app/_shared/components/CelebrityCard";
-import Text from "@/app/_shared/components/Text";
-import SectionTitle from "@/app/_shared/components/Text/SectionTitle";
-import { useScroll } from "@/app/_shared/hooks/useScroll";
-import { useFetch } from "@/app/_shared/libs/swr/fetcher";
-import { CastWithCelebrity } from "@/app/_shared/types/Celebrities";
+} from "@/_shared/components/Carousel";
+import { CelebrityCard } from "@/_shared/components/CelebrityCard";
+import Text from "@/_shared/components/Text";
+import SectionTitle from "@/_shared/components/Text/SectionTitle";
+import { useScroll } from "@/_shared/hooks/useScroll";
+import { useFetch } from "@/_shared/libs/swr/fetcher";
+import { CastWithCelebrity } from "@/_shared/types/Celebrities";
 import { Movie } from "@prisma/client";
 import { useRef } from "react";
 

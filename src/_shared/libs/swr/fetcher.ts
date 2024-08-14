@@ -1,4 +1,4 @@
-import { ErrorResponse } from "@/app/_shared/types/ErrorResponse";
+import { ErrorResponse } from "@/_shared/types/ErrorResponse";
 import useSWR, { SWRConfiguration } from "swr";
 import useSWRImmutable from "swr/immutable";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";

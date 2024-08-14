@@ -1,18 +1,18 @@
 "use client";
-import { Loading, LoadingOverlay } from "@/app/_shared/components/Loading";
-import { Section } from "@/app/_shared/components/MainPage/Section";
-import { useFetch } from "@/app/_shared/libs/swr/fetcher";
-import { CastWithCelebrity } from "@/app/_shared/types/Celebrities";
-import { MovieWithGenres } from "@/app/_shared/types/Movies";
+import { Loading, LoadingOverlay } from "@/_shared/components/Loading";
+import { Section } from "@/_shared/components/MainPage/Section";
+import { useFetch } from "@/_shared/libs/swr/fetcher";
+import { CastWithCelebrity } from "@/_shared/types/Celebrities";
+import { MovieWithGenres } from "@/_shared/types/Movies";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import MovieCelebCarousel from "./components/MovieCelebCarousel";
 import SimilarMediaCarousel from "./components/SimilarMediaCarousel";
 import MovieInfoSection from "./components/MovieInfoSection";
-import Indicator from "@/app/_shared/components/Indicator";
+import Indicator from "@/_shared/components/Indicator";
 import Link from "next/link";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import { TrailerButton } from "@/app/_shared/components/TrailerButton";
+import { TrailerButton } from "@/_shared/components/TrailerButton";
 
 type MediaHeroProps = {
   $backgroundImage?: string;

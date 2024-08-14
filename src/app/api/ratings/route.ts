@@ -1,10 +1,10 @@
-import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { type ParsedRequestWithUser } from "@/_shared/types/Request";
 import { upsertRatingDto, UpsertRatingDto } from "./dto";
 import { Prisma } from "@prisma/client";
 import { response, routeHandler } from "@/app/api/handler";
 import { RatingsService } from "./service";
-import { Authentication } from "../../decorators/Authentication";
-import { Validation } from "../../decorators/Validation";
+import { Authentication } from "@/_shared/decorators/Authentication";
+import { Validation } from "@/_shared/decorators/Validation";
 class RatingsRoutes {
   constructor(private ratingsService: RatingsService) {
     this.ratingsService = new RatingsService();

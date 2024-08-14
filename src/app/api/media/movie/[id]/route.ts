@@ -1,4 +1,4 @@
-import { MediaService } from "@/app/api/(resources)/media/service";
+import { MediaService } from "@/app/api/media/service";
 import { response, routeHandler } from "@/app/api/handler";
 
 class MediaRoutes {

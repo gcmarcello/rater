@@ -1,5 +1,5 @@
+import { ServerResponse } from "@/_shared/classes/ServerResponse";
 import { NextResponse } from "next/server";
-import { ServerResponse } from "./classes/ServerResponse";
 
 export interface IRequestHandler {
   (request: Request): Promise<NextResponse>;

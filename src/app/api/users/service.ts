@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { DeleteUserDto, UpdateUserDto } from "./dto";
 import { z } from "zod";
-import prisma from "../../infrastructure/prisma";
+import prisma from "@/_shared/infrastructure/prisma";
 
 export class UserService {
   async update(data: UpdateUserDto, userId: string) {

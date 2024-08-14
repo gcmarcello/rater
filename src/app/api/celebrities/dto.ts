@@ -3,7 +3,7 @@ import {
   CelebrityCreateArgsSchema,
   CelebrityFindManyArgsSchema,
   CelebrityUpdateArgsSchema,
-} from "../../../../../prisma/generated/zod";
+} from "../../../../prisma/generated/zod";
 
 export const createCelebrityDto = CelebrityCreateArgsSchema;
 

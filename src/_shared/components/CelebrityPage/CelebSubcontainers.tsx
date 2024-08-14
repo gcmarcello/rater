@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import FlexContainer from "@/app/_shared/components/FlexContainer";
+import FlexContainer from "@/_shared/components/FlexContainer";
 
 const StyledMediaContainer = styled(FlexContainer)`
   display: flex;

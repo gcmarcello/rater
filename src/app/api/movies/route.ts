@@ -1,9 +1,9 @@
-import { type ParsedRequest } from "@/app/_shared/types/Request";
+import { type ParsedRequest } from "@/_shared/types/Request";
 import { Prisma } from "@prisma/client";
-import { response, routeHandler } from "../../handler";
-import { Validation } from "../../decorators/Validation";
-import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { MovieService } from "./service";
+import { MovieFindManyArgsSchema } from "../../../../prisma/generated/zod";
+import { Validation } from "@/_shared/decorators/Validation";
+import { response, routeHandler } from "../handler";
 
 class MovieRoutes {
   private movieService: MovieService;

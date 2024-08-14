@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { createContext, useContext, useId } from "react";
 import { FieldContext } from "../hooks/useField";
 import { useFormContext } from "../context/form.ctx";
-import { getZodFields } from "@/app/_shared/libs/zod/getFieldsFromSchema";
+import { getZodFields } from "@/_shared/libs/zod/getFieldsFromSchema";
 import { getEntryFromPath } from "../functions/getEntryFromPath";
 
 export type FieldProps<Fields extends FieldValues> = FieldsetProps & {

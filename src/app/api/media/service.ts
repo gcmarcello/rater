@@ -1,7 +1,6 @@
-import { MovieWithGenres } from "@/app/_shared/types/Movies";
-import prisma from "../../infrastructure/prisma";
-import { parseNumber } from "../../../_shared/utils/parseFloat";
-import { Media, RecommendedMedia } from "@/app/_shared/types/Media";
+import prisma from "@/_shared/infrastructure/prisma";
+import { Media } from "@/_shared/types/Media";
+import { parseNumber } from "@/_shared/utils/parseFloat";
 import { Movie, Show } from "@prisma/client";
 
 export class MediaService {

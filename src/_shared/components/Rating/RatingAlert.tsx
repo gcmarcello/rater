@@ -1,11 +1,8 @@
-import {
-  upsertRatingDto,
-  UpsertRatingDto,
-} from "@/app/api/(resources)/ratings/dto";
+import { upsertRatingDto, UpsertRatingDto } from "@/app/api/ratings/dto";
 import { Rating } from "@prisma/client";
 import { useEffect } from "react";
-import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
-import { Fieldset, Form } from "@/app/_shared/components/Form/components/Form";
+import { useForm } from "@/_shared/components/Form/hooks/useForm";
+import { Fieldset, Form } from "@/_shared/components/Form/components/Form";
 import toast from "react-hot-toast";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import { useMutation } from "../../libs/swr/fetcher";

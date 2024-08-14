@@ -3,22 +3,22 @@
 import { Rating } from "@prisma/client";
 import React from "react";
 import styled from "styled-components";
-import { LoadingOverlay } from "../_shared/components/Loading";
-import { Hero } from "../_shared/components/MainPage/Hero";
-import { HighlightedCelebrities } from "../_shared/components/MainPage/HighlightedCelebrities";
-import { LatestReleases } from "../_shared/components/MainPage/LatestReleases";
-import MainPageContainer from "../_shared/components/MainPage/MainPageContainer";
-import { RatedMovies } from "../_shared/components/MainPage/RatedMovies";
-import { RecommendedMovies } from "../_shared/components/MainPage/RecommendedMovies";
-import { MediaCard } from "../_shared/components/MediaCard";
-import { RatingAlert } from "../_shared/components/Rating/RatingAlert";
-import SectionTitle from "../_shared/components/Text/SectionTitle";
-import { useAuthStore } from "../_shared/hooks/useAuthStore";
-import { useGlobalStore } from "../_shared/hooks/useGlobalStore";
-import useNextStore from "../_shared/hooks/useNextStore";
-import { useFetch } from "../_shared/libs/swr/fetcher";
-import { MovieWithGenres } from "../_shared/types/Movies";
-import Text from "../_shared/components/Text";
+import { LoadingOverlay } from "@/_shared/components/Loading";
+import { Hero } from "@/_shared/components/MainPage/Hero";
+import { HighlightedCelebrities } from "@/_shared/components/MainPage/HighlightedCelebrities";
+import { LatestReleases } from "@/_shared/components/MainPage/LatestReleases";
+import MainPageContainer from "@/_shared/components/MainPage/MainPageContainer";
+import { RatedMovies } from "@/_shared/components/MainPage/RatedMovies";
+import { RecommendedMovies } from "@/_shared/components/MainPage/RecommendedMovies";
+import { MediaCard } from "@/_shared/components/MediaCard";
+import { RatingAlert } from "@/_shared/components/Rating/RatingAlert";
+import SectionTitle from "@/_shared/components/Text/SectionTitle";
+import { useAuthStore } from "@/_shared/hooks/useAuthStore";
+import { useGlobalStore } from "@/_shared/hooks/useGlobalStore";
+import useNextStore from "@/_shared/hooks/useNextStore";
+import { useFetch } from "@/_shared/libs/swr/fetcher";
+import { MovieWithGenres } from "@/_shared/types/Movies";
+import Text from "@/_shared/components/Text";
 
 const AdjacentList = styled.div`
   display: flex;

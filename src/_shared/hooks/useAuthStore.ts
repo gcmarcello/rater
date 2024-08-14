@@ -1,5 +1,5 @@
-import { logout } from "@/app/api/(resources)/auth/action";
-import { Session } from "@/app/_shared/types/Session";
+import { logout } from "@/app/api/auth/action";
+import { Session } from "@/_shared/types/Session";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { create, createStore } from "zustand";

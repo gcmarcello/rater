@@ -1,8 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { MovieService } from "../service";
-import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { type ParsedRequestWithUser } from "@/_shared/types/Request";
 import { response, routeHandler } from "@/app/api/handler";
-import { Authentication } from "@/app/api/decorators/Authentication";
+import { Authentication } from "@/_shared/decorators/Authentication";
 
 class MovieRecommendationRoutes {
   constructor(private movieService: MovieService) {

@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
-import prisma from "../../infrastructure/prisma";
-import { parseNumber } from "../../../_shared/utils/parseFloat";
+import prisma from "@/_shared/infrastructure/prisma";
 import { ReadMovieDto } from "./dto";
+import { parseNumber } from "@/_shared/utils/parseFloat";
 
 export class MovieService {
   async getMovies(data: ReadMovieDto) {

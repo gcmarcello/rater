@@ -4,7 +4,7 @@ import {
   DropdownButton,
   DropdownItems,
   DropdownItem,
-} from "@/app/_shared/components/Dropdown";
+} from "@/_shared/components/Dropdown";
 import {
   UserIcon,
   ArrowRightStartOnRectangleIcon,

@@ -1,8 +1,8 @@
-import { type ParsedRequest } from "@/app/_shared/types/Request";
+import { type ParsedRequest } from "@/_shared/types/Request";
 import { signupDto, SignupDto } from "../dto";
 import { AuthService } from "../service";
 import { response, routeHandler } from "@/app/api/handler";
-import { Validation } from "@/app/api/decorators/Validation";
+import { Validation } from "@/_shared/decorators/Validation";
 
 class SignupRoutes {
   constructor(private authService: AuthService) {

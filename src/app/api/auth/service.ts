@@ -1,10 +1,10 @@
 import { LoginDto, SignupDto } from "./dto";
-import prisma from "../../infrastructure/prisma";
-import { compareData, hashData } from "../../../_shared/utils/bcrypt";
+import prisma from "@/_shared/infrastructure/prisma";
+import { compareData, hashData } from "@/_shared/utils/bcrypt";
 import * as jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import dayjs from "dayjs";
-import { Session } from "@/app/_shared/types/Session";
+import { Session } from "@/_shared/types/Session";
 import { UserService } from "../users/service";
 
 export class AuthService {

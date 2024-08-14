@@ -1,10 +1,10 @@
-import { UpdateUserDto, updateUserDto } from "@/app/api/(resources)/users/dto";
-import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
+import { UpdateUserDto, updateUserDto } from "@/app/api/users/dto";
+import { useForm } from "@/_shared/components/Form/hooks/useForm";
 import {
   Description,
   Fieldset,
   Form,
-} from "@/app/_shared/components/Form/components/Form";
+} from "@/_shared/components/Form/components/Form";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useGlobalStore } from "../../hooks/useGlobalStore";

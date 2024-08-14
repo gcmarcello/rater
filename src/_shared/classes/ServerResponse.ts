@@ -1,5 +1,5 @@
-import { ErrorResponse } from "@/app/_shared/types/ErrorResponse";
 import { NextResponse } from "next/server";
+import { ErrorResponse } from "../types/ErrorResponse";
 
 export class ServerResponse extends NextResponse {
   static err(error: unknown) {

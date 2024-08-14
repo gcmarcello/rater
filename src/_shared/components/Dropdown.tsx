@@ -9,7 +9,7 @@ import {
   MenuItemsProps,
   MenuProps,
 } from "@headlessui/react";
-import { fadeInAnimation } from "@/app/_shared/libs/styled-components/animations";
+import { fadeInAnimation } from "@/_shared/libs/styled-components/animations";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import { HTMLProps, ReactNode, useMemo } from "react";
 

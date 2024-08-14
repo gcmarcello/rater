@@ -1,4 +1,4 @@
-import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { type ParsedRequestWithUser } from "@/_shared/types/Request";
 import {
   deleteUserDto,
   DeleteUserDto,
@@ -6,9 +6,9 @@ import {
   UpdateUserDto,
 } from "./dto";
 import { UserService } from "./service";
-import { Authentication } from "../../decorators/Authentication";
-import { Validation } from "../../decorators/Validation";
-import { response, routeHandler } from "../../handler";
+import { Authentication } from "@/_shared/decorators/Authentication";
+import { Validation } from "@/_shared/decorators/Validation";
+import { response, routeHandler } from "@/app/api/handler";
 
 class UsersRoutes {
   constructor(private userService: UserService) {

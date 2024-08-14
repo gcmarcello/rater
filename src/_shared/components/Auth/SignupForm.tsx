@@ -1,5 +1,5 @@
-import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
-import { SignupDto, signupDto } from "@/app/api/(resources)/auth/dto";
+import { useForm } from "@/_shared/components/Form/hooks/useForm";
+import { SignupDto, signupDto } from "@/app/api/auth/dto";
 import { Session } from "inspector";
 import toast from "react-hot-toast";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";

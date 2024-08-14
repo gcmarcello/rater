@@ -2,7 +2,7 @@ import { ZodSchema } from "zod";
 import {
   type ParsedRequestWithUser,
   type ParsedRequest,
-} from "@/app/_shared/types/Request";
+} from "@/_shared/types/Request";
 
 type ValidationOptions = {
   validateSearchParams?: boolean;

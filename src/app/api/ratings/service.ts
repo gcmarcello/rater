@@ -1,8 +1,8 @@
 import { UpsertRatingDto } from "./dto";
-import prisma from "../../infrastructure/prisma";
+import prisma from "@/_shared/infrastructure/prisma";
 import { MovieService } from "../movies/service";
 import { Prisma } from "@prisma/client";
-import { parseNumber } from "../../../_shared/utils/parseFloat";
+import { parseNumber } from "@/_shared/utils/parseFloat";
 
 export class RatingsService {
   private movieService: MovieService;

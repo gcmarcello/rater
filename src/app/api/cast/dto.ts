@@ -2,7 +2,7 @@ import {
   CastedRoleCreateArgsSchema,
   CastedRoleFindManyArgsSchema,
   CastedRoleUpdateArgsSchema,
-} from "../../../../../prisma/generated/zod";
+} from "../../../../prisma/generated/zod";
 
 export const createCastDto = CastedRoleCreateArgsSchema._output.data;
 

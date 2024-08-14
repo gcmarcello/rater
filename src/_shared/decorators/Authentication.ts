@@ -1,9 +1,9 @@
-import { type ParsedRequestWithUser } from "@/app/_shared/types/Request";
+import { type ParsedRequestWithUser } from "@/_shared/types/Request";
 import jwt from "jsonwebtoken";
 import { cookies, headers } from "next/headers";
-import { UserService } from "../(resources)/users/service";
-import { Session } from "@/app/_shared/types/Session";
+import { Session } from "@/_shared/types/Session";
 import { ServerResponse } from "../classes/ServerResponse";
+import { UserService } from "@/app/api/users/service";
 
 export function Authentication<T>() {
   return function (

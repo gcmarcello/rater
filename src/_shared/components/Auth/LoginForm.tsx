@@ -1,6 +1,5 @@
-import { loginDto, LoginDto } from "@/app/api/(resources)/auth/dto";
 import toast from "react-hot-toast";
-import { useForm } from "@/app/_shared/components/Form/hooks/useForm";
+
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import useNextStore from "../../hooks/useNextStore";
@@ -19,6 +18,8 @@ import Text from "../Text";
 import { Session } from "../../types/Session";
 import Label from "../Form/components/Label";
 import Input from "../Form/components/Input";
+import { useForm } from "../Form/hooks/useForm";
+import { LoginDto, loginDto } from "@/app/api/auth/dto";
 
 export default function LoginForm() {
   const { Field, ...form } = useForm({
