@@ -1,8 +1,46 @@
 "use client";
-import { LoadingOverlay } from "@/app/_shared/components/Loading";
+import { Loading, LoadingOverlay } from "@/app/_shared/components/Loading";
+import { Section } from "@/app/_shared/components/MainPage/Section";
 import { useFetch } from "@/app/_shared/libs/swr/fetcher";
+import { CastWithCelebrity } from "@/app/_shared/types/Celebrities";
 import { MovieWithGenres } from "@/app/_shared/types/Movies";
 import { useRouter } from "next/navigation";
+import styled from "styled-components";
+import MovieCelebCarousel from "./components/MovieCelebCarousel";
+import SimilarMediaCarousel from "./components/SimilarMediaCarousel";
+import MovieInfoSection from "./components/MovieInfoSection";
+import Indicator from "@/app/_shared/components/Indicator";
+import Link from "next/link";
+import { PlayIcon } from "@heroicons/react/24/solid";
+import { TrailerButton } from "@/app/_shared/components/TrailerButton";
+
+type MediaHeroProps = {
+  $backgroundImage?: string;
+};
+
+const StyledMediaHero = styled.div<MediaHeroProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  padding: 16px;
+  background: ${(props) =>
+    props.$backgroundImage ? `url(${props.$backgroundImage})` : "none"};
+  background-size: cover;
+  background-position: center;
+  border-radius: 24px;
+  height: 30dvh;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  @media screen and (min-width: 1024px) {
+    padding: 48px;
+    height: 40dvh;
+  }
+`;
 
 export default function MoviePage({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -14,8 +52,34 @@ export default function MoviePage({ params }: { params: { id: string } }) {
       },
     }
   );
+  const { data: castData, isLoading: castIsLoading } = useFetch<
+    CastWithCelebrity[]
+  >(data ? `/api/cast/movie/${data.id}` : null);
+
   if (isLoading) {
     return <LoadingOverlay />;
   }
-  return <></>;
+  return (
+    <>
+      <StyledMediaHero $backgroundImage={data?.options?.image}>
+        {data?.options?.trailer && (
+          <TrailerButton trailerUrl={data.options.trailer} />
+        )}
+      </StyledMediaHero>
+      {castData && data ? (
+        <MovieInfoSection cast={castData} movie={data} />
+      ) : (
+        <Section>
+          <Loading />
+        </Section>
+      )}
+      <Section>
+        <MovieCelebCarousel data={castData} />
+      </Section>
+
+      <Section>
+        <SimilarMediaCarousel data={data} />
+      </Section>
+    </>
+  );
 }
