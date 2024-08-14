@@ -24,7 +24,7 @@ const StyledInput = styled(HeadlessInput)<InputProps>`
   border-radius: 12px;
   height: 48px;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   flex-grow: 1;
 
