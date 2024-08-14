@@ -91,7 +91,7 @@ export default function Home() {
       )}
 
       <LatestReleases />
-      <RatedMovies />
+      <RatedMovies isAuth={!!auth?.getSession()} />
       <RecommendedMovies />
       <HighlightedCelebrities />
 

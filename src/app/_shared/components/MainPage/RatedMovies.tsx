@@ -21,8 +21,7 @@ import Text from "../Text";
 import Button from "../Button";
 import { Rating } from "@prisma/client";
 
-export function RatedMovies() {
-  const auth = useNextStore(useAuthStore, (state) => state);
+export function RatedMovies({ isAuth }: { isAuth?: boolean }) {
   const ratedMedia = useRef<HTMLDivElement>(null);
   const { x: xRated, canX: canXRated } = useScroll({
     elementRef: ratedMedia,
@@ -31,7 +30,7 @@ export function RatedMovies() {
   const { ratings, ratedMovies, setRatedMovies, setRatings } = useGlobalStore();
   const { setIsAuthModalOpen } = useAuthModalStore();
 
-  useFetch<Rating[]>(auth?.getSession() ? "/api/ratings" : null, {
+  useFetch<Rating[]>(isAuth ? "/api/ratings" : null, {
     onSuccess: (data) => setRatings(data),
   });
 
@@ -68,7 +67,7 @@ export function RatedMovies() {
             />
           </div>
         </SectionTitle>
-        {ratedMovies.length && auth?.getSession() ? (
+        {ratedMovies.length && isAuth ? (
           <Carousel ref={ratedMedia}>
             {ratedMovies.map((movie) => (
               <CarouselItem key={movie.id}>
@@ -95,7 +94,7 @@ export function RatedMovies() {
             />
             <Text>Ops, nenhum filme avaliado ainda. </Text>
             <Text $weight={400}>Que tal adicionar um?</Text>
-            {!auth?.getSession() && (
+            {!isAuth && (
               <Button
                 onClick={() => setIsAuthModalOpen(true)}
                 $variant="secondary"
