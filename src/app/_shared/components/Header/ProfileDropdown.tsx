@@ -14,6 +14,7 @@ import { HTMLProps } from "react";
 import useNextStore from "../../hooks/useNextStore";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
+import toast from "react-hot-toast";
 
 const StyledDropdownOption = styled.div`
   cursor: pointer;
@@ -46,7 +47,14 @@ export function ProfileDropdown({ userName }: { userName?: string }) {
             >
               <UserIcon height={20} width={20} /> Perfil
             </DropdownItem>
-            <DropdownItem div={{ onClick: () => auth?.logout() }}>
+            <DropdownItem
+              div={{
+                onClick: () => {
+                  auth?.logout();
+                  toast.success("Deslogado com sucesso!");
+                },
+              }}
+            >
               <ArrowRightStartOnRectangleIcon height={20} width={20} />{" "}
               Desconectar
             </DropdownItem>
