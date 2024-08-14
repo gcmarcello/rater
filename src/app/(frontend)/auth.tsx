@@ -19,7 +19,7 @@ export function AuthWatcher() {
     return () => {
       window.removeEventListener("storage", triggerLogout);
     };
-  }, [auth]);
+  }, [auth?.session]);
 
   return <></>;
 }
