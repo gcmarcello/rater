@@ -5,7 +5,7 @@ import { Validation } from "../../decorators/Validation";
 import { MovieFindManyArgsSchema } from "../../../../../prisma/generated/zod";
 import { MovieService } from "./service";
 
-export class MovieRoutes {
+class MovieRoutes {
   private movieService: MovieService;
   constructor() {
     this.movieService = new MovieService();

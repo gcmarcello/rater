@@ -5,7 +5,6 @@ import {
   updateUserDto,
   UpdateUserDto,
 } from "./dto";
-import { UsersController } from "./controller";
 import { UserService } from "./service";
 import { Authentication } from "../../decorators/Authentication";
 import { Validation } from "../../decorators/Validation";
