@@ -1,4 +1,8 @@
 import FlexContainer from "@/app/_shared/components/FlexContainer";
+import {
+  HideOnDesktop,
+  HideOnMobile,
+} from "@/app/_shared/components/MediaQuery";
 import Text from "@/app/_shared/components/Text";
 import SectionTitle from "@/app/_shared/components/Text/SectionTitle";
 import { useFetch } from "@/app/_shared/libs/swr/fetcher";
@@ -83,7 +87,14 @@ export default function MovieInfoSection({
           <Image src="/star.png" width={20} height={20} alt="Star" />
           <Text $weight={600}>{movie?.rating?.toFixed(2)} |</Text>
           <Text $color="rgba(180, 180, 180, 1)" $weight={400}>
-            {String(numberToText(ratingData ?? 0))}
+            {ratingData ? (
+              String(numberToText(ratingData ?? 0))
+            ) : (
+              <>
+                <HideOnMobile>Sem Avaliações</HideOnMobile>
+                <HideOnDesktop>N/A</HideOnDesktop>
+              </>
+            )}
           </Text>
         </FlexContainer>
         <>
