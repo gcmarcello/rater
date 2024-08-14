@@ -49,7 +49,7 @@ export function Authentication<T>() {
       } catch (error) {
         cookies().delete("token");
         return ServerResponse.err({
-          message: "Usuário não encontrado.",
+          message: "Token Inválido.",
           status: 401,
           refreshSession: true,
         });
