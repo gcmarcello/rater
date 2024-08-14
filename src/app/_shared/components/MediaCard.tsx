@@ -26,6 +26,7 @@ const Card = styled.div<MediaCardProps>`
   background-repeat: no-repeat;
   height: 100%;
   min-width: 167px;
+  width: 170px;
   min-height: 254px;
   border-radius: 24px;
   transition-duration: 0.3s;

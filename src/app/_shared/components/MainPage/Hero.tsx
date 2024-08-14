@@ -7,6 +7,7 @@ import { minutesToHours } from "../../utils/minutesToHours";
 import { MovieWithGenres } from "../../types/Movies";
 import Indicator from "../Indicator";
 import Text from "../Text";
+import Link from "next/link";
 
 const HeroContainer = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const HeroContainer = styled.div`
   }
 `;
 
-const StyledHero = styled.div<MediaCardProps>`
+const StyledHero = styled(Link)<MediaCardProps>`
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -112,7 +113,7 @@ export function Hero({
   if (movie)
     return (
       <HeroContainer>
-        <StyledHero $image={movie.options?.image}>
+        <StyledHero href={`/filme/${movie.id}`} $image={movie.options?.image}>
           <CardInfo>
             {movie.highlighted && (
               <div style={{ display: "flex", gap: "12px" }}>
