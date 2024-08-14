@@ -14,6 +14,7 @@ export async function movieSeed(prisma: PrismaClient) {
   const movies = await fetch(url, options).then(
     async (res) => await res.json()
   );
+
   console.log("Fetching Complete. Seeding movies...");
   const parsedMovies = movies.results.map((movie: any, index: number) => ({
     id: movie.id,
@@ -32,6 +33,26 @@ export async function movieSeed(prisma: PrismaClient) {
       connect: movie.genre_ids.map((id: number) => ({ id })),
     },
   }));
+
+  for (const movie of movies.results) {
+    const videos = await fetch(
+      `https://api.themoviedb.org/3/movie/${movie.id}/videos?language=pt-BR`,
+      options
+    ).then(async (res) => await res.json());
+    const trailer = videos.results.find(
+      (video: any) => video.type === "Trailer"
+    );
+    console.log(
+      trailer
+        ? `Trailer found for ${movie.title}`
+        : `No trailer found for ${movie.title}`
+    );
+    parsedMovies[
+      movies.results.findIndex((m: any) => m.id === movie.id)
+    ].options.trailer = trailer
+      ? `https://www.youtube.com/watch?v=${trailer.key}`
+      : null;
+  }
 
   for (const movie of parsedMovies) {
     await prisma.movie.create({

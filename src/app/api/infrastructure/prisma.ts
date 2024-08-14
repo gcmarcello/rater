@@ -18,6 +18,7 @@ declare global {
       ageRating?: number;
       image?: string;
       poster?: string;
+      trailer?: string;
     };
     type ShowOptions = {
       description?: string;
