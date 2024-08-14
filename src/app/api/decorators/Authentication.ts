@@ -47,6 +47,7 @@ export function Authentication<T>() {
           });
         newRequest.user = decodedToken;
       } catch (error) {
+        console.log(error);
         cookies().delete("token");
         return ServerResponse.err({
           message: "Token Inválido.",
