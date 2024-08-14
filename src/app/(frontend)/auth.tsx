@@ -7,19 +7,19 @@ import { useAuthStore } from "../_shared/hooks/useAuthStore";
 export function AuthWatcher() {
   const auth = useNextStore(useAuthStore, (state) => state);
 
-  async function triggerLogout() {
-    localStorage.removeItem("auth-storage");
-    auth?.setSession(null);
-    toast.error("Sessão expirada, faça login novamente!");
-  }
-
   useEffect(() => {
+    function triggerLogout() {
+      localStorage.removeItem("auth-storage");
+      auth?.setSession(null);
+      toast.error("Sessão expirada, faça login novamente!");
+    }
+
     window.addEventListener("storage", triggerLogout);
 
     return () => {
       window.removeEventListener("storage", triggerLogout);
     };
-  }, [auth?.session]);
+  }, [auth]);
 
   return <></>;
 }
