@@ -19,6 +19,7 @@ import Carousel, {
 import SectionTitle from "../Text/SectionTitle";
 import Text from "../Text";
 import Button from "../Button";
+import { Rating } from "@prisma/client";
 
 export function RatedMovies() {
   const auth = useNextStore(useAuthStore, (state) => state);
@@ -27,8 +28,12 @@ export function RatedMovies() {
     elementRef: ratedMedia,
   });
 
-  const { ratings, ratedMovies, setRatedMovies } = useGlobalStore();
+  const { ratings, ratedMovies, setRatedMovies, setRatings } = useGlobalStore();
   const { setIsAuthModalOpen } = useAuthModalStore();
+
+  useFetch<Rating[]>(auth?.getSession() ? "/api/ratings" : null, {
+    onSuccess: (data) => setRatings(data),
+  });
 
   const { data: ratedMoviesData, mutate } = useFetch<MovieWithGenres[]>(
     ratings.length

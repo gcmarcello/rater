@@ -59,12 +59,6 @@ export default function Home() {
     setRatings,
   } = useGlobalStore();
 
-  const celebrities = React.useRef<HTMLDivElement>(null);
-
-  useFetch<Rating[]>(auth?.getSession() ? "/api/ratings" : null, {
-    onSuccess: (data) => setRatings(data),
-  });
-
   const { isLoading: isLoadingMovies } = useFetch<MovieWithGenres[]>(
     "/api/movies?take=4&where={%22highlighted%22:true}&orderBy={%22rating%22:%22desc%22}",
     {
