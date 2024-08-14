@@ -6,12 +6,15 @@ import { useFormContext } from "../Form/context/form.ctx";
 import { useField } from "../Form/hooks/useField";
 
 const StyledDiv = styled.div`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
   position: relative;
+  width: 100%;
 `;
 
 const StyledRange = styled.input`
-  width: 240px;
+  width: 100%;
   position: absolute;
   top: 5px;
   left: 0;

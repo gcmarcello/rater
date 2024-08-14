@@ -18,12 +18,10 @@ const StyledTextarea = styled(HeadlessTextarea)<TextareaProps>`
   background-color: #313131;
   color: #eeeeee;
   border-radius: 12px;
-  height: 48px;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
   flex-grow: 1;
-  resize: none;
 
   border: ${(props) =>
     props.$variant === "error" ? "2px solid rgba(225, 29, 72, 1)" : "0"};
@@ -50,7 +48,7 @@ export default function Textarea(props: HeadlessTextareaProps) {
       render={({ field: { onChange: fieldOnChange, value, ...field } }) => (
         <>
           <StyledTextarea
-            rows={6}
+            rows={props.rows}
             $variant={error ? "error" : "normal"}
             value={value || ""}
             onChange={fieldOnChange}

@@ -74,7 +74,7 @@ export function RatingAlert() {
           size={20}
           $variant="white"
         >
-          Sua avaliação -{" "}
+          Sua avaliação{" "}
           {ratings.find((r) => r.movieId === toBeRatedMovie?.id)?.rating}
         </Text>
         <Text size={20} $variant="white">
@@ -89,7 +89,7 @@ export function RatingAlert() {
             </Field>
             <Field name="comment">
               <Label>Comentário</Label>
-              <Textarea />
+              <Textarea rows={12} />
             </Field>
           </Fieldset>
         </AlertBody>

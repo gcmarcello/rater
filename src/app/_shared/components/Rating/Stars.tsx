@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledStar = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
 
   @media screen and (min-width: 1024px) {
     width: 40px;

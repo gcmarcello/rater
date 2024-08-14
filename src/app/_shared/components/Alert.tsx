@@ -58,6 +58,7 @@ const StyledAlertPanel = styled(DialogPanel)<AlertProps>`
 
   @media screen and (min-width: 1024px) {
     overflow: hidden;
+    width: 40%;
     border-radius: 24px;
     border: 4px solid rgba(35, 35, 35, 1);
     animation: ${fadeInAnimation} 0.1s linear;
@@ -79,7 +80,8 @@ export const AlertActions = styled.div`
   }
 `;
 
-export const AlertBody = styled(AlertTitle)`
+export const AlertBody = styled.div`
+  width: 100%;
   flex-grow: 1;
 `;
 
