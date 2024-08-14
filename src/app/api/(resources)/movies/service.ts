@@ -1,9 +1,10 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../infrastructure/prisma";
 import { parseNumber } from "../../utils/parseFloat";
+import { ReadMovieDto } from "./dto";
 
 export class MovieService {
-  async getMovies(data: Prisma.MovieFindManyArgs) {
+  async getMovies(data: ReadMovieDto) {
     const movies = await prisma.movie.findMany({
       ...data,
       take: data.take ? Math.min(data.take, 100) : 10,
@@ -20,6 +21,7 @@ export class MovieService {
     return movie;
   }
 
+  // SPECIAL QUERIES
   async updateMovieRating(id: string | number) {
     const movie = await prisma.movie.findUnique({
       where: { id: parseNumber(id) },
