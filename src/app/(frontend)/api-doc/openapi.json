@@ -1,0 +1,532 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rater API - Marcello",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/genres": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "genres"
+        ]
+      }
+    },
+    "//api/genres": {},
+    "/api/movies": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "movies"
+        ]
+      }
+    },
+    "//api/movies": {},
+    "/api/ratings": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "ratings"
+        ]
+      },
+      "post": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "movieId": {
+                    "type": "number"
+                  },
+                  "showId": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "number"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "ratings"
+        ]
+      }
+    },
+    "//api/ratings": {},
+    "/api/users": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "put": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "realName": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "keepRatings": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "//api/users": {},
+    "/api/auth/login": {
+      "post": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "//api/auth/login": {},
+    "/api/auth/signup": {
+      "post": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "//api/auth/signup": {},
+    "/api/auth/verify": {
+      "post": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "//api/auth/verify": {},
+    "/api/celebrities/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "celebrities"
+        ]
+      }
+    },
+    "//api/celebrities/:id": {},
+    "/api/celebrities/highlighted": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "celebrities"
+        ]
+      }
+    },
+    "//api/celebrities/highlighted": {},
+    "/api/movies/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "movies"
+        ]
+      }
+    },
+    "//api/movies/:id": {},
+    "/api/movies/recommendations": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "tags": [
+          "movies"
+        ]
+      }
+    },
+    "//api/movies/recommendations": {},
+    "/api/cast/movie/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "cast"
+        ]
+      }
+    },
+    "//api/cast/movie/:id": {},
+    "/api/cast/show/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "cast"
+        ]
+      }
+    },
+    "//api/cast/show/:id": {},
+    "/api/celebrities/:id/media": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "celebrities"
+        ]
+      }
+    },
+    "//api/celebrities/:id/media": {},
+    "/api/crew/movie/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "crew"
+        ]
+      }
+    },
+    "//api/crew/movie/:id": {},
+    "/api/crew/show/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "crew"
+        ]
+      }
+    },
+    "//api/crew/show/:id": {},
+    "/api/media/movie/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "//api/media/movie/:id": {},
+    "/api/ratings/movie/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ratings"
+        ]
+      }
+    },
+    "//api/ratings/movie/:id": {},
+    "/api/ratings/show/:id": {
+      "get": {
+        "description": "TODO: Describe what this endpoint does.",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "TODO: Describe this parameter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "ratings"
+        ]
+      }
+    },
+    "//api/ratings/show/:id": {}
+  }
+}
