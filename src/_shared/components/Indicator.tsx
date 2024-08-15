@@ -21,6 +21,10 @@ const IndicatorComponent = styled.div`
   }
 `;
 
-export default function Indicator(props: React.HTMLAttributes<HTMLDivElement>) {
+export default function Indicator(
+  props: React.HTMLAttributes<HTMLDivElement> & {
+    ref?: React.RefObject<HTMLDivElement>;
+  }
+) {
   return <IndicatorComponent {...props} />;
 }

@@ -8,6 +8,8 @@ import { useAuthModalStore } from "../hooks/useAuthModalStore";
 import Indicator from "./Indicator";
 import { MovieWithGenres } from "../types/Movies";
 import Link from "next/link";
+import { useRef } from "react";
+import { handleRatingClick } from "../utils/preventDefault";
 
 export type MediaCardProps = {
   $image?: string;
@@ -93,6 +95,7 @@ export function MediaCard({
   show?: Show | null;
 }) {
   const auth = useNextStore(useAuthStore, (state) => state);
+  const ref = useRef<HTMLDivElement>(null);
   const { setIsAuthModalOpen } = useAuthModalStore();
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
@@ -109,11 +112,12 @@ export function MediaCard({
         <CardInfo>
           <div style={{ display: "flex", gap: "12px" }}>
             <MediaCardStarIndicator
-              onClick={() =>
-                auth?.getSession()
+              ref={ref}
+              onClick={(e) => {
+                return handleRatingClick(e, !!auth?.getSession())
                   ? setToBeRatedMovie(movie)
-                  : setIsAuthModalOpen(true)
-              }
+                  : setIsAuthModalOpen(true);
+              }}
             >
               {ratings.find((rating) => rating.movieId === movie.id) ? (
                 <Image
