@@ -256,16 +256,18 @@ export function SearchCombobox({
                             </FlexContainer>
                           </StyledComboboxOption>
                         ))}
-                        {data
-                          ?.flatMap((c) => c.celebrities)
-                          ?.map((data) => (
-                            <StyledComboboxOption value={data} key={data.id}>
-                              <FlexContainer $gap={8}>
-                                <CelebMediaCard $image={data?.options?.image} />
-                                <Text size={13}>{data.name}</Text>
-                              </FlexContainer>
-                            </StyledComboboxOption>
-                          ))}
+                        {data[0]?.celebrities
+                          ? data[0].celebrities?.map((data) => (
+                              <StyledComboboxOption value={data} key={data.id}>
+                                <FlexContainer $gap={8}>
+                                  <CelebMediaCard
+                                    $image={data?.options?.image}
+                                  />
+                                  <Text size={13}>{data.name}</Text>
+                                </FlexContainer>
+                              </StyledComboboxOption>
+                            ))
+                          : null}
                       </>
                     ) : (
                       <EmptyOptions>
