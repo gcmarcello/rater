@@ -1,4 +1,4 @@
-import prisma from "@/app/api/infrastructure/prisma";
+import prisma from "@/_shared/infrastructure/prisma";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);

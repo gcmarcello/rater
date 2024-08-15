@@ -1,23 +1,23 @@
 "use client";
-import FlexContainer from "@/app/_shared/components/FlexContainer";
-import Text from "@/app/_shared/components/Text";
-import SectionTitle from "@/app/_shared/components/Text/SectionTitle";
-import { useFetch } from "@/app/_shared/libs/swr/fetcher";
-import { RoleWithMedia } from "@/app/_shared/types/Media";
+import FlexContainer from "@/_shared/components/FlexContainer";
+import Text from "@/_shared/components/Text";
+import SectionTitle from "@/_shared/components/Text/SectionTitle";
+import { useFetch } from "@/_shared/libs/swr/fetcher";
+import { RoleWithMedia } from "@/_shared/types/Media";
 import { Celebrity } from "@prisma/client";
-import Separator from "@/app/_shared/components/Separator";
+import Separator from "@/_shared/components/Separator";
 import dayjs from "dayjs";
 import React, { useRef } from "react";
 
-import { CelebPagination } from "@/app/_shared/components/CelebrityPage/CelebPagination";
-import { CelebMediaList } from "@/app/_shared/components/CelebrityPage/CelebMediaList";
-import { LoadingOverlay } from "@/app/_shared/components/Loading";
-import { PaginationProvider } from "@/app/_shared/contexts/pagination.ctx";
-import CelebPageContainer from "@/app/_shared/components/CelebrityPage/CelebPageContainer";
+import { CelebPagination } from "@/_shared/components/CelebrityPage/CelebPagination";
+import { CelebMediaList } from "@/_shared/components/CelebrityPage/CelebMediaList";
+import { LoadingOverlay } from "@/_shared/components/Loading";
+import { PaginationProvider } from "@/_shared/contexts/pagination.ctx";
+import CelebPageContainer from "@/_shared/components/CelebrityPage/CelebPageContainer";
 import CelebMediaContainer, {
   CelebInfoContainer,
-} from "@/app/_shared/components/CelebrityPage/CelebSubcontainers";
-import CelebPortrait from "@/app/_shared/components/CelebrityPage/CelebPortrait";
+} from "@/_shared/components/CelebrityPage/CelebSubcontainers";
+import CelebPortrait from "@/_shared/components/CelebrityPage/CelebPortrait";
 
 export default function CelebritiesPage({
   params,
