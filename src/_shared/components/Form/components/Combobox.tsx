@@ -257,7 +257,7 @@ export function SearchCombobox({
                           </StyledComboboxOption>
                         ))}
                         {data
-                          .flatMap((c) => c.celebrities)
+                          ?.flatMap((c) => c.celebrities)
                           .map((data) => (
                             <StyledComboboxOption value={data} key={data.id}>
                               <FlexContainer $gap={8}>
