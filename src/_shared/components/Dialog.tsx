@@ -110,11 +110,7 @@ export default function Dialog({
 }) {
   return (
     <>
-      <_Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="relative z-50"
-      >
+      <_Dialog open={isOpen} onClose={() => setIsOpen(false)}>
         <DialogBackdrop>
           <StyledDialogPanel size={size}>
             <HideOnDesktop>
