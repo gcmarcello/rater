@@ -1,17 +1,17 @@
 import React, { useRef } from "react";
 
-import { useScroll } from "../../hooks/useScroll";
-import { MediaCard } from "../MediaCard";
+import { useScroll } from "../../../hooks/useScroll";
+import { MediaCard } from "../../../components/MediaCard";
 import { Section } from "./Section";
-import { useFetch } from "../../libs/swr/fetcher";
-import { MovieWithGenres } from "../../types/Movies";
+import { useFetch } from "../../../libs/swr/fetcher";
+import { MovieWithGenres } from "../../../types/Movies";
 import Carousel, {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
   CarouselItem,
-} from "../Carousel";
-import SectionTitle from "../Text/SectionTitle";
-import Text from "../Text";
+} from "../../../components/Carousel";
+import SectionTitle from "../../../components/Text/SectionTitle";
+import Text from "../../../components/Text";
 
 export function LatestReleases() {
   const { data: latestReleases } = useFetch<MovieWithGenres[]>(

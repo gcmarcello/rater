@@ -1,16 +1,16 @@
 import { useRef } from "react";
 import { Section } from "./Section";
-import { useScroll } from "../../hooks/useScroll";
+import { useScroll } from "../../../hooks/useScroll";
 import { Celebrity } from "@prisma/client";
-import { CelebrityCard } from "../CelebrityCard";
-import { useFetch } from "../../libs/swr/fetcher";
-import Text from "../Text";
-import SectionTitle from "../Text/SectionTitle";
+import { CelebrityCard } from "../../../components/CelebrityCard";
+import { useFetch } from "../../../libs/swr/fetcher";
+import Text from "../../../components/Text";
+import SectionTitle from "../../../components/Text/SectionTitle";
 import Carousel, {
   CarouselItem,
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
-} from "../Carousel";
+} from "../../../components/Carousel";
 
 export function HighlightedCelebrities() {
   const { data: highlightCelebs } = useFetch<Celebrity[]>(

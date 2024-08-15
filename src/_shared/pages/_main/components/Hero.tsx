@@ -1,13 +1,17 @@
 import { Show } from "@prisma/client";
-import { useGlobalStore } from "../../hooks/useGlobalStore";
+import { useGlobalStore } from "../../../hooks/useGlobalStore";
 import styled from "styled-components";
-import { MediaCardProps } from "../MediaCard";
+import { MediaCardProps } from "../../../components/MediaCard";
 import Image from "next/image";
-import { minutesToHours } from "../../utils/numbersToString";
-import { MovieWithGenres } from "../../types/Movies";
-import Indicator from "../Indicator";
-import Text from "../Text";
+import { minutesToHours } from "../../../utils/numbersToString";
+import { MovieWithGenres } from "../../../types/Movies";
+import Indicator from "../../../components/Indicator";
+import Text from "../../../components/Text";
 import Link from "next/link";
+import { useAuthStore } from "@/_shared/hooks/useAuthStore";
+import { useAuthModalStore } from "@/_shared/hooks/useAuthModalStore";
+import { MouseEvent } from "react";
+import { handleRatingClick } from "@/_shared/utils/preventDefault";
 
 const HeroContainer = styled.div`
   display: flex;
@@ -108,7 +112,10 @@ export function Hero({
   if (!movie && !show) throw new Error("No movie or show provided");
   if (movie && show) throw new Error("Both movie and show provided");
 
-  const { setToBeRatedMovie } = useGlobalStore();
+  const auth = useAuthStore((state) => state);
+
+  const { setToBeRatedMovie, ratings } = useGlobalStore();
+  const { setIsAuthModalOpen } = useAuthModalStore();
 
   if (movie)
     return (
@@ -128,7 +135,13 @@ export function Hero({
                     <Text $variant="white">Em Destaque</Text>
                   </>
                 </Indicator>
-                <Indicator onClick={() => setToBeRatedMovie(movie)}>
+                <Indicator
+                  onClick={(e) => {
+                    return handleRatingClick(e, !!auth?.getSession())
+                      ? setToBeRatedMovie(movie)
+                      : setIsAuthModalOpen(true);
+                  }}
+                >
                   <Image
                     src={"/star.svg"}
                     height={20}

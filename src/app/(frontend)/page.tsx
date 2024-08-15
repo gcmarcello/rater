@@ -1,17 +1,16 @@
 "use client";
 
-import { Genre, Rating } from "@prisma/client";
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { LoadingOverlay } from "@/_shared/components/Loading";
-import { Hero } from "@/_shared/components/MainPage/Hero";
-import { HighlightedCelebrities } from "@/_shared/components/MainPage/HighlightedCelebrities";
-import { LatestReleases } from "@/_shared/components/MainPage/LatestReleases";
-import MainPageContainer from "@/_shared/components/MainPage/MainPageContainer";
-import { RatedMovies } from "@/_shared/components/MainPage/RatedMovies";
-import { RecommendedMovies } from "@/_shared/components/MainPage/RecommendedMovies";
+import { Hero } from "@/_shared/pages/_main/components/Hero";
+import { HighlightedCelebrities } from "@/_shared/pages/_main/components/HighlightedCelebrities";
+import { LatestReleases } from "@/_shared/pages/_main/components/LatestReleases";
+import MainPageContainer from "@/_shared/pages/_main/components/MainPageContainer";
+import { RatedMovies } from "@/_shared/pages/_main/components/RatedMovies";
+import { RecommendedMovies } from "@/_shared/pages/_main/components/RecommendedMovies";
 import { MediaCard } from "@/_shared/components/MediaCard";
-import { RatingAlert } from "@/_shared/components/Rating/RatingAlert";
+import { RatingAlert } from "@/_shared/components/rating-alert/RatingAlert";
 import SectionTitle from "@/_shared/components/Text/SectionTitle";
 import { useAuthStore } from "@/_shared/hooks/useAuthStore";
 import { useGlobalStore } from "@/_shared/hooks/useGlobalStore";

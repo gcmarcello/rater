@@ -5,8 +5,8 @@ import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 import {
   FormFields,
   handleFormError,
-} from "../../components/Form/functions/formErrors";
-import { UseFormReturn } from "../../components/Form/hooks/useForm";
+} from "../../components/form/functions/formErrors";
+import { UseFormReturn } from "../../components/form/hooks/useForm";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { useStore } from "zustand";

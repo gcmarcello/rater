@@ -5,7 +5,6 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import useNextStore from "../../hooks/useNextStore";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { useAuthModalStore } from "../../hooks/useAuthModalStore";
-import AuthModal from "../Auth/AuthModal";
 import ProfileModal from "./ProfileModal";
 import Button from "../Button";
 import Text from "../Text";
@@ -16,6 +15,7 @@ import SearchForm from "./SearchForm";
 import { useFetch } from "@/_shared/libs/swr/fetcher";
 import { Genre } from "@prisma/client";
 import { useGlobalStore } from "@/_shared/hooks/useGlobalStore";
+import AuthModal from "../auth-modal/AuthModal";
 
 const HeaderContainer = styled.div`
   width: 100dvw;

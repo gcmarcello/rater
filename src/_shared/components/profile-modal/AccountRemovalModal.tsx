@@ -1,16 +1,16 @@
 import { type DeleteUserDto, deleteUserDto } from "@/app/api/users/dto";
-import { useForm } from "@/_shared/components/Form/hooks/useForm";
-import { Description, Form } from "@/_shared/components/Form/components/Form";
+import { useForm } from "@/_shared/components/form/hooks/useForm";
+import { Description, Form } from "@/_shared/components/form/components/Form";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import useNextStore from "../../hooks/useNextStore";
 import { useMutation } from "../../libs/swr/fetcher";
 import Alert, { AlertActions } from "../Alert";
-import { SubmitButton } from "../Form/components/SubmitButton";
+import { SubmitButton } from "../form/components/SubmitButton";
 import Text from "../Text";
-import Checkbox from "../Form/components/Checkbox";
-import Label from "../Form/components/Label";
+import Checkbox from "../form/components/Checkbox";
+import Label from "../form/components/Label";
 import Button from "../Button";
 
 export function AccountRemovalModal() {

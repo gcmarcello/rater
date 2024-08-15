@@ -1,17 +1,17 @@
 import { upsertRatingDto, UpsertRatingDto } from "@/app/api/ratings/dto";
 import { Rating } from "@prisma/client";
 import { useEffect } from "react";
-import { useForm } from "@/_shared/components/Form/hooks/useForm";
-import { Fieldset, Form } from "@/_shared/components/Form/components/Form";
+import { useForm } from "@/_shared/components/form/hooks/useForm";
+import { Fieldset, Form } from "@/_shared/components/form/components/Form";
 import toast from "react-hot-toast";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
 import { useMutation } from "../../libs/swr/fetcher";
 import Alert, { AlertTitle, AlertBody, AlertActions } from "../Alert";
-import { SubmitButton } from "../Form/components/SubmitButton";
+import { SubmitButton } from "../form/components/SubmitButton";
 import { StarRating } from "./StarSlider";
 import Text from "../Text";
-import Label from "../Form/components/Label";
-import Textarea from "../Form/components/Textarea";
+import Label from "../form/components/Label";
+import Textarea from "../form/components/Textarea";
 
 export function RatingAlert() {
   const { toBeRatedMovie, toBeRatedShow, clearToBeRated, ratings, setRatings } =

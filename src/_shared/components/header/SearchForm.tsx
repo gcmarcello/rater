@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { SearchDto, searchDto } from "@/app/api/search/dto";
-import { useForm } from "../Form/hooks/useForm";
-import { Form, FormProps } from "../Form/components/Form";
-import { SearchCombobox } from "../Form/components/Combobox";
+import { useForm } from "../form/hooks/useForm";
+import { Form, FormProps } from "../form/components/Form";
+import { SearchCombobox } from "../form/components/Combobox";
 import styled from "styled-components";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import { useFetch } from "@/_shared/libs/swr/fetcher";
@@ -27,7 +27,7 @@ import {
 import FlexContainer from "../FlexContainer";
 import Text from "../Text";
 import { useGlobalStore } from "@/_shared/hooks/useGlobalStore";
-import Checkbox from "../Form/components/Checkbox";
+import Checkbox from "../form/components/Checkbox";
 import { buildSearchQuery } from "@/_shared/utils/buildSearchParams";
 
 const StyledForm: typeof Form = styled(Form)`

@@ -34,12 +34,12 @@ import { MovieWithCelebrities, MovieWithGenres } from "@/_shared/types/Movies";
 import dayjs from "dayjs";
 import Text from "../../Text";
 import FlexContainer from "../../FlexContainer";
-import { CelebMediaCard } from "../../CelebrityPage/CelebMediaCard";
+import { CelebMediaCard } from "../../../pages/celebridade/components/CelebMediaCard";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SearchDto } from "@/app/api/search/dto";
 import Image from "next/image";
-import { Section } from "../../MainPage/Section";
+import { Section } from "../../../pages/_main/components/Section";
 import { Spinner } from "../../Spinner";
 
 export interface SelectOption<T = any> {

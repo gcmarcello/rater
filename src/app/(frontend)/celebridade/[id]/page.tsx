@@ -9,15 +9,15 @@ import Separator from "@/_shared/components/Separator";
 import dayjs from "dayjs";
 import React, { useRef } from "react";
 
-import { CelebPagination } from "@/_shared/components/CelebrityPage/CelebPagination";
-import { CelebMediaList } from "@/_shared/components/CelebrityPage/CelebMediaList";
+import { CelebPagination } from "@/_shared/pages/celebridade/components/CelebPagination";
+import { CelebMediaList } from "@/_shared/pages/celebridade/components/CelebMediaList";
 import { LoadingOverlay } from "@/_shared/components/Loading";
 import { PaginationProvider } from "@/_shared/contexts/pagination.ctx";
-import CelebPageContainer from "@/_shared/components/CelebrityPage/CelebPageContainer";
+import CelebPageContainer from "@/_shared/pages/celebridade/components/CelebPageContainer";
 import CelebMediaContainer, {
   CelebInfoContainer,
-} from "@/_shared/components/CelebrityPage/CelebSubcontainers";
-import CelebPortrait from "@/_shared/components/CelebrityPage/CelebPortrait";
+} from "@/_shared/pages/celebridade/components/CelebSubcontainers";
+import CelebPortrait from "@/_shared/pages/celebridade/components/CelebPortrait";
 
 export default function CelebritiesPage({
   params,
