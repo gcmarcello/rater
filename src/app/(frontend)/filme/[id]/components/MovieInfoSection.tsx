@@ -17,7 +17,7 @@ const StyledMediaInfoSection = styled.div`
   flex-direction: row;
   align-items: flex-start;
   gap: 24px;
-  padding: 24px 0;
+  padding: 12px 0;
 
   @media screen and (min-width: 1024px) {
     grid-template-columns: repeat(3, minmax(200px, 1fr));
@@ -80,16 +80,25 @@ export default function MovieInfoSection({
           <StyledMediaTitle>{movie?.title}</StyledMediaTitle>
           <Image src="/star.png" width={20} height={20} alt="Star" />
           <Text $weight={600}>{movie?.rating?.toFixed(2)} |</Text>
-          <Text $color="rgba(180, 180, 180, 1)" $weight={400}>
-            {ratingData ? (
-              String(numberToText(ratingData ?? 0))
-            ) : (
-              <>
-                <HideOnMobile>Sem Avaliações</HideOnMobile>
-                <HideOnDesktop>N/A</HideOnDesktop>
-              </>
-            )}
-          </Text>
+
+          {ratingData ? (
+            <Text $color="rgba(180, 180, 180, 1)" $weight={400}>
+              {String(numberToText(ratingData ?? 0))}
+            </Text>
+          ) : (
+            <>
+              <HideOnMobile>
+                <Text $color="rgba(180, 180, 180, 1)" $weight={400}>
+                  Sem Avaliações
+                </Text>
+              </HideOnMobile>
+              <HideOnDesktop>
+                <Text $color="rgba(180, 180, 180, 1)" $weight={400}>
+                  N/A
+                </Text>
+              </HideOnDesktop>
+            </>
+          )}
         </FlexContainer>
         <>
           <Text $color="rgba(180, 180, 180, 1)" $weight={400}>

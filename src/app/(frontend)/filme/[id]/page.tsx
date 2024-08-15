@@ -13,6 +13,8 @@ import Indicator from "@/_shared/components/Indicator";
 import Link from "next/link";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { TrailerButton } from "@/_shared/components/TrailerButton";
+import FlexContainer from "@/_shared/components/FlexContainer";
+import GenrePill from "@/_shared/components/GenrePill";
 
 type MediaHeroProps = {
   $backgroundImage?: string;
@@ -42,6 +44,21 @@ const StyledMediaHero = styled.div<MediaHeroProps>`
   }
 `;
 
+const StyledPillSection = styled(FlexContainer)`
+  margin-top: 12px;
+  gap: 12px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    overflow: hidden;
+  }
+`;
+
 export default function MoviePage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { data, isLoading } = useFetch<MovieWithGenres>(
@@ -66,6 +83,11 @@ export default function MoviePage({ params }: { params: { id: string } }) {
           <TrailerButton trailerUrl={data.options.trailer} />
         )}
       </StyledMediaHero>
+      <StyledPillSection>
+        {data?.genres.map((g) => (
+          <GenrePill key={g.id} genre={g.name} />
+        ))}
+      </StyledPillSection>
       {castData && data ? (
         <MovieInfoSection cast={castData} movie={data} />
       ) : (

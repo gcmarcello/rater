@@ -1,7 +1,7 @@
 "use client";
 
-import { Rating } from "@prisma/client";
-import React from "react";
+import { Genre, Rating } from "@prisma/client";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { LoadingOverlay } from "@/_shared/components/Loading";
 import { Hero } from "@/_shared/components/MainPage/Hero";
@@ -57,6 +57,8 @@ export default function Home() {
     highlightedMovie,
     featuredMovies,
     setRatings,
+    setGenres,
+    genres,
   } = useGlobalStore();
 
   const { isLoading: isLoadingMovies } = useFetch<MovieWithGenres[]>(
