@@ -3,6 +3,8 @@ import {
   type ParsedRequestWithUser,
   type ParsedRequest,
 } from "@/_shared/types/Request";
+import { ServerResponse } from "../classes/ServerResponse";
+import { error } from "console";
 
 type ValidationOptions = {
   validateSearchParams?: boolean;
@@ -28,17 +30,35 @@ export function Validation<T>(
     ) {
       let newRequest = request as ParsedRequestWithUser<T>;
       if (options?.validateSearchParams && request.nextUrl.searchParams) {
-        (request as any).parsedSearchParams = validateSearchParams(
-          request,
-          zodSchema
-        );
-        return await originalMethod!.apply(this, [newRequest, params]);
+        try {
+          const validation = validateSearchParams(request, zodSchema);
+          if (validation.error) {
+            throw validation.error;
+          }
+          (newRequest as any).parsedSearchParams = validation;
+          return await originalMethod!.apply(this, [newRequest, params]);
+        } catch (error) {
+          console.log(error);
+          return ServerResponse.err({
+            message: "Parâmetros de Requisição Inválidos",
+            error,
+            status: 400,
+          });
+        }
       }
 
       if (request.body) {
         (request as any).parsedBody = await request.json();
 
-        await validateBody(request.parsedBody, zodSchema);
+        const validation = await validateBody(request.parsedBody, zodSchema);
+
+        if (validation.error) {
+          return ServerResponse.err({
+            message: "Corpo da Requisição Inválido",
+            error: validation.error,
+            status: 400,
+          });
+        }
 
         return await originalMethod!.apply(this, [newRequest, params]);
       }
@@ -61,7 +81,7 @@ function validateSearchParams<T>(
   });
   const validateParams = zodSchema.safeParse(parsedParams);
   if (!validateParams.success) {
-    throw validateParams.error.issues;
+    return { error: validateParams.error.issues };
   }
   return validateParams.data;
 }
@@ -70,7 +90,7 @@ export async function validateBody<T>(body: T, zodSchema: ZodSchema) {
   const parsedBody = zodSchema.safeParse(body);
 
   if (!parsedBody.success) {
-    throw parsedBody.error.issues;
+    return { error: parsedBody.error.issues };
   }
 
   return parsedBody.data;

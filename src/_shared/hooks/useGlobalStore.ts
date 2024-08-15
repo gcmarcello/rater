@@ -31,7 +31,7 @@ export const useGlobalStore = create<GlobalStoreProps>((set) => ({
   setToBeRatedShow: (show) => set({ toBeRatedShow: show }),
   clearToBeRated: () => set({ toBeRatedMovie: null, toBeRatedShow: null }),
   genres: [],
-  setGenres: () => {},
+  setGenres: (genres) => set({ genres }),
   highlightedMovie: null,
   featuredMovies: [],
   handleHighlightedMovies: (movies) => {

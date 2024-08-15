@@ -27,6 +27,7 @@ const StyledTrailerButton = styled(Link)<TrailerButtonsProps>`
   align-items: center;
   padding: 8px;
   gap: 8px;
+  color: white;
   border-radius: 12px;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.2);

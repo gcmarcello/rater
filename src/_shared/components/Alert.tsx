@@ -104,7 +104,6 @@ export default function Alert({
           setIsOpen(false);
           onClose && onClose();
         }}
-        className="relative z-50"
       >
         <AlertBackdrop>
           <StyledAlertPanel>{children}</StyledAlertPanel>
