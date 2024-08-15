@@ -4,7 +4,7 @@ import { response, routeHandler } from "../handler";
 import { searchDto, SearchDto } from "./dto";
 import { Validation } from "@/_shared/decorators/Validation";
 
-export class SearchRoutes {
+class SearchRoutes {
   constructor(private searchService: SearchService) {
     this.searchService = new SearchService();
   }
