@@ -258,10 +258,10 @@ export function SearchCombobox({
                         ))}
                         {data
                           ?.flatMap((c) => c.celebrities)
-                          .map((data) => (
+                          ?.map((data) => (
                             <StyledComboboxOption value={data} key={data.id}>
                               <FlexContainer $gap={8}>
-                                <CelebMediaCard $image={data.options?.image} />
+                                <CelebMediaCard $image={data?.options?.image} />
                                 <Text size={13}>{data.name}</Text>
                               </FlexContainer>
                             </StyledComboboxOption>
