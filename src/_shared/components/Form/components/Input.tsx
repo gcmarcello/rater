@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 import {
   Input as HeadlessInput,
-  Button as HeadlessButton,
   InputProps as HeadlessInputProps,
 } from "@headlessui/react";
 import { Controller } from "react-hook-form";
@@ -10,12 +9,12 @@ import { useState } from "react";
 import { useField } from "../hooks/useField";
 import { useFormContext } from "../context/form.ctx";
 
-type InputProps = {
+export type InputProps = {
   type?: "email" | "number" | "password" | "search" | "tel" | "text" | "url";
   $variant?: "normal" | "error";
 };
 
-const StyledInput = styled(HeadlessInput)<InputProps>`
+export const StyledInput = styled(HeadlessInput)<InputProps>`
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0 2px 0;

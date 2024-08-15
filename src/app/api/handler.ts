@@ -24,7 +24,6 @@ export async function response<T>(data: T) {
   try {
     return ServerResponse.json(await data);
   } catch (error) {
-    console.log(error);
     return ServerResponse.err(error);
   }
 }
