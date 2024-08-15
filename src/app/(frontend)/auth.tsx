@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -19,7 +20,7 @@ export function AuthWatcher() {
     return () => {
       window.removeEventListener("storage", triggerLogout);
     };
-  }, [auth]);
+  }, []);
 
   return <></>;
 }
