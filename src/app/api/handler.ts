@@ -22,7 +22,9 @@ export function routeHandler<T>(routeClass: new (...args: any[]) => T): T {
 
 export async function response<T>(data: T) {
   try {
-    return ServerResponse.json(await data);
+    return ServerResponse.json(await data, {
+      headers: { "Cache-Control": "no-cache" },
+    });
   } catch (error) {
     return ServerResponse.err(error);
   }
