@@ -1,23 +1,23 @@
-import { useScroll } from "../../hooks/useScroll";
-import { MediaCard } from "../MediaCard";
+import { useScroll } from "../../../hooks/useScroll";
+import { MediaCard } from "../../../components/MediaCard";
 import { Section } from "./Section";
-import { useAuthModalStore } from "../../hooks/useAuthModalStore";
-import { useGlobalStore } from "../../hooks/useGlobalStore";
-import { useAuthStore } from "../../hooks/useAuthStore";
-import useNextStore from "../../hooks/useNextStore";
+import { useAuthModalStore } from "../../../hooks/useAuthModalStore";
+import { useGlobalStore } from "../../../hooks/useGlobalStore";
+import { useAuthStore } from "../../../hooks/useAuthStore";
+import useNextStore from "../../../hooks/useNextStore";
 import { useRef } from "react";
 import Image from "next/image";
-import { useFetch } from "../../libs/swr/fetcher";
-import { MovieWithGenres } from "../../types/Movies";
+import { useFetch } from "../../../libs/swr/fetcher";
+import { MovieWithGenres } from "../../../types/Movies";
 import Carousel, {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
   CarouselItem,
-} from "../Carousel";
-import { HideOnMobile } from "../MediaQuery";
-import SectionTitle from "../Text/SectionTitle";
-import Text from "../Text";
-import { Loading } from "../Loading";
+} from "../../../components/Carousel";
+import { HideOnMobile } from "../../../components/MediaQuery";
+import SectionTitle from "../../../components/Text/SectionTitle";
+import Text from "../../../components/Text";
+import { Loading } from "../../../components/Loading";
 
 export function RecommendedMovies() {
   const auth = useNextStore(useAuthStore, (state) => state);

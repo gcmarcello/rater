@@ -1,11 +1,8 @@
-import useNextStore from "../../hooks/useNextStore";
-import { useAuthStore } from "../../hooks/useAuthStore";
 import { useGlobalStore } from "../../hooks/useGlobalStore";
-import ProfileForm from "../Profile/ProfileForm";
+import ProfileForm from "../profile-modal/ProfileForm";
 import Dialog from "../Dialog";
 
 export default function ProfileModal() {
-  const auth = useNextStore(useAuthStore, (state) => state);
   const { isProfileModalOpen, setIsProfileModalOpen } = useGlobalStore();
 
   return (

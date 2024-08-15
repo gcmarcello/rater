@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import dayjs from "dayjs";
 import Image from "next/image";
-import Text from "../Text";
-import { RoleWithMedia } from "../../types/Media";
+import Text from "../../../components/Text";
+import { RoleWithMedia } from "../../../types/Media";
 import { CelebMediaCard } from "./CelebMediaCard";
 import { useContext } from "react";
 import { useStore } from "zustand";
-import { useFetch } from "../../libs/swr/fetcher";
-import { usePagination } from "../../hooks/usePagination";
+import { useFetch } from "../../../libs/swr/fetcher";
+import { usePagination } from "../../../hooks/usePagination";
 
 const CelebMediaCardContainer = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ import Text from "../Text";
 import { useGlobalStore } from "@/_shared/hooks/useGlobalStore";
 import GenrePill from "../GenrePill";
 import FlexContainer from "../FlexContainer";
-import { useFormContext } from "../Form/context/form.ctx";
+import { useFormContext } from "../form/context/form.ctx";
 import { SearchDto } from "@/app/api/search/dto";
 import { Checkbox } from "@headlessui/react";
 import { useMemo } from "react";

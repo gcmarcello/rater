@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Star } from "./Stars";
 import { Controller } from "react-hook-form";
-import { useFormContext } from "../Form/context/form.ctx";
-import { useField } from "../Form/hooks/useField";
+import { useFormContext } from "../form/context/form.ctx";
+import { useField } from "../form/hooks/useField";
 
 const StyledDiv = styled.div`
   display: flex;

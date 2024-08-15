@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { RoleWithMedia } from "../../types/Media";
+import { RoleWithMedia } from "../../../types/Media";
 import {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
-} from "../Carousel";
-import FlexContainer from "../FlexContainer";
+} from "../../../components/Carousel";
+import FlexContainer from "../../../components/FlexContainer";
 import { useStore } from "zustand";
-import { usePagination } from "../../hooks/usePagination";
-import { HideOnMobile } from "../MediaQuery";
+import { usePagination } from "../../../hooks/usePagination";
+import { HideOnMobile } from "../../../components/MediaQuery";
 
 export function CelebPagination() {
   const {

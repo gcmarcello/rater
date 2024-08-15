@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Celebrity } from "@prisma/client";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { Description } from "./Form/components/Form";
+import { Description } from "./form/components/Form";
 
 export type CelebrityCardProps = {
   $image?: string;

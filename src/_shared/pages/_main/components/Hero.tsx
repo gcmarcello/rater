@@ -1,12 +1,12 @@
 import { Show } from "@prisma/client";
-import { useGlobalStore } from "../../hooks/useGlobalStore";
+import { useGlobalStore } from "../../../hooks/useGlobalStore";
 import styled from "styled-components";
-import { MediaCardProps } from "../MediaCard";
+import { MediaCardProps } from "../../../components/MediaCard";
 import Image from "next/image";
-import { minutesToHours } from "../../utils/numbersToString";
-import { MovieWithGenres } from "../../types/Movies";
-import Indicator from "../Indicator";
-import Text from "../Text";
+import { minutesToHours } from "../../../utils/numbersToString";
+import { MovieWithGenres } from "../../../types/Movies";
+import Indicator from "../../../components/Indicator";
+import Text from "../../../components/Text";
 import Link from "next/link";
 import { useAuthStore } from "@/_shared/hooks/useAuthStore";
 import { useAuthModalStore } from "@/_shared/hooks/useAuthModalStore";

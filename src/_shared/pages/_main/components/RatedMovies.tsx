@@ -1,24 +1,24 @@
-import { MediaCard } from "../MediaCard";
+import { MediaCard } from "../../../components/MediaCard";
 import { Section } from "./Section";
-import { useScroll } from "../../hooks/useScroll";
+import { useScroll } from "../../../hooks/useScroll";
 import { useRef } from "react";
 
-import { useGlobalStore } from "../../hooks/useGlobalStore";
+import { useGlobalStore } from "../../../hooks/useGlobalStore";
 import Image from "next/image";
-import { useAuthStore } from "../../hooks/useAuthStore";
-import useNextStore from "../../hooks/useNextStore";
-import { useAuthModalStore } from "../../hooks/useAuthModalStore";
+import { useAuthStore } from "../../../hooks/useAuthStore";
+import useNextStore from "../../../hooks/useNextStore";
+import { useAuthModalStore } from "../../../hooks/useAuthModalStore";
 
-import { useFetch } from "../../libs/swr/fetcher";
-import { MovieWithGenres } from "../../types/Movies";
+import { useFetch } from "../../../libs/swr/fetcher";
+import { MovieWithGenres } from "../../../types/Movies";
 import Carousel, {
   CarouselScrollLeftButton,
   CarouselScrollRightButton,
   CarouselItem,
-} from "../Carousel";
-import SectionTitle from "../Text/SectionTitle";
-import Text from "../Text";
-import Button from "../Button";
+} from "../../../components/Carousel";
+import SectionTitle from "../../../components/Text/SectionTitle";
+import Text from "../../../components/Text";
+import Button from "../../../components/Button";
 import { Rating } from "@prisma/client";
 
 export function RatedMovies({ isAuth }: { isAuth?: boolean }) {

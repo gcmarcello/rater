@@ -1,14 +1,14 @@
 "use client";
 import { Loading, LoadingOverlay } from "@/_shared/components/Loading";
-import { Section } from "@/_shared/components/MainPage/Section";
+import { Section } from "@/_shared/pages/_main/components/Section";
 import { useFetch } from "@/_shared/libs/swr/fetcher";
 import { CastWithCelebrity } from "@/_shared/types/Celebrities";
 import { MovieWithGenres } from "@/_shared/types/Movies";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-import MovieCelebCarousel from "./components/MovieCelebCarousel";
-import SimilarMediaCarousel from "./components/SimilarMediaCarousel";
-import MovieInfoSection from "./components/MovieInfoSection";
+import MovieCelebCarousel from "../../../../_shared/pages/filme/components/MovieCelebCarousel";
+import SimilarMediaCarousel from "../../../../_shared/pages/filme/components/SimilarMediaCarousel";
+import MovieInfoSection from "../../../../_shared/pages/filme/components/MovieInfoSection";
 import Indicator from "@/_shared/components/Indicator";
 import Link from "next/link";
 import { PlayIcon } from "@heroicons/react/24/solid";

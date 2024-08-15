@@ -5,20 +5,20 @@ import { useAuthStore } from "../../hooks/useAuthStore";
 import useNextStore from "../../hooks/useNextStore";
 import { useMutation } from "../../libs/swr/fetcher";
 import { DialogHeader, DialogBody, DialogActions } from "../Dialog";
-import ErrorMessage from "../Form/components/ErrorMessage";
+import ErrorMessage from "../form/components/ErrorMessage";
 import {
   FormTitle,
   Details,
   Description,
   Fieldset,
   Form,
-} from "../Form/components/Form";
-import { SubmitButton } from "../Form/components/SubmitButton";
+} from "../form/components/Form";
+import { SubmitButton } from "../form/components/SubmitButton";
 import Text from "../Text";
 import { Session } from "../../types/Session";
-import Label from "../Form/components/Label";
-import Input from "../Form/components/Input";
-import { useForm } from "../Form/hooks/useForm";
+import Label from "../form/components/Label";
+import Input from "../form/components/Input";
+import { useForm } from "../form/hooks/useForm";
 import { LoginDto, loginDto } from "@/app/api/auth/dto";
 
 export default function LoginForm() {
