@@ -12,7 +12,7 @@ class MovieRoutes {
   }
 
   @Validation(MovieFindManyArgsSchema, { validateSearchParams: true })
-  async GET(request: ParsedRequest<Prisma.MovieFindManyArgs>) {
+  async GET(request: ParsedRequest<any>) {
     return response(this.movieService.getMovies(request.parsedSearchParams));
   }
 }

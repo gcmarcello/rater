@@ -11,7 +11,7 @@ class RatingsRoutes {
   }
 
   @Authentication()
-  async GET(request: ParsedRequestWithUser<Prisma.RatingFindManyArgs>) {
+  async GET(request: ParsedRequestWithUser<any>) {
     return response(this.ratingsService.getRatings(request.user.id));
   }
 
